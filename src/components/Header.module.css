@@ -1,0 +1,29 @@
+.sign_in {
+    background-color: #6eb257;
+    color: #000000; /* text-white */
+    padding: 0.25rem 0.5rem; /* px-2 py-1 */
+    border-radius: 0.25rem; /* rounded */
+    outline: none; /* outline-none */
+
+}
+
+.sign_in:hover,
+.sign_in:focus {
+    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+}
+
+.register {
+    background-color: #BEECAE;
+    color: #000000; /* text-white */
+    padding: 0.25rem 0.5rem; /* px-2 py-1 */
+    border-radius: 0.25rem; /* rounded */
+    outline: none; /* outline-none */
+}
+
+.header_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 16px;
+
+}
