@@ -1,4 +1,6 @@
 import Link from "next/link";
+import React, { Component } from 'react';
+import mosquito from '../app/images/mosquito.png';
 
 import styles from "./Header.module.css";
 
@@ -14,7 +16,10 @@ export function Header({ page }: HeaderProps) {
                         Tchau Dengue
                 </h1>
 
+                <img src={mosquito} />
+
             </div>
+
             <div className="">
                 <Link
                     className={styles.sign_in}
