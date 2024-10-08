@@ -20,6 +20,22 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Dependencies
+
+This project includes the following dependencies:
+
+- [Heroicons](https://heroicons.com/): To use icons in the project.
+  
+  Install Heroicons with:
+
+  ```bash
+  npm install @heroicons/react
+  # or
+  yarn add @heroicons/react
+  # or
+  pnpm add @heroicons/react
+  ```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
