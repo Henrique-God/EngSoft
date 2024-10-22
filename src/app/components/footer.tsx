@@ -40,7 +40,7 @@ const Footer = () => {
           {/* Column for Project Information */}
           <div className={styles.column}>
             <h4 className={styles.heading}>Sobre o Projeto</h4>
-            <p className={styles.text}>Nome do Projeto: Projeto de Drones Autônomos</p>
+            <p className={styles.text}>Tchau Dengue</p>
             <a href="#" className={styles.link}>Saiba Mais</a><br />
             <a href="#" className={styles.link}>FAQ</a><br />
             <a href="#" className={styles.link}>Informações Gerais</a><br />
@@ -52,7 +52,7 @@ const Footer = () => {
       
       {/* Copyright Notice */}
       <div className={styles.copyright}>
-        <p>&copy; 2024 Projeto de Drones Autônomos. Todos os direitos reservados.</p>
+        <p>&copy; 2024 Projeto de Combate à Dengue. Todos os direitos reservados.</p>
       </div>
     </footer>
   );
