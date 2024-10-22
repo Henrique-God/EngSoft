@@ -1,0 +1,40 @@
+.footer {
+  background-color: white; /* Fundo branco */
+  padding: 20px;
+  border-top: 1px solid #037171; /* Borda superior */
+}
+
+.footerWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.footer-container {
+  display: grid; /* Usando grid layout */
+  grid-template-columns: repeat(3, 1fr); /* Criar 3 colunas de tamanho igual */
+  gap: 20px; /* Espaçamento entre as colunas */
+}
+
+.footer-column {
+  padding: 10px; /* Espaçamento interno em cada coluna */
+}
+
+.footer-title {
+  font-weight: bold;
+  color: #037171; /* Título em verde */
+  margin-bottom: 10px;
+}
+
+.footer-item {
+  color: black; /* Texto preto */
+  margin-bottom: 5px; /* Espaçamento entre itens */
+}
+
+.footer-item a {
+  color: #037171; /* Links em verde */
+  text-decoration: none;
+}
+
+.footer-item a:hover {
+  text-decoration: underline; /* Sublinha ao passar o mouse */
+}
