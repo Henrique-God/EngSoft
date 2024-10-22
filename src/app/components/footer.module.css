@@ -1,40 +1,65 @@
 .footer {
-  background-color: white; /* Fundo branco */
-  padding: 20px;
-  border-top: 1px solid #037171; /* Borda superior */
+  background-color: white;
+  color: black;
+  padding: 1rem 0; /* 4 units of padding */
+  border-top: 1px solid gray; /* Gray border at the top */
+
 }
 
 .footerWrapper {
   display: flex;
+  align-items: center; /* Center the footer content */
+}
+
+.container {
+  max-width: 1200px; /* Max width for the container */
+  width: 100%;
+  display: flex;
   flex-direction: row;
+  align-items: flex-start; /* Align items to the left */
+  justify-content: center; /* Center columns vertically */
+  padding: 0 1rem; /* Padding for the container */
 }
 
-.footer-container {
-  display: grid; /* Usando grid layout */
-  grid-template-columns: repeat(3, 1fr); /* Criar 3 colunas de tamanho igual */
-  gap: 20px; /* Espaçamento entre as colunas */
+.column {
+  flex: 1; /* Flex property to equally distribute columns */
+  padding: 1rem; /* Padding around columns */
 }
 
-.footer-column {
-  padding: 10px; /* Espaçamento interno em cada coluna */
-}
-
-.footer-title {
+.heading {
   font-weight: bold;
-  color: #037171; /* Título em verde */
-  margin-bottom: 10px;
+  font-size: 1.25rem; /* 1.25rem for headings */
+  margin-bottom: 0.5rem; /* Margin below heading */
 }
 
-.footer-item {
-  color: black; /* Texto preto */
-  margin-bottom: 5px; /* Espaçamento entre itens */
+.text {
+  font-size: 0.875rem; /* 0.875rem for text */
+  margin-bottom: 0.25rem; /* Margin below text */
 }
 
-.footer-item a {
-  color: #037171; /* Links em verde */
-  text-decoration: none;
+.link {
+  color: #3b82f6; /* Tailwind's blue-600 */
+  font-size: 0.75rem; /* Font size for links */
+  text-decoration: underline; /* Underline for links */
 }
 
-.footer-item a:hover {
-  text-decoration: underline; /* Sublinha ao passar o mouse */
+.link:hover {
+  text-decoration: underline; /* Maintain underline on hover */
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: flex-start; /* Align icons to the left */
+  gap: 1rem; /* Gap between icons */
+}
+
+.icon {
+  color: inherit; /* Inherit color */
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 1rem; /* Margin above copyright notice */
+  font-size: 0.75rem; /* Font size for copyright */
+  color: gray; /* Gray color for copyright text */
 }

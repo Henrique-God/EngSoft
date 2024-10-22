@@ -5,54 +5,55 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/f
 
 const Footer = () => {
   return (
-    <footer className={`bg-white text-black py-4 border-t border-gray-300 ${josefinSans.className}`}>
+    <footer className={`${styles.footer} ${josefinSans.className}`}>
       <div className={styles.footerWrapper}>
-        <div className="container mx-auto grid grid-cols-1 sm:grid-cols-3 text-center">
-          
-          {/* Column for Project Team */}
-          <div className="p-4">
-            <h4 className="font-bold text-base mb-1">Responsáveis pelo Projeto</h4>
-            <p className="text-sm">Helena Moyen</p>
-            <p className="text-sm">Henrique Godoy</p>
-            <p className="text-sm">Gabriel Pereira</p>
-            <p className="text-sm">Gabriel Vilas</p>
-          </div>
-          
-          {/* Column for Project Information */}
-          <div className="p-4">
-            <h4 className="font-bold text-base mb-1">Sobre o Projeto</h4>
-            <p className="text-sm mb-2">Nome do Projeto: Projeto de Drones Autônomos</p>
-            <a href="#" className="text-blue-600 text-xs hover:underline">Saiba Mais</a><br />
-            <a href="#" className="text-blue-600 text-xs hover:underline">FAQ</a><br />
-            <a href="#" className="text-blue-600 text-xs hover:underline">Informações Gerais</a><br />
-            <a href="#" className="text-blue-600 text-xs hover:underline">Documentação</a>
-          </div>
+        <div className={styles.container}>
           
           {/* Column for Social Media */}
-          <div className="p-4">
-            <h4 className="font-bold text-base mb-1">Siga-nos</h4>
-            <div className="flex justify-center space-x-4">
-              <a href="#" className="text-blue-600">
+          <div className={styles.column}>
+            <h4 className={styles.heading}>Siga-nos</h4>
+            <div className={styles.socialIcons}>
+              <a href="#" className={styles.icon}>
                 <FaFacebookF size={20} />
               </a>
-              <a href="#" className="text-blue-400">
+              <a href="#" className={styles.icon}>
                 <FaTwitter size={20} />
               </a>
-              <a href="#" className="text-pink-500">
+              <a href="#" className={styles.icon}>
                 <FaInstagram size={20} />
               </a>
-              <a href="#" className="text-blue-700">
+              <a href="#" className={styles.icon}>
                 <FaLinkedinIn size={20} />
               </a>
             </div>
           </div>
 
+          {/* Column for Project Team */}
+          <div className={styles.column}>
+            <h4 className={styles.heading}>Responsáveis pelo Projeto</h4>
+            <p className={styles.text}>Helena Moyen</p>
+            <p className={styles.text}>Henrique Godoy</p>
+            <p className={styles.text}>Gabriel Pereira</p>
+            <p className={styles.text}>Gabriel Vilas</p>
+          </div>
+          
+          {/* Column for Project Information */}
+          <div className={styles.column}>
+            <h4 className={styles.heading}>Sobre o Projeto</h4>
+            <p className={styles.text}>Nome do Projeto: Projeto de Drones Autônomos</p>
+            <a href="#" className={styles.link}>Saiba Mais</a><br />
+            <a href="#" className={styles.link}>FAQ</a><br />
+            <a href="#" className={styles.link}>Informações Gerais</a><br />
+            <a href="#" className={styles.link}>Documentação</a>
+          </div>
+
         </div>
-        
       </div>
-      <div className="text-center mt-4">
-          <p className="text-xs text-gray-500">&copy; 2024 Projeto de Combate à Dengue. Todos os direitos reservados.</p>
-        </div>
+      
+      {/* Copyright Notice */}
+      <div className={styles.copyright}>
+        <p>&copy; 2024 Projeto de Drones Autônomos. Todos os direitos reservados.</p>
+      </div>
     </footer>
   );
 };
