@@ -3,7 +3,7 @@ import React from 'react';
 import styles from "./Header.module.css";
 
 import Image from 'next/image';
-import mosquito from "../public/images/mosquito.png";
+import mosquito from "../assets/mosquito.png";
 
 type HeaderProps = {
      page: string
