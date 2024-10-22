@@ -1,0 +1,27 @@
+.mainTitle {
+    color: black;
+    font-size: 30px;
+    padding-bottom: 16px;
+}
+
+.secondTitle {
+    color: black;
+    font-size: 30px;
+    padding-bottom: 16px;
+}
+.mainImage{
+    height: 400px;
+    width: 98%;
+}
+
+.bottom {
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.imageWrapper {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
