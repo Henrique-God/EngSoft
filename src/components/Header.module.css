@@ -1,31 +1,63 @@
 .sign_in {
     background-color: #6eb257;
-    color: #000000; /* text-white */
-    padding: 0.25rem 0.5rem; /* px-2 py-1 */
-    border-radius: 0.25rem; /* rounded */
-    outline: none; /* outline-none */
-
+    color: #000000;
+    padding: 0.5rem 1rem; /* Aumentei o padding para aumentar a altura dos botões */
+    border-radius: 0.25rem;
+    outline: none;
+    margin-right: 10px; /* Espaçamento de 10px à esquerda do botão Register */
+    display: flex; /* Para garantir que o texto fique centralizado */
+    align-items: center; /* Centraliza o texto verticalmente */
 }
 
 .sign_in:hover,
 .sign_in:focus {
-    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+    background-color: #15803d;
 }
 
 .register {
     background-color: #BEECAE;
-    color: #000000; /* text-white */
-    padding: 0.25rem 0.5rem; /* px-2 py-1 */
-    border-radius: 0.25rem; /* rounded */
-    outline: none; /* outline-none */
+    color: #000000;
+    padding: 0.5rem 1rem; /* Aumentei o padding para aumentar a altura dos botões */
+    border-radius: 0.25rem;
+    outline: none;
+    margin-right: 32px; /* Espaçamento de 32px à esquerda da margem da página */
+    display: flex; /* Para garantir que o texto fique centralizado */
+    align-items: center; /* Centraliza o texto verticalmente */
 }
 
 .header_wrapper {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-left: 20px;
-
+    align-items: center; /* Centraliza verticalmente todos os elementos no cabeçalho */
+    width: 100%; /* O cabeçalho ocupa 100% da largura da página */
+    border: 2px solid black; /* Adicionando contorno preto */
+    padding: 8px; /* Adicionando espaçamento interno */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
 }
 
+.logo_title_wrapper {
+    display: flex;
+    align-items: center; /* Centraliza o logo e o título verticalmente */
+}
 
+.logo_title_wrapper h1 {
+    margin-left: 12px;
+    padding-top: 0; /* Removido para alinhar o título corretamente */
+}
+
+.buttons_wrapper {
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1; /* Para empurrar os botões para o lado direito */
+    margin-bottom: 8px; /* Distância entre os botões e a borda inferior */
+}
+
+.title {
+    width: 269px;   /* Largura do título */
+    height: 64px;   /* Altura do título */
+    font-size: 2rem; /* Ajustar conforme necessário para o tamanho do texto */
+    overflow: hidden; /* Caso o texto exceda as dimensões */
+    white-space: nowrap;
+    display: flex; /* Para garantir que o texto fique centralizado */
+    align-items: center; /* Centraliza o texto verticalmente */
+}
