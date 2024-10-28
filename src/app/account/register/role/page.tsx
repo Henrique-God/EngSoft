@@ -111,7 +111,7 @@ export default function Role() {
                 ))}
                 
                 {(role === "fiscal" || role === "admin") && (
-                    <div>
+                    <div className={styles.inputs}>
                         <label className={styles.label}>Insira um comprovante de cargo (PDF):</label>
                         <input
                             type="file"
