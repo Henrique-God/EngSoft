@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import morador from '@/src/assets/morador.jpg';
 import fiscal from '@/src/assets/fiscal.jpg';
 import admin from '@/src/assets/admin.jpg';
+import ShowPass from '@/src/assets/icons/show_pass.svg';
+import HidePass from '@/src/assets/icons/dont_show_pass.svg';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import styles from "./page.module.css";
@@ -18,7 +20,9 @@ export default function Role() {
     const role = searchParams.get("role");
 
     const [pdfFile, setPdfFile] = useState(null);
-    const [inputErrors, setInputErrors] = useState({})
+    const [inputErrors, setInputErrors] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
 
     const [formData, setFormData] = useState({
         nomecompleto: "",
@@ -30,6 +34,8 @@ export default function Role() {
         cep: "",
         email: "",
         telefone: "",
+        senha: "",
+        senha2: "",
     });
     let roleImg: StaticImageData | undefined;
     if (role === "morador") {
@@ -40,7 +46,14 @@ export default function Role() {
         roleImg = admin;
     }
     
-     const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+    const togglePassword2Visibility = () => {
+        setShowPassword2(!showPassword2);
+    };
+    
+    const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
         
@@ -115,6 +128,38 @@ export default function Role() {
                             </div>
                         ))}
                         
+                        <div className={styles.inputs}>
+                            <label className={styles.label}>Senha:</label>
+                            <div className={styles.inputWrapper}>
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    name="senha"
+                                    value={formData["senha"] || ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputErrors.senha ? styles.error : ""}`}
+                                />
+                                <button type="button" onClick={togglePasswordVisibility} className={styles.toggleButton}>
+                                    {showPassword ? <Image src={ShowPass} alt="" width={24} height={24} /> : <Image src={HidePass} alt="" width={24} height={24} />}
+                                </button>   
+                            </div>
+
+                        </div>
+                        <div className={styles.inputs}>
+                            <label className={styles.label}>Digite a senha novamente:</label>
+                            <div className={styles.inputWrapper}>
+                                <input
+                                    type={showPassword2 ? "text" : "password"}
+                                    name="senha2"
+                                    value={formData["senha2"] || ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputErrors.senha2 ? styles.error : ""}`}
+                                />
+                                <button type="button" onClick={togglePassword2Visibility} className={styles.toggleButton}>
+                                    {showPassword2 ? <Image src={ShowPass} alt="" width={24} height={24} /> : <Image src={HidePass} alt="" width={24} height={24} />}
+                                </button>
+                            </div>
+                        </div>
+
                         {(role === "fiscal" || role === "admin") && (
                             <div className={styles.inputs}>
                                 <label className={styles.label}>Insira um comprovante de cargo (PDF):</label>
