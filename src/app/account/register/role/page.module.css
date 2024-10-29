@@ -4,6 +4,8 @@
     align-items: center;
     padding: 20px;
     font-family: sans-serif;
+    width: 100%;
+    min-height: 88vh;
 }
 
 .Header {

@@ -9,6 +9,8 @@ import admin from '@/src/assets/admin.jpg';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import styles from "./page.module.css";
+import SideNav from '@/src/app/components/sidenav';
+import Header from '@/src/app/components/Header';
 
 
 export default function Role() {
@@ -86,49 +88,54 @@ export default function Role() {
         }
     };
 
-    
-
-
     return (
-        <div className={styles.container}>
-            <div className={styles.Header}>
-                <h1 className={styles.title}>Morador</h1>
-                <Image src={roleImg} alt="Morador" className={styles.image} />
+        <div>
+        <Header />
+        <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+            <div className="w-full flex-none md:w-40">
+                <SideNav />
             </div>
-            
-            <form onSubmit={handleSubmit} className={styles.form}>
-                {["Nome Completo", "CPF", "Logradouro", "Bairro", "Cidade", "Estado", "CEP", "Email", "Telefone"].map((field, index) => (
-                    <div key={index}  className={styles.inputs}>
-                        <label className={styles.label}>{field}:</label>
-                        <input
-                            type="text"
-                            name={field.toLowerCase().replace(/ /g, "")}
-                            value={formData[field.toLowerCase().replace(/ /g, "")] || ""}
-                            onChange={handleChange}
-                            className={`${styles.input} ${inputErrors[field.toLowerCase().replace(/ /g, "")] ? styles.error : ""}`}
-                        />
+                <div className={styles.container}>
+                    <div className={styles.Header}>
+                        <h1 className={styles.title}>Morador</h1>
+                        <Image src={roleImg} alt="Morador" className={styles.image} />
                     </div>
-                ))}
-                
-                {(role === "fiscal" || role === "admin") && (
-                    <div className={styles.inputs}>
-                        <label className={styles.label}>Insira um comprovante de cargo (PDF):</label>
-                        <input
-                            type="file"
-                            accept=".pdf"
-                            onChange={handleFileChange}
-                            className={`${styles.input} ${inputErrors.pdf ? styles.error : ""}`}
-                        />
-                    </div>
-                )}
+                    
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        {["Nome Completo", "CPF", "Logradouro", "Bairro", "Cidade", "Estado", "CEP", "Email", "Telefone"].map((field, index) => (
+                            <div key={index}  className={styles.inputs}>
+                                <label className={styles.label}>{field}:</label>
+                                <input
+                                    type="text"
+                                    name={field.toLowerCase().replace(/ /g, "")}
+                                    value={formData[field.toLowerCase().replace(/ /g, "")] || ""}
+                                    onChange={handleChange}
+                                    className={`${styles.input} ${inputErrors[field.toLowerCase().replace(/ /g, "")] ? styles.error : ""}`}
+                                />
+                            </div>
+                        ))}
+                        
+                        {(role === "fiscal" || role === "admin") && (
+                            <div className={styles.inputs}>
+                                <label className={styles.label}>Insira um comprovante de cargo (PDF):</label>
+                                <input
+                                    type="file"
+                                    accept=".pdf"
+                                    onChange={handleFileChange}
+                                    className={`${styles.input} ${inputErrors.pdf ? styles.error : ""}`}
+                                />
+                            </div>
+                        )}
 
-                <div className={styles.buttonContainer}>
-                    <Link
-                        className={styles.backButton} 
-                        href="/account/register">Voltar</Link> 
-                    <button type="submit" className={styles.nextButton}>Próximo</button>
+                        <div className={styles.buttonContainer}>
+                            <Link
+                                className={styles.backButton} 
+                                href="/account/register">Voltar</Link> 
+                            <button type="submit" className={styles.nextButton}>Próximo</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }

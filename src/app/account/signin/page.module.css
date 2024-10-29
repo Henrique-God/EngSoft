@@ -6,7 +6,18 @@
     padding: 20px;
     font-family: sans-serif;
     width: 100vw;
-    height: 100vh;
+    height: 88vh;
+}
+
+.logo_title_wrapper {
+    display: flex;
+    align-items: center; /* Centraliza o logo e o título verticalmente */
+    margin-bottom: 32px;
+}
+
+.title {
+    padding-left: 16px;
+    font-size: 32px;
 }
 
 .form {

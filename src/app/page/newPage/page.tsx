@@ -5,7 +5,9 @@ import React, { Component } from 'react';
 import { useState } from 'react';
 import styles from "./page.module.css";
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm'
+import remarkGfm from 'remark-gfm';
+import SideNav from '@/src/app/components/sidenav';
+import Header from '@/src/app/components/Header';
 
 export default function NewPage() {
 
@@ -105,69 +107,77 @@ export default function NewPage() {
     };
 
     return (
-        <div className={styles.container}>
-            <form onSubmit={handleSubmit} className={styles.form}>
-                <div className={styles.inputs}>
-                    <label className={styles.label}>Título: </label>
-                    <input
-                        type="text"
-                        name="titulo"
-                        onChange={handleChange}
-                        className={`${styles.inputTitle} ${inputErrors.titulo ? styles.error : ""}`}
-                    />
+        <div>
+            <Header />
+            <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+                <div className="w-full flex-none md:w-40">
+                    <SideNav />
                 </div>
-                <div  className={styles.inputs}>
-                    <label className={styles.label}>Texto: </label>
-                    <textarea
-                        name="texto"
-                        onChange={handleChange}
-                        className={`${styles.inputText} ${inputErrors.texto ? styles.error : ""}`}
-                    />
-                </div>
-                <div  className={styles.inputs}>
-                    <label className={styles.label}>Imagens: </label>
-                    <input
-                        type="file" 
-                        multiple 
-                        accept="image/*" 
-                        onChange={handleImageChange} 
-                    />
-                </div>
-                <div>
-                {images != null && images.length > 0 && (
-                    <div>
-                    <ul>
-                        {images.map((image, index) => (
-                        <li key={index}>
-                            <img 
-                            src={URL.createObjectURL(image)} 
-                            alt={`Preview ${index + 1}`} 
-                            style={{ width: '400px', height: 'auto' }} 
+                <div className={styles.container}>
+                    <form onSubmit={handleSubmit} className={styles.form}>
+                        <div className={styles.inputs}>
+                            <label className={styles.label}>Título: </label>
+                            <input
+                                type="text"
+                                name="titulo"
+                                onChange={handleChange}
+                                className={`${styles.inputTitle} ${inputErrors.titulo ? styles.error : ""}`}
                             />
-                        </li>
-                        ))}
-                    </ul>
-                    </div>
-                )}  
-                </div>
+                        </div>
+                        <div  className={styles.inputs}>
+                            <label className={styles.label}>Texto: </label>
+                            <textarea
+                                name="texto"
+                                onChange={handleChange}
+                                className={`${styles.inputText} ${inputErrors.texto ? styles.error : ""}`}
+                            />
+                        </div>
+                        <div  className={styles.inputs}>
+                            <label className={styles.label}>Imagens: </label>
+                            <input
+                                type="file" 
+                                multiple 
+                                accept="image/*" 
+                                onChange={handleImageChange} 
+                            />
+                        </div>
+                        <div>
+                        {images != null && images.length > 0 && (
+                            <div>
+                            <ul>
+                                {images.map((image, index) => (
+                                <li key={index}>
+                                    <img 
+                                    src={URL.createObjectURL(image)} 
+                                    alt={`Preview ${index + 1}`} 
+                                    style={{ width: '400px', height: 'auto' }} 
+                                    />
+                                </li>
+                                ))}
+                            </ul>
+                            </div>
+                        )}  
+                        </div>
 
-                <div className={styles.buttonContainer}>
-                    <button type="button" onClick={handleCreateLinks} className={styles.backButton}>Inserir links</button> 
-                    <button type="submit" className={styles.nextButton}>Finalizar</button>
-                </div>
+                        <div className={styles.buttonContainer}>
+                            <button type="button" onClick={handleCreateLinks} className={styles.backButton}>Inserir links</button> 
+                            <button type="submit" className={styles.nextButton}>Finalizar</button>
+                        </div>
 
-                {linkedText && (
-                    <div>
-                    <label className={styles.label}>Linked Text Preview:</label>
-                    <ReactMarkdown 
-                        className={styles.preview}
-                        children={linkedText} 
-                        remarkPlugins={[remarkGfm]} 
-                        components={renderers} 
-                    />
-                    </div>
-                )}
-            </form>
+                        {linkedText && (
+                            <div>
+                            <label className={styles.label}>Linked Text Preview:</label>
+                            <ReactMarkdown 
+                                className={styles.preview}
+                                children={linkedText} 
+                                remarkPlugins={[remarkGfm]} 
+                                components={renderers} 
+                            />
+                            </div>
+                        )}
+                    </form>
+                </div>
+            </div>
         </div>
     );
 }
