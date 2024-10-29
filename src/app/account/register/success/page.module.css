@@ -1,0 +1,57 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    min-height: 88vh;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    
+}
+
+.title{
+    display: flex;
+    width: 600px;
+    height: fit-content;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 64px;
+    font-weight: bold;
+}
+
+.semiTitle{
+    display: flex;
+    width: 600px;
+    height: fit-content;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 40px;
+    margin-top: 16px;
+    
+}
+
+.buttonDiv {
+    margin-top: 64px;
+}
+
+.backButton {
+    background-color: #6eb257;
+    color: #000000; /* text-white */
+    padding: 1rem 1rem; /* px-2 py-1 */
+    border-radius: 0.5rem; /* rounded */
+    outline: none; /* outline-none */
+    font-size: 32px;
+}
+
+.backButton:hover,
+.backButton:focus {
+    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+}

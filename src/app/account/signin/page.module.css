@@ -1,0 +1,80 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: sans-serif;
+    width: 100vw;
+    height: 88vh;
+}
+
+.logo_title_wrapper {
+    display: flex;
+    align-items: center; /* Centraliza o logo e o título verticalmente */
+    margin-bottom: 32px;
+}
+
+.title {
+    padding-left: 16px;
+    font-size: 32px;
+}
+
+.form {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.label {
+    font-size: 16px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+}
+
+.input {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #d1e7b6;
+    font-size: 16px;
+    color: #000;
+}
+
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: end;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.backButton {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #b1d382;
+    border: none;
+    color: #000;
+    cursor: pointer;
+}
+
+.nextButton {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #006b5c;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.error {
+    border: 2px solid red;
+}
