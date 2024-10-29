@@ -41,6 +41,7 @@
 }
 
 .input {
+    flex: 1;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -49,10 +50,23 @@
     color: #000;
 }
 
-
 .inputs {
     display: flex;
     flex-direction: column;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.toggleButton {
+    margin-left: 8px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #007bff;
 }
 
 .buttonContainer {
