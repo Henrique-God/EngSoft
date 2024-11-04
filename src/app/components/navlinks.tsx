@@ -3,6 +3,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  ChartBarIcon, // Import an appropriate icon for statistics
 } from '@heroicons/react/24/outline';
 
 // Map of links to display in the side navigation.
@@ -14,6 +15,11 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   { name: 'Forum', href: '/dashboard/forum', icon: UserGroupIcon },
+  {
+    name: 'Estatística', // Add the new link here
+    href: '/dashboard/circles', // Link to the Circles page
+    icon: ChartBarIcon, // Use an icon for statistics
+  },
 ];
 
 export default function NavLinks() {

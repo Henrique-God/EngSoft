@@ -58,6 +58,7 @@
     font-size: 2rem; /* Ajustar conforme necessário para o tamanho do texto */
     overflow: hidden; /* Caso o texto exceda as dimensões */
     white-space: nowrap;
+    color: #000000; 
     display: flex; /* Para garantir que o texto fique centralizado */
     align-items: center; /* Centraliza o texto verticalmente */
 }
