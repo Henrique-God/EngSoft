@@ -1,51 +1,50 @@
-// src/app/components/MapComponent.tsx
-"use client"; // Add this line to mark the file as a client component
+"use client";
 
-import React, { createContext, useContext } from 'react'; 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import React, { useEffect, useRef } from 'react';
+import { addressPoints } from '@/src/app/components/randomAdressPoints';
 
-// Import marker images directly
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+const MapComponent = () => {
+  const mapRef = useRef(null);
 
-// Fix default icon issues
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow,
-});
+  useEffect(() => {
+    // Import Leaflet and its styles inside useEffect to ensure they run only in the browser
+    const L = require('leaflet');
+    require('leaflet/dist/leaflet.css');
+    require('leaflet.heat');
 
-// Create a context for Leaflet (if you need one)
-export const LeafletContext = createContext(null);
-export const LeafletProvider = LeafletContext.Provider;
+    // Initialize the map only in the browser
+    if (mapRef.current) {
+      const map = L.map(mapRef.current).setView([-37.88, 175.4], 10);
 
-export function useLeafletContext() {
-  const context = useContext(LeafletContext);
-  if (!context) {
-    throw new Error('useLeafletContext must be used within a LeafletProvider');
-  }
-  return context;
-}
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
 
-const MapComponent: React.FC = () => {
-  const position: [number, number] = [51.505, -0.09]; // Latitude and Longitude of the center
+      const heatmapPoints = addressPoints
+        .filter(([lat, lng]) => lat !== null && lng !== null)
+        .map(([lat, lng]) => [lat, lng, 0.5]);
+
+      L.heatLayer(heatmapPoints, {
+        radius: 25,
+        blur: 15,
+        maxZoom: 17,
+        max: 1,
+      }).addTo(map);
+
+      return () => {
+        map.remove();
+      };
+    }
+  }, []);
 
   return (
-    <MapContainer center={position} zoom={13} style={{ height: '100vh', width: '100%' }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div
+      ref={mapRef}
+      style={{
+        width: '100%',  // Full width of the container
+        height: '600px' // Increased height for the map
+      }}
+    />
   );
 };
 

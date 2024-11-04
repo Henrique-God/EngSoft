@@ -1,0 +1,78 @@
+.container {
+  background-color: white; /* Fundo branco */
+  color: black; /* Cor do texto padrão preta */
+  padding: 20px;
+}
+
+.title {
+  color: #037171; /* Cor para o título em verde */
+  font-size: 2.5em; /* Ajustar conforme necessário para ser maior */
+  font-weight: bold; /* Adiciona negrito ao título */
+}
+
+.subtitle {
+  color: black; /* Mudando a cor do subtítulo para preto */
+  font-size: 1.5em; /* Ajustar conforme necessário */
+}
+/* New styles for the MapComponent */
+.map-container {
+  width: 100%;         /* Full width of the container */
+  height: 600px;      /* Set the height you want */
+  border: 1px solid #ccc; /* Optional: add a border for better visibility */
+  border-radius: 5px; /* Optional: rounded corners */
+}
+
+.post {
+  border: 1px solid #037171; /* Cor da borda em verde */
+  border-radius: 8px; /* Cantos arredondados */
+  padding: 10px;
+  margin: 10px 0;
+  background-color: rgba(255, 255, 255, 0.9); /* Fundo levemente transparente */
+}
+
+.post-title {
+  color: #037171; /* Cor para títulos dos posts em verde */
+  margin: 0;
+}
+
+.post-user {
+  color: black; /* Mudando a cor do texto do usuário para preto */
+}
+
+.post-content {
+  color: black; /* Mudando a cor do texto do conteúdo para preto */
+}
+
+.form {
+  margin-top: 20px; /* Espaçamento acima do formulário */
+}
+
+.form-label {
+  display: block; /* Exibir rótulos como bloco */
+  margin-bottom: 5px; /* Espaçamento abaixo do rótulo */
+  color: #037171; /* Cor dos rótulos em verde */
+}
+
+.input, .textarea {
+  width: 100%; /* Largura total */
+  padding: 8px; /* Preenchimento interno */
+  margin-bottom: 10px; /* Espaçamento abaixo do campo */
+  border: 1px solid #037171; /* Borda dos campos em verde */
+  border-radius: 4px; /* Bordas arredondadas */
+  background-color: white; /* Fundo dos campos */
+  color: black; /* Cor do texto nos campos */
+}
+
+.button {
+  background-color: #037171; /* Cor do botão em azul */
+  color: rgb(255, 255, 255); /* Cor do texto do botão branca */
+  padding: 10px 15px; /* Preenchimento do botão */
+  border: none; /* Sem borda */
+  border-radius: 4px; /* Bordas arredondadas */
+  cursor: pointer; /* Mudar o cursor ao passar o mouse */
+}
+
+.button:hover {
+  background-color: #025555; /* Mudar a cor de fundo ao passar o mouse (azul mais escuro) */
+  color: rgb(255, 255, 255); /* Cor do texto ao passar o mouse */
+}
