@@ -1,96 +1,34 @@
-:root {
-    /* Global Color Palette */
-    --elegant-green: #6eb257;
-    --dark-green: #15803d;
-    --teal-green: #00695c;
-    --white: #ffffff;
-    --black: #000000;
-}
-
-/* Container */
 .container {
     display: flex;
     flex-direction: column;
     width: 100%;
     min-height: 88vh;
-    background-color: var(--white);
-    background-color: var(--white);
+    margin: 32px;
 }
 
-/* Main Section */
-.main {
+.profileHeader {
     display: flex;
-    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 16px;
+    margin-bottom: 32px;
+    
 }
 
-/* Content Section */
-.content {
-    flex: 1;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Grid Layout */
-.grid {
-    flex: 1;
-}
-
-/* Content Section */
-.content {
-    flex: 1;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Grid Layout */
-.grid {
+.FirstHeader {
     display: flex;
-    justify-content: space-around;
-    margin-top: 40px;
-    margin-bottom: 8%;
+    flex-direction: row;
+    flex: 1;
+    justify-content: start;
+    align-items: center;
 }
 
-/* Card Styling */
-.card {
-    text-align: center;
-    cursor: pointer;
-    justify-content: space-around;
-    margin-top: 40px;
-    margin-bottom: 8%;
-}
-
-/* Card Styling */
-.card {
-    text-align: center;
-    cursor: pointer;
-}
-
-/* Role Title */
-.roletitle {
-    font-size: 32px;
-    color: var(--elegant-green);
-}
-
-/* Account Type Image */
-.accoutn_type {
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-}
-/* Role Title */
-.roletitle {
-    font-size: 32px;
-    color: var(--elegant-green);
-}
-
-/* Account Type Image */
-.accoutn_type {
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
+.profileImage {
+    width: 144px;
+    height: 144px;
+    border-radius: 50%; 
     margin-bottom: 8px;
-    border: 3px solid var(--teal-green);
-    border: 3px solid var(--teal-green);
+    border: 3px solid #00695c; 
     object-fit: cover;
 }
 
@@ -141,14 +79,12 @@
     background-color: transparent;
 }
 
-/* Back Button */
 .backButton {
     background-color: #6eb257;
     color: #000000; /* text-white */
     padding: 0.5rem 0.5rem; /* px-2 py-1 */
     border-radius: 0.5rem; /* rounded */
     outline: none; /* outline-none */
-<<<<<<< HEAD
     font-size: 24px;
     height: fit-content;
     width: fit-content;
@@ -156,16 +92,108 @@
     padding-left: 24px;
     padding-top: 8px;
     padding-bottom: 8px;
-=======
-    font-size: 32px;
->>>>>>> cb28902 (new visual identity)
     
 
 }
 
-/* Back Button Hover and Focus */
 .backButton:hover,
 .backButton:focus {
-    background-color: var(--dark-green);
-<<<<<<< HEAD
+    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+.firstCol, .secondCol {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.fieldRow {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.inputs {
+    margin-top: 8px;
+    display: none;
+    flex-direction: column;
+}
+
+.input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #d1e7b6;
+    font-size: 16px;
+    color: #393939;
+}
+
+
+.error {
+    border: 2px solid red;
+}
+
+.inAnalisys {
+    color: red;
+}
+
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 32px;
+}
+
+.changePasswordButton {
+    background-color: #6eb257;
+    color: #000000; /* text-white */
+    padding: 0.5rem 0.5rem; /* px-2 py-1 */
+    border-radius: 0.5rem; /* rounded */
+    outline: none; /* outline-none */
+    font-size: 24px;
+    height: fit-content;
+    width: fit-content;
+    padding-right: 24px;
+    padding-left: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    
+
+}
+
+.changePasswordButton:hover,
+.changePasswordButton:focus {
+    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+}
+
+.saveChangesButton {
+    background-color: #6eb257;
+    color: #000000; /* text-white */
+    padding: 0.5rem 0.5rem; /* px-2 py-1 */
+    border-radius: 0.5rem; /* rounded */
+    outline: none; /* outline-none */
+    font-size: 24px;
+    height: fit-content;
+    width: fit-content;
+    padding-right: 24px;
+    padding-left: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    
+
+}
+
+.saveChangesButton:hover,
+.saveChangesButton:focus {
+    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
 }
