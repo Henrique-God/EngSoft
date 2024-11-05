@@ -1,29 +1,108 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://cdngovbr-ds.estaleiro.serpro.gov.br/design-system/fonts/rawline.css');
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css');
 
+/* Color Palette */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --dark-blue: #003366;    /* Dark Blue */
+  --basic-grey: #B0B0B0;   /* Basic Grey */
+  --black: #000000;        /* Black */
+  --white: #FFFFFF;        /* White */
+  --elegant-green: #46ad44;    /* Elegant Green */
+  --light-yellow: #FFFACD;     /* Light Yellow */
+  --button-blue: #2864ae;      /* Custom Button Blue */
+  --button-grey: #B0B0B0;      /* Custom Button Grey */
+  --button-blue-light: #66B2FF; /* Lighter Button Blue */
+  --button-blue-dark: #0056b3;  /* Darker Button Blue */
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0; /* Remove a margem padrão */
-  padding: 0; /* Remove o preenchimento padrão, se houver */
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--light-background); /* Light background for contrast */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.template-base {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Additional Global Styles */
+h1, h2, h3 {
+  color: var(--dark-blue); /* Headings in Dark Blue */
+  text-decoration: none;
+}
+
+a {
+  color: var(--dark-blue); /* Links in Dark Blue */
+}
+
+a:hover {
+  color: var(--black); /* Change link color on hover to Black */
+}
+
+.br-skiplink {
+  position: absolute;
+  top: -40px;
+}
+
+.br-skiplink:focus {
+  top: 0;
+}
+
+/* Button Styles */
+button {
+  background-color: var(--button-blue);
+  color: var(--white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+  background-color: var(--button-blue-light); /* Lighter blue on hover */
+}
+
+/* Ensure html and body take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* Main layout adjustments */
+.container {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  min-height: calc(100vh - 80px); /* Adjust based on header/footer height */
+}
+
+/* Sidebar full height */
+.sidenav-container {
+  width: 250px; /* Adjust as needed */
+  height: calc(100vh - 80px); /* Full height minus header/footer */
+  background-color: var(--dark-blue);
+  position: sticky;
+  top: 0;
+}
+
+/* Content container fills the rest */
+.content-container {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Footer styles */
+footer {
+  width: 100%;
+  background-color: var(--basic-grey);
+  padding: 20px;
+  text-align: center;
 }

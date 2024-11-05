@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { josefinSans } from '@/src/app/fonts/fonts'; // Importando a fonte
 import styles from './forum.module.css'; // Importando o arquivo CSS
 
 export default function DengueForum() {
@@ -25,7 +24,7 @@ export default function DengueForum() {
   };
 
   return (
-    <div className={styles.container} style={{ fontFamily: josefinSans.style.fontFamily }}> {/* Aplicando a fonte diretamente */}
+    <div className={styles.container}>
       <h1 className={styles.title}>Fórum sobre Dengue</h1>
       <p>Aqui você pode discutir e compartilhar informações sobre a dengue, prevenção e tratamento.</p>
 

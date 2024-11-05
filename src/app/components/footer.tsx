@@ -1,11 +1,10 @@
 import React from 'react';
-import { josefinSans } from '@/src/app/fonts/fonts'; // Importing the font
 import styles from './footer.module.css';
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa'; // Importing icons for social media
 
 const Footer = () => {
   return (
-    <footer className={`${styles.footer} ${josefinSans.className}`}>
+    <footer className={styles.footer}>
       <div className={styles.footerWrapper}>
         <div className={styles.container}>
           

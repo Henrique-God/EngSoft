@@ -10,10 +10,10 @@ import Header from '@/src/app/components/Header';
 export default function Account(){
     return (
     <div>
-        <Header />
+       
         <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
             <div className="w-full flex-none md:w-40">
-                <SideNav />
+               
             </div>
         </div>
     </div>

@@ -4,7 +4,6 @@ import React from 'react';
 import { useRouter } from 'next/navigation'; // Use next/navigation instead of next/router
 import styles from './CirclesPage.module.css'; // Import CSS for styling
 import Image from 'next/image'; // Ensure this import is included
-import { josefinSans } from '@/src/app/fonts/fonts'; // Importing the font
 import Image1 from '@/src/assets/1.png'; // Correctly import your image
 import HeatImage from '@/src/assets/2.png'; // Import other images as needed
 import BarImage from '@/src/assets/1.png'; // Import bar image
@@ -22,11 +21,11 @@ const CirclesPage = () => {
 
     const handleCircleClick = () => {
         // Navigate to the map page
-        router.push('/dashboard/map');
+        router.push('/map');
     };
 
     return (
-        <div className={`${styles.container} ${josefinSans.className}`}>
+        <div className={styles.container}>
             <div className={styles['main-content']}> {/* Main content area */}
                 <h1 className={styles.title}>Mapas, índices e gráficos</h1>
                 <div className={styles.circleContainer}>

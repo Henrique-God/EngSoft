@@ -1,25 +1,30 @@
+/* Container */
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    font-family: sans-serif;
     width: 100vw;
     height: 88vh;
+    background-color: var(--white);
 }
 
+/* Logo and Title Wrapper */
 .logo_title_wrapper {
     display: flex;
-    align-items: center; /* Centraliza o logo e o título verticalmente */
+    align-items: center; /* Center logo and title vertically */
     margin-bottom: 32px;
 }
 
+/* Title */
 .title {
     padding-left: 16px;
     font-size: 32px;
+    color: var(--dark-blue);
 }
 
+/* Form */
 .form {
     width: 500px;
     display: flex;
@@ -27,22 +32,24 @@
     gap: 10px;
 }
 
+/* Label */
 .label {
     font-size: 16px;
     margin-bottom: 4px;
     margin-right: 4px;
 }
 
+/* Input Field */
 .input {
     padding: 8px;
     border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #d1e7b6;
+    border: 1px solid var(--dark-blue);
+    background-color: var(--white);
     font-size: 16px;
-    color: #000;
+    color: var(--dark-blue);
 }
 
-
+/* Inputs Container */
 .inputs {
     display: flex;
     flex-direction: column;
@@ -50,6 +57,7 @@
     height: 100%;
 }
 
+/* Button Container */
 .buttonContainer {
     display: flex;
     justify-content: end;
@@ -57,24 +65,38 @@
     margin-top: 20px;
 }
 
+/* Back Button */
 .backButton {
     padding: 10px 20px;
     border-radius: 5px;
-    background-color: #b1d382;
+    background-color: var(--button-blue-light);
     border: none;
-    color: #000;
+    color: var(--black);
     cursor: pointer;
 }
 
+.backButton:hover {
+    background-color: var(--button-blue-dark); /* Azul mais escuro no hover */
+    color: white; /* Texto branco */
+}
+/* Next Button */
 .nextButton {
     padding: 10px 20px;
     border-radius: 5px;
-    background-color: #006b5c;
+    background-color:var(--button-blue-light); /* Azul */
     border: none;
-    color: #fff;
+    color: black; /* Texto branco */
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Transição suave */
+    font-family: 'Raleway', sans-serif; /* Set the font family to match the container */
 }
 
+.nextButton:hover {
+    background-color: var(--button-blue-dark); /* Azul mais escuro no hover */
+    color: white; /* Texto branco */
+}
+
+/* Error Styling */
 .error {
     border: 2px solid red;
 }

@@ -1,65 +1,75 @@
 .footer {
-  background-color: white;
-  color: black;
-  padding: 1rem 0; /* 4 units of padding */
-  border-top: 1px solid gray; /* Gray border at the top */
-
+  background-color: var(--dark-blue);
+  color: var(--white);
+  padding: 20px;
+  text-align: center;
 }
 
 .footerWrapper {
-  display: flex;
-  align-items: center; /* Center the footer content */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .container {
-  max-width: 1200px; /* Max width for the container */
-  width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start; /* Align items to the left */
-  justify-content: center; /* Center columns vertically */
-  padding: 0 1rem; /* Padding for the container */
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .column {
-  flex: 1; /* Flex property to equally distribute columns */
-  padding: 1rem; /* Padding around columns */
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
 }
 
 .heading {
-  font-weight: bold;
-  font-size: 1.25rem; /* 1.25rem for headings */
-  margin-bottom: 0.5rem; /* Margin below heading */
-}
-
-.text {
-  font-size: 0.875rem; /* 0.875rem for text */
-  margin-bottom: 0.25rem; /* Margin below text */
-}
-
-.link {
-  color: #3b82f6; /* Tailwind's blue-600 */
-  font-size: 0.75rem; /* Font size for links */
-  text-decoration: underline; /* Underline for links */
-}
-
-.link:hover {
-  text-decoration: underline; /* Maintain underline on hover */
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .socialIcons {
   display: flex;
-  justify-content: flex-start; /* Align icons to the left */
-  gap: 1rem; /* Gap between icons */
+  gap: 10px; /* Spacing between icons */
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .icon {
-  color: inherit; /* Inherit color */
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--dark-blue);
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.icon:hover {
+  background-color: var(--button-blue-light);
+}
+
+.text {
+  margin: 5px 0;
+}
+
+.link {
+  color: var(--button-blue-light);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: var(--button-grey);
+
 }
 
 .copyright {
-  text-align: center;
-  margin-top: 1rem; /* Margin above copyright notice */
-  font-size: 0.75rem; /* Font size for copyright */
-  color: gray; /* Gray color for copyright text */
+  margin-top: 20px;
+  font-size: 0.9rem;
 }

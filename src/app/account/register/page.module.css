@@ -1,3 +1,4 @@
+/* Container */
 .container {
     display: flex;
     flex-direction: column;
@@ -5,17 +6,20 @@
     min-height: 88vh;
 }
 
+/* Main Section */
 .main {
     display: flex;
     flex: 1;
 }
 
+/* Content Area */
 .content {
     flex: 1;
     padding: 20px;
     text-align: center;
 }
 
+/* Grid Layout */
 .grid {
     display: flex;
     justify-content: space-around;
@@ -23,38 +27,42 @@
     margin-bottom: 8%;
 }
 
+/* Card */
 .card {
     text-align: center;
     cursor: pointer;
 }
 
-.roletitle{
-    font-family: Arial, Helvetica, sans-serif;
+/* Role Title */
+.roletitle {
     font-size: 32px;
-    color: #6eb257;
+    color: var(--dark-blue); /* Use global color */
 }
 
+/* Account Type */
 .accoutn_type {
     width: 280px;
     height: 280px;
     border-radius: 50%; 
     margin-bottom: 8px;
-    border: 3px solid #00695c; 
+    border: 3px solid var(--dark-blue); /* Use global color */
     object-fit: cover;
 }
 
+/* Back Button */
 .backButton {
-    background-color: #6eb257;
-    color: #000000; /* text-white */
+    background-color: var(--dark-blue); /* Use global color */
+    color: var(--white); /* Use global color */
     padding: 0.5rem 0.5rem; /* px-2 py-1 */
     border-radius: 0.5rem; /* rounded */
     outline: none; /* outline-none */
     font-size: 32px;
-    
-
 }
 
+/* Back Button Hover and Focus States */
 .backButton:hover,
 .backButton:focus {
-    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+    background-color: var(--button-grey); /* Custom hover/focus color */
+    color: var(--dark-blue); /* Use global color */
+
 }

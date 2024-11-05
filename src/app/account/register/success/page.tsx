@@ -12,10 +12,8 @@ export default function Success(){
     const role = searchParams.get("role");
     return (
         <div>
-        <Header />
         <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
             <div className="w-full flex-none md:w-40">
-                <SideNav />
             </div>
             <div className={styles.container}>
                 <div className={styles.main}>

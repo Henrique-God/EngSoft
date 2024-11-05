@@ -11,9 +11,15 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "primary-color": "var(--primary-color)", // Primary gov.br blue
+        "secondary-color": "var(--secondary-color)", // Gov.br yellow
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "sans-serif"],
       },
     },
   },
   plugins: [],
 };
+
 export default config;
