@@ -1,19 +1,18 @@
-import { josefinSans } from '@/src/app/fonts/fonts';
+// src/app/components/navlinks.tsx
+
+import styles from './SideNav.module.css';
 import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  ChartBarIcon,
 } from '@heroicons/react/24/outline';
 
-// Map of links to display in the side navigation.
 const links = [
-  { name: 'Home', href: '/dashboard/home', icon: HomeIcon },
-  {
-    name: 'Wiki',
-    href: '/dashboard/wiki',
-    icon: DocumentDuplicateIcon,
-  },
-  { name: 'Forum', href: '/dashboard/forum', icon: UserGroupIcon },
+  { name: 'Home', href: '/home', icon: HomeIcon },
+  { name: 'Wiki', href: '/wiki', icon: DocumentDuplicateIcon },
+  { name: 'Forum', href: '/forum', icon: UserGroupIcon },
+  { name: 'Estatística', href: '/circles', icon: ChartBarIcon },
 ];
 
 export default function NavLinks() {
@@ -25,10 +24,10 @@ export default function NavLinks() {
           <a
             key={link.name}
             href={link.href}
-            className={`${josefinSans.className} flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-[#BEECAE] p-3 text-black text-sm font-medium hover:bg-[#A8D5A5] hover:text-black-600 md:flex-none md:justify-start md:p-2 md:px-3`}
+            className={styles.navLink}
           >
-            <LinkIcon className="w-6 text-black" /> {/* Icon color */}
-            <p className="hidden md:block">{link.name}</p>
+            <LinkIcon className={styles.iconSmall} /> {/* Smaller icon class */}
+            <span>{link.name}</span>
           </a>
         );
       })}

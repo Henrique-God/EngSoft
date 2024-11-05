@@ -23,16 +23,18 @@
     display: flex;
     width: 600px;
     height: fit-content;
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 64px;
     font-weight: bold;
+    color: var(--elegant-green)
+    
 }
 
 .semiTitle{
     display: flex;
     width: 600px;
     height: fit-content;
-    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+
     font-size: 40px;
     margin-top: 16px;
     
@@ -42,16 +44,20 @@
     margin-top: 64px;
 }
 
+/* Back Button */
 .backButton {
-    background-color: #6eb257;
-    color: #000000; /* text-white */
-    padding: 1rem 1rem; /* px-2 py-1 */
+    background-color: var(--dark-blue); /* Use global color */
+    color: var(--white); /* Use global color */
+    padding: 0.5rem 0.5rem; /* px-2 py-1 */
     border-radius: 0.5rem; /* rounded */
     outline: none; /* outline-none */
     font-size: 32px;
 }
 
+/* Back Button Hover and Focus States */
 .backButton:hover,
 .backButton:focus {
-    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+    background-color: var(--button-grey); /* Custom hover/focus color */
+    color: var(--dark-blue); /* Use global color */
+
 }
