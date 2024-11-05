@@ -137,7 +137,7 @@ export default function Role() {
                                     className={`${styles.input} ${inputErrors.senha ? styles.error : ""}`}
                                 />
                                 <button type="button" onClick={togglePasswordVisibility} className={styles.toggleButton}>
-                                    {showPassword ? <Image src={ShowPass} alt="" width={24} height={24} /> : <Image src={HidePass} alt="" width={24} height={24} />}
+                                    {showPassword ? <Image src={HidePass} alt="Hide Password" width={24} height={24} /> : <Image src={ShowPass} alt="Show Password" width={24} height={24} />}
                                 </button>   
                             </div>
 
@@ -153,7 +153,7 @@ export default function Role() {
                                     className={`${styles.input} ${inputErrors.senha2 ? styles.error : ""}`}
                                 />
                                 <button type="button" onClick={togglePassword2Visibility} className={styles.toggleButton}>
-                                    {showPassword2 ? <Image src={ShowPass} alt="" width={24} height={24} /> : <Image src={HidePass} alt="" width={24} height={24} />}
+                                    {showPassword2 ? <Image src={HidePass} alt="Hide Password" width={24} height={24} /> : <Image src={ShowPass} alt="Show Password" width={24} height={24} />}
                                 </button>
                             </div>
                         </div>
