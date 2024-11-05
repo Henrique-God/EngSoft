@@ -14,11 +14,24 @@
     width: 100%;
     min-height: 88vh;
     background-color: var(--white);
+    background-color: var(--white);
 }
 
 /* Main Section */
 .main {
     display: flex;
+    flex: 1;
+}
+
+/* Content Section */
+.content {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Grid Layout */
+.grid {
     flex: 1;
 }
 
@@ -41,6 +54,15 @@
 .card {
     text-align: center;
     cursor: pointer;
+    justify-content: space-around;
+    margin-top: 40px;
+    margin-bottom: 8%;
+}
+
+/* Card Styling */
+.card {
+    text-align: center;
+    cursor: pointer;
 }
 
 /* Role Title */
@@ -54,19 +76,81 @@
     width: 280px;
     height: 280px;
     border-radius: 50%;
+}
+/* Role Title */
+.roletitle {
+    font-size: 32px;
+    color: var(--elegant-green);
+}
+
+/* Account Type Image */
+.accoutn_type {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
     margin-bottom: 8px;
+    border: 3px solid var(--teal-green);
     border: 3px solid var(--teal-green);
     object-fit: cover;
 }
 
+.nameAndRole {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    margin-left: 16px;
+    justify-content: start;
+}
+
+.editWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    height: fit-content;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.editDropWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    align-items: center;
+    height: fit-content;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.editIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.name {
+    font-size: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+.role {
+    font-size: 36px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #00695c;
+    background-color: transparent;
+}
+
 /* Back Button */
 .backButton {
-    background-color: var(--elegant-green);
-    color: var(--black);
-    padding: 0.5rem 0.5rem;
-    border-radius: 0.5rem;
-    outline: none;
+    background-color: #6eb257;
+    color: #000000; /* text-white */
+    padding: 0.5rem 0.5rem; /* px-2 py-1 */
+    border-radius: 0.5rem; /* rounded */
+    outline: none; /* outline-none */
     font-size: 32px;
+    
+
 }
 
 /* Back Button Hover and Focus */
