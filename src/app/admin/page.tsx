@@ -9,7 +9,7 @@ import searchIcon from '@/src/assets/icons/search-svgrepo-com.svg';
 
 
 
-export default function Account(){
+export default function Admin(){
     const [searchQuery, setSearchQuery] = useState('');
 
     const validateOptions = ["", "Validados", "Em Análise", "Inválidos"];
