@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { useState } from 'react';
 import styles from "./page.module.css";
 import Image from 'next/image';
-import mosquito from "@/src/assets/mosquito.png";
+import mosquito from "@/src/assets/logo_min.png";
 import SideNav from '@/src/app/components/sidenav';
 import Header from '@/src/app/components/Header';
 
@@ -53,15 +53,12 @@ export default function Role() {
 
     return (
         <div>
-            <Header />
             <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
                 <div className="w-full flex-none md:w-40">
-                    <SideNav />
                 </div>
                 <div className={styles.container}>
                     <div className={styles.logo_title_wrapper}>
-                        <Image src={mosquito} alt="Mosquito" width={64} height={64} />
-                        <h1 className={styles.title}>Tchau Dengue</h1>
+                        <Image src={mosquito} alt="Mosquito" width={300} height={300} />
                     </div>            
                     <form onSubmit={handleSubmit} className={styles.form}>
                         {["Email", "Senha"].map((field, index) => (

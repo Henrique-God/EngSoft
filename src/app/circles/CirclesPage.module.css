@@ -1,0 +1,122 @@
+.container {
+    background-color: var(--white);
+    color: var(--black);
+    padding: 20px;
+}
+
+.title {
+    color: var(--dark-blue);
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.subtitle {
+    color: var(--black);
+    font-size: 1.5em;
+}
+
+.map-container {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--basic-grey);
+    border-radius: 5px;
+}
+
+.circleContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.circleWithText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+.circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    background-color: var(--light-yellow);
+}
+
+.circle:hover {
+    transform: scale(1.05);
+}
+
+.circleImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.circleLabel {
+    text-align: center;
+    margin-top: 10px;
+    color: var(--black);
+    font-size: 1.2em;
+}
+
+.post {
+    border: 1px solid var(--elegant-green);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.post-title {
+    color: var(--elegant-green);
+    margin: 0;
+}
+
+.post-user {
+    color: var(--black);
+}
+
+.post-content {
+    color: var(--black);
+}
+
+.form {
+    margin-top: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--elegant-green);
+}
+
+.input, .textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid var(--elegant-green);
+    border-radius: 4px;
+    background-color: var(--white);
+    color: var(--black);
+}
+
+.button {
+    background-color: var(--button-blue);
+    color: var(--white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--button-blue-dark);
+    color: var(--white);
+}

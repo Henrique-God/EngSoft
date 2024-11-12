@@ -173,10 +173,10 @@ export default function Account(){
 
     return (
     <div>
-        <Header />
+       
         <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
             <div className="w-full flex-none md:w-40">
-                <SideNav />
+               
             </div>
             <form onSubmit={handleSubmit} className={styles.container}>
                 <div className={styles.profileHeader}>
