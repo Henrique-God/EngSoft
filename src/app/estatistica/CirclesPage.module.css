@@ -120,3 +120,40 @@
     background-color: var(--button-blue-dark);
     color: var(--white);
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 1200px; /* Sets a maximum width for the main content */
+    text-align: center;
+}
+
+.circleContainer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.circleWithText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 300px; /* Set a maximum width for each circle container */
+    text-align: center;
+}
+
+.circleDescription {
+    text-align: justify; /* Justifies the text */
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 250px; /* Sets a maximum width for the description */
+    padding: 0 10px; /* Adds padding for better readability */
+}

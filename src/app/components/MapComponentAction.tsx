@@ -9,9 +9,9 @@ const Map = dynamic(() => import('./MapComponent'), { ssr: false });
 
 // Import d3 for color interpolation
 import { scaleSequential } from 'd3-scale';
-import { interpolateRdYlGn } from 'd3-scale-chromatic'; // Example color scale
+import {interpolateRdYlBu } from 'd3-scale-chromatic'; // Example color scale
 
-const MapComponent = () => {
+const MapComponentAction = () => {
   const mapRef = useRef(null);
   const [apiData, setApiData] = useState(null);
   const [startDate, setStartDate] = useState("2024-09-01"); // Default start date
@@ -42,7 +42,7 @@ const MapComponent = () => {
         // Find the matching record in apiData based on the sector code
         const apiRecord = apiData.find((d) => `${d.censitario}P` === feature.properties.CD_SETOR);
 
-        // Determine color based on the selected data key ('trabalhados' or 'nao_trabalhados')
+        // Determine color based on the selected data key (e.g., 'focal', 'perifocal', etc.)
         const color = apiRecord && apiRecord[dataKey]
           ? getColor(apiRecord[dataKey])
           : "lightgrey";
@@ -64,7 +64,7 @@ const MapComponent = () => {
             const value = apiRecord[dataKey];
             layer.bindPopup(`
               <b>Sector: ${feature.properties.CD_SETOR}</b><br>
-              ${dataKey === 'trabalhados' ? 'Trabalhados' : 'Não Trabalhados'}: ${value}
+              ${dataKey}: ${value}
             `).openPopup();
           });
         }
@@ -75,13 +75,15 @@ const MapComponent = () => {
   // Helper function to determine color based on value
   const getColor = (value) => {
     // Define the color scale using d3's scaleSequential
-    const colorScale = scaleSequential(interpolateRdYlGn).domain([0, getMaxValue()]);
+    const colorScale = scaleSequential(interpolateRdYlBu).domain([0, getMaxValue()]);
     return colorScale(value); // Return the color for the given value
   };
 
   // Get the maximum value from the API data
   const getMaxValue = () => {
-    const values = apiData.map((record) => Math.max(record.trabalhados, record.nao_trabalhados));
+    const values = apiData.flatMap((record) => [
+      record.focal, record.perifocal, record.nebulizacao, record.mecanico, record.alternativo
+    ]);
     return Math.max(...values);
   };
 
@@ -97,13 +99,13 @@ const MapComponent = () => {
       const maxValue = getMaxValue(); // Dynamically calculate max value based on data
 
       // Create a continuous color scale
-      const colorScale = scaleSequential(interpolateRdYlGn).domain([minValue, maxValue]);
+      const colorScale = scaleSequential(interpolateRdYlBu).domain([minValue, maxValue]);
 
       // Create a div for the gradient bar
       const gradientDiv = L.DomUtil.create('div', 'legend-gradient');
       gradientDiv.style.height = '50px';  // Height of the gradient bar
       gradientDiv.style.width = '100px';   // Full width of the legend container
-      gradientDiv.style.background = `linear-gradient(to right, ${colorScale(minValue)},  ${colorScale(maxValue/2)},${colorScale(maxValue)})`;
+      gradientDiv.style.background = `linear-gradient(to right, ${colorScale(minValue)},${colorScale(maxValue/4)},${colorScale(maxValue/2)}, ${colorScale(3*maxValue/4)},${colorScale(maxValue)})`;
 
       // Add the gradient bar to the legend
       div.appendChild(gradientDiv);
@@ -140,7 +142,7 @@ const MapComponent = () => {
 
       console.log("Map initialized");
 
-      // Load GeoJSON and style features based on 'trabalhados' and 'nao_trabalhados'
+      // Load GeoJSON and style features based on any of the selected parameters (e.g., 'focal', 'perifocal', etc.)
       fetch("/geo_setores.geojson")
         .then((res) => res.json())
         .then((geoData) => {
@@ -150,21 +152,36 @@ const MapComponent = () => {
           const bounds = L.geoJSON(geoData).getBounds();
           map.fitBounds(bounds); // Adjust the view to fit the bounds of the geoData
 
-          // Create GeoJSON layers for 'trabalhados' and 'nao_trabalhados'
-          const geoLayerTrabalhados = createLayer('trabalhados', geoData, apiData);
-          const geoLayerNaoTrabalhados = createLayer('nao_trabalhados', geoData, apiData);
+          // Create GeoJSON layers for each parameter (e.g., 'focal', 'perifocal', etc.)
+          const geoLayerFocal = createLayer('focal', geoData, apiData);
+          const geoLayerPerifocal = createLayer('perifocal', geoData, apiData);
+          const geoLayerNebulizacao = createLayer('nebulizacao', geoData, apiData);
+          const geoLayerMecanico = createLayer('mecanico', geoData, apiData);
+          const geoLayerAlternativo = createLayer('alternativo', geoData, apiData);
 
           // Create layer groups for easy layer control
-          const layerGroupTrabalhados = L.layerGroup([geoLayerTrabalhados]);
-          const layerGroupNaoTrabalhados = L.layerGroup([geoLayerNaoTrabalhados]);
+          const layerGroupFocal = L.layerGroup([geoLayerFocal]);
+          const layerGroupPerifocal = L.layerGroup([geoLayerPerifocal]);
+          const layerGroupNebulizacao = L.layerGroup([geoLayerNebulizacao]);
+          const layerGroupMecanico = L.layerGroup([geoLayerMecanico]);
+          const layerGroupAlternativo = L.layerGroup([geoLayerAlternativo]);
 
           // Add the layers to the map
-          layerGroupTrabalhados.addTo(map);
-          layerGroupNaoTrabalhados.addTo(map);
+          layerGroupFocal.addTo(map);
+          layerGroupPerifocal.addTo(map);
+          layerGroupNebulizacao.addTo(map);
+          layerGroupMecanico.addTo(map);
+          layerGroupAlternativo.addTo(map);
 
           // Add layer control to toggle between layers
           L.control.layers(
-            { "Trabalhados": layerGroupTrabalhados, "Não Trabalhados": layerGroupNaoTrabalhados },
+            { 
+              "Focal": layerGroupFocal, 
+              "Perifocal": layerGroupPerifocal,
+              "Nebulizacao": layerGroupNebulizacao,
+              "Mecanico": layerGroupMecanico,
+              "Alternativo": layerGroupAlternativo
+            },
             {},
             { collapsed: false }
           ).addTo(map);
@@ -182,7 +199,7 @@ const MapComponent = () => {
 
   return (
     <div>
-      <h1>Mapa de Imóveis Trabalhados e Não Trabalhados</h1>
+      <h1>Mapa de Dados de Ações</h1>
 
       {/* Date selection inputs */}
       <div>
@@ -205,9 +222,10 @@ const MapComponent = () => {
         </label>
       </div>
 
-      <div ref={mapRef} style={{ height: "500px" }}></div>
+      {/* Map container */}
+      <div ref={mapRef} className={styles.map} style={{ height: '600px', width: '100%' }} />
     </div>
   );
 };
 
-export default MapComponent;
+export default MapComponentAction;
