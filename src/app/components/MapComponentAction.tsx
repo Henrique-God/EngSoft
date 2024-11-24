@@ -223,7 +223,7 @@ const MapComponentAction = () => {
       </div>
 
       {/* Map container */}
-      <div ref={mapRef} className={styles.map} style={{ height: '600px', width: '100%' }} />
+      <div ref={mapRef} className={styles.map} style={{ height: '750px', width: '100%' }} />
     </div>
   );
 };

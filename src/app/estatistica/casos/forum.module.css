@@ -1,7 +1,11 @@
+/* General container and title styling */
 .container {
   background-color: var(--white);
   color: var(--black);
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
@@ -17,66 +21,63 @@
   margin-bottom: 15px;
 }
 
-.post {
-  border: 1px solid var(--dark-blue);
-  border-radius: 8px;
-  padding: 15px;
-  margin: 15px 0;
-  background-color: rgba(255, 255, 255, 0.9); /* Adjust transparency as needed */
-}
-
-.post-title {
-  color: var(--dark-blue);
-  font-weight: bold;
-  margin: 0;
-  font-size: 1.2em;
-}
-
-.post-user {
-  color: var(--black);
-  font-size: 0.9em;
-  margin: 5px 0;
-}
-
-.post-content {
-  color: var(--black);
-  font-size: 1em;
-  margin-top: 8px;
-}
-
-.form {
-  margin-top: 20px;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--dark-blue);
-  font-weight: bold;
-}
-
-.input, .textarea {
+/* Content section for property info and map - side by side */
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch; /* Ensures both columns are of equal height */
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid var(--basic-grey);
-  border-radius: 4px;
-  background-color: var(--basic-grey);
-  color: var(--black);
-  font-size: 1em;
+  max-width: 1700px;
+  margin-top: 20px;
+  gap: 20px; /* Improved spacing between the columns */
 }
 
-.button {
-  background-color: var(--button-blue);
-  color: var(--white);
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+/* Property Information Styling */
+.property-info {
+  flex: 1;  /* Makes sure the content takes up the available space equally */
+  background-color: #f9f9f9;
+  padding: 2rem;
+  max-width: 600px; /* Limits the width of the text box */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.property-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.property-info p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+.property-info ul {
+  list-style-type: disc;
+  margin-left: 1rem;
+}
+
+.property-info ul ul {
+  list-style-type: circle;
+}
+
+.property-info ul li {
+  margin-bottom: 1rem;
+}
+
+.property-info ul li strong {
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  color: #2980b9;
 }
 
-.button:hover {
-  background-color: var(--button-blue-dark);
+/* Map container Styling */
+.map-container {
+  flex: 1;  /* Makes sure the map container takes up the available space equally */
+  height: 800px;
+  position: relative;
+  border-radius: 8px;
 }

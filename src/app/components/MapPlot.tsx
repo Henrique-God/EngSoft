@@ -38,13 +38,19 @@ const MapPlot = () => {
   useEffect(() => {
     fetch('/geo_setores.geojson')
       .then(res => res.json())
-      .then(setGeoData)
+      .then(data => {
+        setGeoData(data);
+        console.log('GeoJSON loaded:', data); // Debugging
+      })
       .catch(error => console.error('Error loading GeoJSON:', error));
   }, []);
 
   useEffect(() => {
-    csv(`/csv/output_${selectedDate}.csv`)
-      .then(setCsvData)
+    csv(`/csv/periodo/output_${selectedDate}.csv`)
+      .then(data => {
+        setCsvData(data);
+        console.log('CSV loaded:', data); // Debugging
+      })
       .catch(error => console.error('Error loading CSV:', error));
   }, [selectedDate]);
 
@@ -52,9 +58,10 @@ const MapPlot = () => {
     return L.geoJSON(geoData, {
       style: feature => {
         const sectorCode = feature.properties.CD_SETOR;
-        const record = csvData.find(d => `${d.censitario}P` === sectorCode);
+        const record = csvData.find(d => `${d.censitario}` === sectorCode);
 
         const color = record ? getColor(record.notificacoes) : 'lightgrey';
+        console.log('Feature color:', color); // Debugging to check if the color is applied
         return {
           color: 'grey',
           weight: 1,
@@ -64,7 +71,7 @@ const MapPlot = () => {
       },
       onEachFeature: (feature, layer) => {
         const sectorCode = feature.properties.CD_SETOR;
-        const record = csvData.find(d => `${d.censitario}P` === sectorCode);
+        const record = csvData.find(d => `${d.censitario}` === sectorCode);
 
         if (record) {
           layer.on('click', () => {
@@ -79,7 +86,7 @@ const MapPlot = () => {
   };
 
   const getColor = value => {
-    const colorScale = scaleSequential(interpolateYlOrRd).domain([0, 200]);  // Scale from green (0) to blue (200)
+    const colorScale = scaleSequential(interpolateYlOrRd).domain([0, 200]);  // Scale from yellow (0) to red (200)
     return colorScale(value);
   };
 
@@ -122,6 +129,8 @@ const MapPlot = () => {
   useEffect(() => {
     if (mapRef.current && geoData) {
       const map = L.map(mapRef.current, { zoomControl: false });
+      const pane = map.createPane('customPane');
+      pane.style.zIndex = 650; // Set the z-index for layering order
 
       // Set up the map instance
       setMapInstance(map);
@@ -136,6 +145,7 @@ const MapPlot = () => {
 
       // Ensure the map fits the bounds of the GeoJSON data
       const bounds = L.geoJSON(geoData).getBounds();
+      console.log('GeoJSON Bounds:', bounds); // Debugging to check the bounds
       map.fitBounds(bounds);
 
       // Listen for the map to finish loading before performing further actions
@@ -164,7 +174,7 @@ const MapPlot = () => {
 
   return (
     <div>
-      <h1>Mapa de Notificações por Período</h1>
+      <h1>Notificações por Período</h1>
       <label>
         Selecionar Data:{' '}
         <select
@@ -174,7 +184,7 @@ const MapPlot = () => {
           {generateDateOptions()}
         </select>
       </label>
-      <div ref={mapRef} style={{ height: '700px', marginTop: '20px' }}></div>
+      <div ref={mapRef} style={{ height: '650px', marginTop: '20px' }}></div>
     </div>
   );
 };

@@ -3,10 +3,12 @@
     justify-content: space-between;
     align-items: center; /* Center elements vertically */
     width: 100%; /* Full width of the page */
-    border: 2px solid var(--basic-grey); /* Using a dark blue border */
     padding: 8px; /* Adding internal spacing */
     box-sizing: border-box; /* Includes padding and border in total width */
+    position: relative; /* Allow for the shadow to be placed relative to the header */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Bottom shadow for the header */
 }
+
 
 .logo_title_wrapper {
     display: flex;
@@ -69,3 +71,4 @@
     background-color: var(--button-blue); /* Change to Custom Button Blue on hover/focus */
     color: var(--white); /* Keep text white on hover for contrast */
 }
+

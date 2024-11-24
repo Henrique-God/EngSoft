@@ -85,7 +85,6 @@
     padding: 0.5rem 0.5rem; /* px-2 py-1 */
     border-radius: 0.5rem; /* rounded */
     outline: none; /* outline-none */
-<<<<<<< HEAD
     font-size: 24px;
     height: fit-content;
     width: fit-content;
@@ -93,9 +92,6 @@
     padding-left: 24px;
     padding-top: 8px;
     padding-bottom: 8px;
-=======
-    font-size: 32px;
->>>>>>> cb28902 (new visual identity)
     
 
 }
@@ -103,7 +99,6 @@
 .backButton:hover,
 .backButton:focus {
     background-color: var(--dark-green);
-<<<<<<< HEAD
     background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
 }
 

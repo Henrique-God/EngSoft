@@ -205,7 +205,7 @@ const MapComponent = () => {
         </label>
       </div>
 
-      <div ref={mapRef} style={{ height: "500px" }}></div>
+      <div ref={mapRef} style={{ height: "600px" }}></div>
     </div>
   );
 };

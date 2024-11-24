@@ -1,44 +1,68 @@
+/* Main container for layout */
 .container {
-    background-color: var(--white);
-    color: var(--black);
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: space-between; /* Space between description and circles */
+    align-items: flex-start; /* Align items at the top */
+    gap: 4rem; /* Increased space between the left and right sections (previously 2rem) */
+}
+
+/* Main content layout */
+.main-content {
+    display: flex; /* Flex to organize the main content */
+    flex-direction: row; /* Row-wise layout */
+    gap: 4rem; /* Increased space between left and right content */
+}
+
+/* Description container: Make it take up available space */
+.description-container {
+    flex: 1;
+    width: 800px;
+    background-color: #ffffff;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.title {
+/* Increased font size in description container */
+.description-container h2 {
+    font-size: 32px; /* Larger font size for title */
     color: var(--dark-blue);
-    font-size: 2.5em;
-    font-weight: bold;
+    margin-bottom: 15px;
 }
 
-.subtitle {
-    color: var(--black);
-    font-size: 1.5em;
+.description-container p {
+    font-size: 18px; /* Larger text for paragraphs */
+    color: #333333;
+    line-height: 1.8;
+    margin-bottom: 10px;
 }
 
-.map-container {
-    width: 100%;
-    height: 600px;
-    border: 1px solid var(--basic-grey);
-    border-radius: 5px;
+.description-container strong {
+    color: var(--dark-blue);
 }
 
+/* Circle wrapper to hold the circles */
+.circleWrapper {
+    flex: 1; /* Take up available space */
+    display: flex;
+    flex-wrap: wrap; /* Allow the circles to wrap if needed */
+    gap: 3.9rem; /* Space between circles */
+    justify-content: flex-start;
+    min-width: 550px; /* Prevent circles from going under the description */
+}
+
+/* Circle container */
 .circleContainer {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-
-.circleWithText {
-    display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 20px;
+    gap: 3.9rem;
 }
 
+/* Circle styles */
 .circle {
     width: 200px;
     height: 200px;
-    border-radius: 50%;
+    border-radius: 70%;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -53,107 +77,16 @@
 }
 
 .circleImage {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
 }
 
 .circleLabel {
-    text-align: center;
-    margin-top: 10px;
-    color: var(--black);
-    font-size: 1.2em;
-}
-
-.post {
-    border: 1px solid var(--elegant-green);
-    border-radius: 8px;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: rgba(255, 255, 255, 0.9);
-}
-
-.post-title {
-    color: var(--elegant-green);
-    margin: 0;
-}
-
-.post-user {
-    color: var(--black);
-}
-
-.post-content {
-    color: var(--black);
-}
-
-.form {
-    margin-top: 20px;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-    color: var(--elegant-green);
-}
-
-.input, .textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid var(--elegant-green);
-    border-radius: 4px;
-    background-color: var(--white);
-    color: var(--black);
-}
-
-.button {
-    background-color: var(--button-blue);
-    color: var(--white);
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.button:hover {
-    background-color: var(--button-blue-dark);
-    color: var(--white);
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.main-content {
-    width: 100%;
-    max-width: 1200px; /* Sets a maximum width for the main content */
-    text-align: center;
-}
-
-.circleContainer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.circleWithText {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 300px; /* Set a maximum width for each circle container */
-    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
 }
 
 .circleDescription {
-    text-align: justify; /* Justifies the text */
-    margin-top: 10px;
-    font-size: 14px;
-    line-height: 1.5;
-    max-width: 250px; /* Sets a maximum width for the description */
-    padding: 0 10px; /* Adds padding for better readability */
+    font-size: 1.0rem;
+    color: #555;
+    max-width: 250px; /* Optional: Limit description width */
 }
