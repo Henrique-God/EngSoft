@@ -6,8 +6,6 @@ import { useState } from 'react';
 import styles from "./page.module.css";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import SideNav from '@/src/app/components/sidenav';
-import Header from '@/src/app/components/Header';
 
 export default function NewPage() {
 
@@ -108,10 +106,8 @@ export default function NewPage() {
 
     return (
         <div>
-            <Header />
             <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
                 <div className="w-full flex-none md:w-40">
-                    <SideNav />
                 </div>
                 <div className={styles.container}>
                     <form onSubmit={handleSubmit} className={styles.form}>

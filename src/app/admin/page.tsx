@@ -1,14 +1,30 @@
 "use client"
 
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import styles from "./page.module.css";
 import searchIcon from '@/src/assets/icons/search-svgrepo-com.svg';
-
-
+import { GetAllUserHandler, GetAllUserResponse, UserHandler, UserResponse } from "@/src/app/components/backendConnection";
 
 export default function Admin(){
     const [searchQuery, setSearchQuery] = useState('');
+    const [filteredUsers, setFilteredUsers] = useState<(string)[][]>([]);
+    const [validateFilter, setValidateFilter] = useState('');
+    const [roleChecked, setRoleChecked] = useState({
+        Administrador: false,
+        Fiscal: false,
+        Morador: false,
+    });
+    const [dMin, setDMin] = useState('');
+    const [mMin, setMMin] = useState('');
+    const [yMin, setYMin] = useState('');
+    const [dMax, setDMax] = useState('');
+    const [mMax, setMMax] = useState('');
+    const [yMax, setYMax] = useState('');
+    const [users, setUsers] = useState<(string)[][]>([]);   
+    const [roleValue, setRoleValue] = useState("Morador");
+    const [orderOption, setOrderOption] = useState("");
+
 
     const validateOptions = ["", "Validados", "Em Análise", "Inválidos"];
     const orderOptions = ["", "Mais recente", "Mais antigo"];
@@ -20,45 +36,101 @@ export default function Admin(){
         }
     };
 
+    const id = localStorage.getItem("id")
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (id) {
+                try {
+                    const result: UserResponse = await UserHandler(id);
+                    if (result.userName) {
+                        setRoleValue(result.userName)
+                    }
+                } catch (err) {
+                }
+            } 
+        };
 
-    //teste
-    const users = [
-        {
-          nome: 'Pessoa a',
-          cargo: 'Morador',
-          validado: true,
-          documento: '123456789',
-          dataCriacao: '2024-10-01',
-          active: "ativo",
-        },
-        {
-          nome: 'Pessoa B',
-          cargo: 'Morador',
-          validado: false,
-          documento: '987654321',
-          dataCriacao: '2023-09-15',
-          active: "ativo",
-        },
-        {
-          nome: 'Pessoa C',
-          cargo: 'Fiscal',
-          validado: true,
-          documento: '456123789',
-          dataCriacao: '2022-05-30',
-          active: "ativo",
-        },
-        {
-          nome: 'Pessoa D',
-          cargo: 'Aministrador',
-          validado: true,
-          documento: '321789654',
-          dataCriacao: '2021-11-20',
-          active: "ativo",
-        },
-      ];
+        fetchUserData();
+    }, [id]);
 
+    
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (roleValue) {
+                try {
+                    const result: GetAllUserResponse = await GetAllUserHandler();
+                    if (result.users) {
+                        setUsers(result.users);
+                        setFilteredUsers(result.users)
+                    }
+                } catch (err) {
+                }
+            } else {
+            }
+        };
+        fetchUserData();
+    }, [roleValue]);
 
+    const applyFilters = () => {
+        let filteredUsers = [...users];
+    
+        // Filter by validated status
+        if (validateFilter) {
+            if (validateFilter === "Validados") {
+                filteredUsers = filteredUsers.filter(user => user.validated === "Válido");
+            } else if (validateFilter === "Em Análise") {
+                filteredUsers = filteredUsers.filter(user => user.validated === "em análise");
+            } else if (validateFilter === "Inválidos") {
+                filteredUsers = filteredUsers.filter(user => user.validated === "Inválido");
+            }
+        }
+    
+        // Filter by role
+        
+        const selectedRoles = Object.entries(roleChecked)
+                .filter(([key, value]) => value)
+                .map(([key]) => key); 
+        console.log(selectedRoles)
+        if (selectedRoles.length > 0) {
+            filteredUsers = filteredUsers.filter(user => selectedRoles.includes(user.role));
+        }
+    
+        // Filter by creation date range
+        const minDate = new Date(`${yMin}-${mMin}-${dMin}`);
+        const maxDate = new Date(`${yMax}-${mMax}-${dMax}`);
+        if (!isNaN(minDate.getTime()) && !isNaN(maxDate.getTime())) {
+            filteredUsers = filteredUsers.filter(user => {
+                const userDate = new Date(user.createdAt);
+                return userDate >= minDate && userDate <= maxDate;
+            });
+        }
+        setFilteredUsers(filteredUsers);
+    };
+    
+    const applySearch = () => {
+        let filtered = [...filteredUsers]; 
+        if (searchQuery) {
+            const lowerCaseQuery = searchQuery.toLowerCase();
+            filtered = filteredUsers.filter(user => 
+                user.userName.toLowerCase().includes(lowerCaseQuery) || 
+                user.email?.toLowerCase().includes(lowerCaseQuery)
+            );
+        }
+        setSearchQuery('');
+        setFilteredUsers(filtered);
+    }
 
+    const applyOrder = () => {
+        let orderedUsers = [...filteredUsers]; // Start with the filtered list
+        if (orderOption === "Mais recente") {
+            orderedUsers.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        } else if (orderOption === "Mais antigo") {
+            orderedUsers.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+        }
+
+        setFilteredUsers(orderedUsers); // Update the state with the ordered list
+    }
+    
     return (
     <div>
         <div className={styles.container}>
@@ -70,7 +142,7 @@ export default function Admin(){
                         <label className={`${styles.filterLabel} ${styles.additionalSize}`}>Válidado:</label>
                         <select 
                             className={styles.validate}
-                            onChange={(e) => handleChange("validateFilter", e)}
+                            onChange={(e) => setValidateFilter(e.target.value)}
                         >
                             {validateOptions.map((option, index) => (
                                 <option key={index} value={option}>
@@ -84,9 +156,15 @@ export default function Admin(){
                         {options.map(option => (
                             <label key={option} className={styles.roleLabel}>
                                 <input
-                                className={styles.roleInput}
-                                type="checkbox"
-                                key={option}
+                                    className={styles.roleInput}
+                                    type="checkbox"
+                                    key={option}
+                                    onChange={(e) =>
+                                        setRoleChecked((prev) => ({
+                                            ...prev,
+                                            [option]: e.target.checked,
+                                        }))
+                                    }
                                 />
                                 {option}
                             </label>
@@ -103,6 +181,8 @@ export default function Admin(){
                                 pattern="\d*"
                                 placeholder="dd"
                                 className={styles.inputDate}
+                                onChange={(e) => setDMin(e.target.value)}
+
                             />
                             <label className={styles.filterLabel}>/</label>
                             <input
@@ -112,6 +192,8 @@ export default function Admin(){
                                 pattern="\d*"
                                 placeholder="mm"
                                 className={styles.inputDate}
+                                onChange={(e) => setMMin(e.target.value)}
+
                             />
                             <label className={styles.filterLabel}>/</label>
                             <input
@@ -121,6 +203,7 @@ export default function Admin(){
                                 pattern="\d*"
                                 placeholder="yyyy"
                                 className={styles.inputDate}
+                                onChange={(e) => setYMin(e.target.value)}
                             />
                         </div>
                         <div className={styles.dateMinDiv}>
@@ -132,6 +215,8 @@ export default function Admin(){
                                 pattern="\d*"
                                 placeholder="dd"
                                 className={styles.inputDate}
+                                onChange={(e) => setDMax(e.target.value)}
+
                             />
                             <label className={styles.filterLabel}>/</label>
                             <input
@@ -141,6 +226,7 @@ export default function Admin(){
                                 pattern="\d*"
                                 placeholder="mm"
                                 className={styles.inputDate}
+                                onChange={(e) => setMMax(e.target.value)}
                             />
                             <label className={styles.filterLabel}>/</label>
                             <input
@@ -150,17 +236,19 @@ export default function Admin(){
                                 pattern="\d*"
                                 placeholder="yyyy"
                                 className={styles.inputDate}
+                                onChange={(e) => setYMax(e.target.value)}
+
                             />
                         </div>
                     </div>
                     <div className={styles.filterButton}>
-                        <button className={styles.saveChangesButton}>Aplicar filtros</button>
+                        <button className={styles.saveChangesButton} onClick={applyFilters}>Aplicar filtros</button>
                     </div>
                 </div>
                 <div className={styles.tableWrapper}>
                     <div className={styles.searchAndOrderbyDiv}>
                         <div className={styles.searchDiv}>
-                            <Image src={searchIcon} alt="searchIcon" className={styles.searchImg}></Image>
+                            <Image src={searchIcon} alt="searchIcon" className={styles.searchImg} onClick={applySearch}></Image>
                             <input
                                 type="text"
                                 placeholder="Search..."
@@ -170,7 +258,12 @@ export default function Admin(){
                             />
                         </div>
                         <label className={styles.filterLabel}>ordenar por:</label>
-                        <select className={styles.orderSelect}>
+                        <select 
+                            className={styles.orderSelect} 
+                            onChange={(e) => {
+                                setOrderOption(e.target.value);
+                                applyOrder();
+                            }}>
                             {orderOptions.map((option, index) => (
                                     <option key={index} value={option}>
                                         {option}
@@ -184,6 +277,7 @@ export default function Admin(){
                             <thead className={styles.threadTable}>
                             <tr className={styles.trTable}>
                                 <th className={styles.thTable}>Nome</th>
+                                <th className={styles.thTable}>Email</th>
                                 <th className={styles.thTable}>Cargo</th>
                                 <th className={styles.thTable}>Validado</th>
                                 <th className={styles.thTable}>Documento</th>
@@ -192,14 +286,15 @@ export default function Admin(){
                             </tr>
                             </thead>
                             <tbody className={styles.tbodyTable}>
-                            {users.map((user, index) => (
-                                <tr className={styles.trTable} key={index} style={{ textAlign: 'center' }}>
-                                <td className={styles.tdTable}>{user.nome}</td>
-                                <td className={styles.tdTable}>{user.cargo}</td>
-                                <td className={styles.tdTable}>{user.validado ? 'Sim' : 'Não'}</td>
-                                <td className={styles.tdTable}>{user.documento}</td>
-                                <td className={styles.tdTable}>{user.dataCriacao}</td>
-                                <td className={styles.tdTable}>{user.active}</td>
+                            {filteredUsers.map((user) => (
+                                <tr className={styles.trTable} key={user.id} style={{ textAlign: 'center' }}>
+                                <td className={styles.tdTable}>{user.userName}</td>
+                                <td className={styles.tdTable}>{user.email}</td>
+                                <td className={styles.tdTable}>{user.role}</td>
+                                <td className={styles.tdTable}>{user.validated}</td>
+                                <td className={styles.tdTable}>{user.socialNumber}</td>
+                                <td className={styles.tdTable}>{user.createdAt}</td>
+                                <td className={styles.tdTable}>{user.status ? 'Ativo' : 'Inativo'}</td>
                                 </tr>
                             ))}
                             </tbody>

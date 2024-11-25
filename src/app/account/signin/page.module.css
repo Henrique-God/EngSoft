@@ -4,8 +4,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100vw;
-    height: 88vh;
+    width: 80vw;
+    height: 72vh;
     background-color: var(--white);
 }
 
@@ -86,7 +86,7 @@
     border: none;
     color: black; /* Texto branco */
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Transição suave */
+    transition: 0.3s ease; /* Transição suave */
     font-family: 'Raleway', sans-serif; /* Set the font family to match the container */
 }
 
