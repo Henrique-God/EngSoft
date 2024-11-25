@@ -123,12 +123,16 @@ export default function Role() {
 
     return (
         <div>
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+        <div style={{ display: 'flex', flexDirection: 'row'}}>
             <div className="w-full flex-none md:w-40">
             </div>
                 <div className={styles.container}>
                     <div className={styles.Header}>
-                        <h1 className={styles.title}>Morador</h1>
+                    <h1 className={styles.title}>
+                        {role === "admin" && "Administrador"}
+                        {role === "fiscal" && "Fiscal"}
+                        {role === "morador" && "Morador"}
+                    </h1>
                         <Image src={roleImg} alt="Morador" className={styles.image} />
                     </div>
                     

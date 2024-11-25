@@ -6,6 +6,8 @@ import {
   HomeIcon,
   DocumentDuplicateIcon,
   ChartBarIcon,
+  PencilSquareIcon,
+  Cog6ToothIcon,
 } from '@heroicons/react/24/outline';
 
 const links = [
@@ -13,6 +15,8 @@ const links = [
   { name: 'Wiki', href: '/wiki', icon: DocumentDuplicateIcon },
   { name: 'Forum', href: '/forum', icon: UserGroupIcon },
   { name: 'Estatística', href: '/circles', icon: ChartBarIcon },
+  { name: 'Write Wiki', href: '/page/newPage', icon: PencilSquareIcon },
+  { name: 'Admin', href: '/admin', icon: Cog6ToothIcon },
 ];
 
 export default function NavLinks() {
