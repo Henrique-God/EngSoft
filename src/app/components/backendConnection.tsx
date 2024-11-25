@@ -3,7 +3,6 @@ const baseUrl = "http://localhost:5036/api/";
 export interface UserResponse {
     success: boolean;
     userName?: string;
-    name?: string;
     role?: string;
     email?: string;
     socialNumber?: string;
@@ -207,4 +206,3 @@ export async function GetAllUserHandler(): Promise<GetAllUserResponse> {
         return { success: false, error: (error as Error).message };
     }
 }
-

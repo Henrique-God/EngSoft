@@ -60,7 +60,7 @@ export default function Role() {
 
     return (
         <div>
-            <div style={{ display: "flex", flexDirection: "row", width: "100vw" }}>
+            <div style={{ display: "flex", flexDirection: "row"}}>
                 <div className="w-full flex-none md:w-40"></div>
                 <div className={styles.container}>
                     <div className={styles.logo_title_wrapper}>

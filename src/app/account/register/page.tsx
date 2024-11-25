@@ -5,14 +5,12 @@ import morador from '@/src/assets/morador.jpg';
 import fiscal from '@/src/assets/fiscal.jpg';
 import admin from '@/src/assets/admin.jpg';
 import styles from "./page.module.css";
-import SideNav from '@/src/app/components/sidenav';
-import Header from '@/src/app/components/Header';
 
 
 export default function Register(){
     return (
     <div>
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+        <div style={{ display: 'flex', flexDirection: 'row'}}>
             <div className="w-full flex-none md:w-40">
             </div>
             <div className={styles.container}>

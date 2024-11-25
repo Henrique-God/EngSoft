@@ -237,7 +237,7 @@ export default function Account(){
     return (
     <div>
        
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
             <div className="w-full flex-none md:w-40">
                
             </div>
