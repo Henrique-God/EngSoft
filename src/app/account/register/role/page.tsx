@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image, { StaticImageData } from 'next/image';
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import morador from '@/src/assets/morador.jpg';
 import fiscal from '@/src/assets/fiscal.jpg';
 import admin from '@/src/assets/admin.jpg';
@@ -11,15 +11,15 @@ import HidePass from '@/src/assets/icons/dont_show_pass.svg';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import styles from "./page.module.css";
-import SideNav from '@/src/app/components/sidenav';
-import Header from '@/src/app/components/Header';
+import { CreateHandler, CreateResponse } from "@/src/app/components/backendConnection";
 
 
 export default function Role() {
+    
     const searchParams = useSearchParams();
     const role = searchParams.get("role");
 
-    const [pdfFile, setPdfFile] = useState(null);
+    const [pdfFile, setPdfFile] = useState("");
     const [inputErrors, setInputErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
@@ -90,12 +90,32 @@ export default function Role() {
         return Object.keys(errors).length === 0;
     };
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
-        if (handleValidation()) {
-            const queryString = new URLSearchParams({ role }).toString();
-            window.location.href = `/account/register/success?${queryString}`;
+        if (handleValidation() && role) {
+            const accountInfo = {
+                userName: formData.nomecompleto, 
+                password: formData.senha,
+                role: role,
+                email: formData.email,
+                phoneNumber: formData.telefone,
+                zipCode: formData.cep,
+                address: formData.logradouro,
+                neighbor: formData.bairro,
+                city: formData.cidade,
+                state: formData.estado,
+                pdf: pdfFile,  
+            };
+            const result: CreateResponse = await CreateHandler(accountInfo);
+            if (result.success && result.token && result.id) {
+                // Store the token and redirect
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("id", result.id);
+                window.location.href = `/account/register/success`;
+            } else {
+                alert("Algo deu errado, tente novamente mais tarde");
+            }            
         } else {
             alert("Por favor, preencha todos os campos obrigatórios.");
         }
@@ -103,12 +123,16 @@ export default function Role() {
 
     return (
         <div>
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+        <div style={{ display: 'flex', flexDirection: 'row'}}>
             <div className="w-full flex-none md:w-40">
             </div>
                 <div className={styles.container}>
                     <div className={styles.Header}>
-                        <h1 className={styles.title}>Morador</h1>
+                    <h1 className={styles.title}>
+                        {role === "admin" && "Administrador"}
+                        {role === "fiscal" && "Fiscal"}
+                        {role === "morador" && "Morador"}
+                    </h1>
                         <Image src={roleImg} alt="Morador" className={styles.image} />
                     </div>
                     

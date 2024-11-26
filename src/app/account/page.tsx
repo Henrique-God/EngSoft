@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import Image from 'next/image';
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect, FormEvent } from 'react';
 import morador from '@/src/assets/morador.jpg';
 import editIcon from '@/src/assets/icons/pencil-svgrepo-com.svg';
 import dEditIcon from '@/src/assets/icons/pencil-slash-svgrepo-com.svg';
 import styles from "./page.module.css";
-import SideNav from '@/src/app/components/sidenav';
-import Header from '@/src/app/components/Header';
+import { UpdateHandler, UpdateResponse, UserHandler, UserResponse } from "@/src/app/components/backendConnection";
+import { Result } from "postcss";
 
 
 export default function Account(){
@@ -28,10 +28,8 @@ export default function Account(){
     const [accountVerified, setAccountVerified] = useState(false);
     const [shouldShowDiv, setShouldShowDiv] = useState(false);
     const [shouldShowAlert, setShouldShowAlert] = useState(!accountVerified);
-    const [pdfFile, setPdfFile] = useState(null);
+    const [pdfFile, setPdfFile] = useState("");
     const [pdfError, setPdfError] = useState(false)
-    
-
 
     const [isNomeEditable, setIsNomeEditable] = useState(false);
     const [inputNomeValue, setInputNomeValue] = useState(nomeValue);
@@ -51,6 +49,60 @@ export default function Account(){
     const [inputCidadeValue, setInputCidadeValue] = useState(cidadeValue);
     const [isEstadoEditable, setIsEstadoEditable] = useState(false);
     const [inputEstadoValue, setInputEstadoValue] = useState(estadoValue);
+
+    const id = localStorage.getItem("id")
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (id) {
+                try {
+                    const result: UserResponse = await UserHandler(id);
+                    if (result.userName) {
+                        setNomeValue(result.userName)
+                        setInputNomeValue(result.userName)
+                    }
+                    if (result.role) {
+                        setCargoValue(result.role)
+                        setInputCargoValue(result.role)
+                    }
+                    if (result.socialNumber) {
+                        setCpfValue(result.socialNumber)
+                    }
+                    if (result.email) {
+                        setEmailValue(result.email)
+                        setInputEmailValue(result.email)
+                    }
+                    if (result.phoneNumber) {
+                        setTelefoneValue(result.phoneNumber)
+                        setInputTelefoneValue(result.phoneNumber)
+                    }
+                    if (result.zipCode) {
+                        setCepValue(result.zipCode)
+                        setInputCepValue(result.zipCode)
+                    }
+                    if (result.address) {
+                        setEnderecoValue(result.address)
+                        setInputEnderecoValue(result.address)
+                    }
+                    if (result.neighbor) {
+                        setBairroValue(result.neighbor)
+                        setInputBairroValue(result.neighbor)
+                    }
+                    if (result.city) {
+                        setCidadeValue(result.city)
+                        setInputCidadeValue(result.city)
+                    }
+                    if (result.state) {
+                        setEstadoValue(result.state)
+                        setInputEstadoValue(result.state)
+                    }
+                } catch (err) {
+                }
+            } else {
+            }
+        };
+
+        fetchUserData();
+    }, [id]);
 
     const handleEditClick = (value : string) => {
         if (value === "Nome") {
@@ -153,28 +205,39 @@ export default function Account(){
             setPdfFile(file);
             setPdfError(false)
         } else {
-            setPdfFile(null);
+            setPdfFile("");
             alert("Por favor, selecione um arquivo PDF.");
             
         }
     };
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
-        if ((inputCargoValue == "Fiscal") && !pdfFile) {
+        if ((inputCargoValue == "Fiscal" || inputCargoValue == "Administrador") && pdfFile == "") {
             setPdfError(true);
             alert("Por favor, adicione um PDF de comprovante.");
         } else {
-            // const queryString = new URLSearchParams({ role }).toString();
-            // window.location.href = `/account/register/success?${queryString}`;
+            const accountInfo = {
+                userName: inputNomeValue, 
+                role: inputCargoValue,
+                email: inputEmailValue,
+                phoneNumber: inputTelefoneValue,
+                zipCode: inputCepValue,
+                address: inputEnderecoValue,
+                neighbor: inputBairroValue,
+                city: inputCidadeValue,
+                state: inputEstadoValue,
+                pdf: pdfFile,  
+            };
+            const result: UpdateResponse = await UpdateHandler(accountInfo);
         }
     };
 
     return (
     <div>
        
-        <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
             <div className="w-full flex-none md:w-40">
                
             </div>

@@ -4,8 +4,6 @@ import Link from "next/link";
 import React, { Component, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from "./page.module.css";
-import SideNav from '@/src/app/components/sidenav';
-import Header from '@/src/app/components/Header';
 
 export default function Success(){
     const searchParams = useSearchParams();

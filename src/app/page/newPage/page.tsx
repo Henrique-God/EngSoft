@@ -1,17 +1,19 @@
 "use client"; 
 
 import Link from "next/link";
-import React, { Component } from 'react';
+import React, { Component, FormEvent } from 'react';
 import { useState } from 'react';
 import styles from "./page.module.css";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import SideNav from '@/src/app/components/sidenav';
-import Header from '@/src/app/components/Header';
+import { ImgInsertHandler, ImgInsertResponse } from "@/src/app/components/conecctionBackendWiki";
+import { Result } from "postcss";
+
 
 export default function NewPage() {
 
-    const [images, setImages] = useState(null);
+    const [image, setImage] = useState(null);
+    const [savedImages, setSavedImages] = useState<string[]>([]);
     const [inputErrors, setInputErrors] = useState({})
     const [linkedText, setLinkedText] = useState('');
 
@@ -34,6 +36,16 @@ export default function NewPage() {
         titles.sort((a, b) => b.title.length - a.title.length);
     
         let updatedText = formData.texto;
+
+        // Replace image placeholders
+        const imagePlaceholderRegex = /!\[.*?\]\(<image-(\d+)>\)/g;
+        updatedText = updatedText.replace(imagePlaceholderRegex, (match, imageIndex) => {
+            const index = parseInt(imageIndex, 10) - 1;
+            if (index >= 0 && index < savedImages.length) {
+                return `![Image](${savedImages[index]})`;
+            }
+            return match;
+        });
     
         titles.forEach(({ title, link, query }) => {
             const markdownLink = `[${title}](${link}?title=${encodeURIComponent(query.title)})`;
@@ -80,7 +92,21 @@ export default function NewPage() {
 
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);
-        setImages(files);
+        setImage(files);
+
+    };
+
+    const handleSaveImg = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+        e.preventDefault();
+        if (image) {
+            const result: ImgInsertResponse = await ImgInsertHandler(image);
+            setImage(null);
+            if (result.success && result.path) {
+                setSavedImages([...savedImages, result.path]);
+            }
+        }
+        
+        return
     };
 
     const handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -108,10 +134,8 @@ export default function NewPage() {
 
     return (
         <div>
-            <Header />
-            <div style={{ display: 'flex', flexDirection: 'row', width: '100vw' }}>
+            <div style={{ display: 'flex', flexDirection: 'row'}}>
                 <div className="w-full flex-none md:w-40">
-                    <SideNav />
                 </div>
                 <div className={styles.container}>
                     <form onSubmit={handleSubmit} className={styles.form}>
@@ -126,6 +150,12 @@ export default function NewPage() {
                         </div>
                         <div  className={styles.inputs}>
                             <label className={styles.label}>Texto: </label>
+                            <label className={styles.label}
+                                style={{ color: 'darkgrey', fontSize: '14px' }}
+
+                            >
+                                Para inserir imagens, escreva {"![<alt-text>](<image-numeroDaImagemInserida>)"}
+                            </label>                            
                             <textarea
                                 name="texto"
                                 onChange={handleChange}
@@ -140,24 +170,15 @@ export default function NewPage() {
                                 accept="image/*" 
                                 onChange={handleImageChange} 
                             />
+                            <button type="button" onClick={handleSaveImg} className={styles.backButton}>Salvar Imagem</button>
                         </div>
-                        <div>
-                        {images != null && images.length > 0 && (
-                            <div>
-                            <ul>
-                                {images.map((image, index) => (
-                                <li key={index}>
-                                    <img 
-                                    src={URL.createObjectURL(image)} 
-                                    alt={`Preview ${index + 1}`} 
-                                    style={{ width: '400px', height: 'auto' }} 
-                                    />
-                                </li>
+                        {savedImages.length > 0 && (
+                            <div className={styles.imageContainer}>
+                                {savedImages.map((path, index) => (
+                                    <img key={index} src={path} alt={`Uploaded ${index}`} className={styles.uploadedImage} />
                                 ))}
-                            </ul>
                             </div>
-                        )}  
-                        </div>
+                        )}
 
                         <div className={styles.buttonContainer}>
                             <button type="button" onClick={handleCreateLinks} className={styles.backButton}>Inserir links</button> 

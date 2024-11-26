@@ -79,6 +79,16 @@
     background-color: transparent;
 }
 
+.toggleButton {
+    background: none;
+}
+
+.toggleButton:hover,
+.toggleButton:focus {
+    background-color: var(--dark-green);
+    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+}
+
 .backButton {
     background-color: #6eb257;
     color: #000000; /* text-white */
@@ -92,8 +102,6 @@
     padding-left: 24px;
     padding-top: 8px;
     padding-bottom: 8px;
-    
-
 }
 
 .backButton:hover,
