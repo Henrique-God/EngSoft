@@ -26,10 +26,39 @@
 .profileImage {
     width: 144px;
     height: 144px;
+    object-fit: cover;
     border-radius: 50%; 
     margin-bottom: 8px;
     border: 3px solid #00695c; 
-    object-fit: cover;
+}
+
+.imageWrapper {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 160px;
+    height: 160px;    
+}
+
+.profileContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.editIconContainer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 5px;
+    margin-bottom: 54px;
+    margin-right: 50px;
+}
+
+.inputImage {
+    display: none;
 }
 
 .nameAndRole {

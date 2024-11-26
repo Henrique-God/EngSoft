@@ -8,6 +8,7 @@ import fiscal from '@/src/assets/fiscal.jpg';
 import admin from '@/src/assets/admin.jpg';
 import ShowPass from '@/src/assets/icons/show_pass.svg';
 import HidePass from '@/src/assets/icons/dont_show_pass.svg';
+import editIcon from '@/src/assets/icons/pencil-svgrepo-com.svg';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import styles from "./page.module.css";
@@ -24,6 +25,7 @@ export default function Role() {
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
 
+    const [profilePic, setProfilePic] = useState("");
     const [formData, setFormData] = useState({
         nomecompleto: "",
         cpf: "",
@@ -99,13 +101,9 @@ export default function Role() {
                 password: formData.senha,
                 role: role,
                 email: formData.email,
-                phoneNumber: formData.telefone,
                 zipCode: formData.cep,
-                address: formData.logradouro,
-                neighbor: formData.bairro,
-                city: formData.cidade,
-                state: formData.estado,
-                pdf: pdfFile,  
+                pdf: pdfFile, 
+                profilePic: profilePic 
             };
             const result: CreateResponse = await CreateHandler(accountInfo);
             if (result.success && result.token && result.id) {
@@ -121,6 +119,22 @@ export default function Role() {
         }
     };
 
+    const handleImageChange = async (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const newImageUrl = URL.createObjectURL(file);
+          setProfilePic(newImageUrl);
+        }
+    };
+
+    const getImageSrc = () => {
+        if (profilePic) return profilePic;
+        if (role === "Morador") return morador;
+        if (role === "Fiscal") return fiscal;
+        if (role === "Admin") return admin;
+        return morador
+    };
+
     return (
         <div>
         <div style={{ display: 'flex', flexDirection: 'row'}}>
@@ -128,16 +142,35 @@ export default function Role() {
             </div>
                 <div className={styles.container}>
                     <div className={styles.Header}>
-                    <h1 className={styles.title}>
-                        {role === "admin" && "Administrador"}
-                        {role === "fiscal" && "Fiscal"}
-                        {role === "morador" && "Morador"}
-                    </h1>
-                        <Image src={roleImg} alt="Morador" className={styles.image} />
+                        <h1 className={styles.title}>
+                            {role === "admin" && "Administrador"}
+                            {role === "fiscal" && "Fiscal"}
+                            {role === "morador" && "Morador"}
+                        </h1>
+                        <div className={styles.profileContainer}>
+                            <label htmlFor="fileInput" className={styles.imageWrapper}>
+                                <Image
+                                fill={true}
+                                src={getImageSrc()}
+                                alt="Profile"
+                                className={styles.image}
+                                />
+                                <div className={styles.editIconContainer} style={{ filter: "invert(1)" }}>
+                                    <Image src={editIcon} alt="Edit" className={styles.editIcon} />
+                                </div>
+                            </label>
+                            <input
+                                id="fileInput"
+                                type="file"
+                                accept="image/*"
+                                className={styles.inputImage}
+                                onChange={handleImageChange}
+                            />
+                        </div>
                     </div>
                     
                     <form onSubmit={handleSubmit} className={styles.form}>
-                        {["Nome Completo", "CPF", "Logradouro", "Bairro", "Cidade", "Estado", "CEP", "Email", "Telefone"].map((field, index) => (
+                        {["Nome Completo", "CPF", "CEP", "Email"].map((field, index) => (
                             <div key={index}  className={styles.inputs}>
                                 <label className={styles.label}>{field}:</label>
                                 <input

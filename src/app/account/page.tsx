@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from 'next/image';
 import React, { Component, useState, useEffect, FormEvent } from 'react';
 import morador from '@/src/assets/morador.jpg';
+import admin from '@/src/assets/admin.jpg';
+import fiscal from '@/src/assets/fiscal.jpg';
 import editIcon from '@/src/assets/icons/pencil-svgrepo-com.svg';
 import dEditIcon from '@/src/assets/icons/pencil-slash-svgrepo-com.svg';
 import styles from "./page.module.css";
@@ -16,12 +18,8 @@ export default function Account(){
     const [cargoValue, setCargoValue] = useState("Morador");
     const [cpfValue, setCpfValue] = useState("CPF");
     const [emailValue, setEmailValue] = useState("Email");
-    const [telefoneValue, setTelefoneValue] = useState("Telefone");
     const [cepValue, setCepValue] = useState("CEP");
-    const [enderecoValue, setEnderecoValue] = useState("Endereço");
-    const [bairroValue, setBairroValue] = useState("Bairro");
-    const [cidadeValue, setCidadeValue] = useState("Cidade");
-    const [estadoValue, setEstadoValue] = useState("Estado");
+    const [profilePic, setProfilePic] = useState("");
 
     const cargoOptions = ["Morador", "Fiscal", "Administrador"];
     const [fileUploaded, setFileUploaded] = useState('');
@@ -37,19 +35,8 @@ export default function Account(){
     const [inputCargoValue, setInputCargoValue] = useState(cargoValue);
     const [isEmailEditable, setIsEmailEditable] = useState(false);
     const [inputEmailValue, setInputEmailValue] = useState(emailValue);
-    const [isTelefoneEditable, setIsTelefoneEditable] = useState(false);
-    const [inputTelefoneValue, setInputTelefoneValue] = useState(telefoneValue);
     const [isCepEditable, setIsCepEditable] = useState(false);
     const [inputCepValue, setInputCepValue] = useState(cepValue);
-    const [isEnderecoEditable, setIsEnderecoEditable] = useState(false);
-    const [inputEnderecoValue, setInputEnderecoValue] = useState(enderecoValue);
-    const [isBairroEditable, setIsBairroEditable] = useState(false);
-    const [inputBairroValue, setInputBairroValue] = useState(bairroValue);
-    const [isCidadeEditable, setIsCidadeEditable] = useState(false);
-    const [inputCidadeValue, setInputCidadeValue] = useState(cidadeValue);
-    const [isEstadoEditable, setIsEstadoEditable] = useState(false);
-    const [inputEstadoValue, setInputEstadoValue] = useState(estadoValue);
-
     const id = localStorage.getItem("id")
     useEffect(() => {
         const fetchUserData = async () => {
@@ -57,43 +44,26 @@ export default function Account(){
                 try {
                     const result: UserResponse = await UserHandler(id);
                     if (result.userName) {
-                        setNomeValue(result.userName)
-                        setInputNomeValue(result.userName)
+                        setNomeValue(result.userName);
+                        setInputNomeValue(result.userName);
                     }
                     if (result.role) {
-                        setCargoValue(result.role)
-                        setInputCargoValue(result.role)
+                        setCargoValue(result.role);
+                        setInputCargoValue(result.role);
                     }
                     if (result.socialNumber) {
-                        setCpfValue(result.socialNumber)
+                        setCpfValue(result.socialNumber);
                     }
                     if (result.email) {
-                        setEmailValue(result.email)
-                        setInputEmailValue(result.email)
-                    }
-                    if (result.phoneNumber) {
-                        setTelefoneValue(result.phoneNumber)
-                        setInputTelefoneValue(result.phoneNumber)
+                        setEmailValue(result.email);
+                        setInputEmailValue(result.email);
                     }
                     if (result.zipCode) {
-                        setCepValue(result.zipCode)
-                        setInputCepValue(result.zipCode)
+                        setCepValue(result.zipCode);
+                        setInputCepValue(result.zipCode);
                     }
-                    if (result.address) {
-                        setEnderecoValue(result.address)
-                        setInputEnderecoValue(result.address)
-                    }
-                    if (result.neighbor) {
-                        setBairroValue(result.neighbor)
-                        setInputBairroValue(result.neighbor)
-                    }
-                    if (result.city) {
-                        setCidadeValue(result.city)
-                        setInputCidadeValue(result.city)
-                    }
-                    if (result.state) {
-                        setEstadoValue(result.state)
-                        setInputEstadoValue(result.state)
+                    if(result.profilePic) {
+                        setProfilePic(result.profilePic);
                     }
                 } catch (err) {
                 }
@@ -129,13 +99,6 @@ export default function Account(){
                 setInputEmailValue("");
             }
             setIsEmailEditable(!isEmailEditable);
-        } else if (value === "Telefone") {
-            if  (isTelefoneEditable) {
-                setInputTelefoneValue(telefoneValue);
-            } else {
-                setInputTelefoneValue("");
-            }
-            setIsTelefoneEditable(!isTelefoneEditable);
         } else if (value === "CEP") {
             if  (isCepEditable) {
                 setInputCepValue(cepValue);
@@ -143,35 +106,7 @@ export default function Account(){
                 setInputCepValue("");
             }
             setIsCepEditable(!isCepEditable);
-        } else if (value === "Endereço") {
-            if  (isEnderecoEditable) {
-                setInputEnderecoValue(enderecoValue);
-            } else {
-                setInputEnderecoValue("");
-            }
-            setIsEnderecoEditable(!isEnderecoEditable);
-        } else if (value === "Bairro") {
-            if  (isBairroEditable) {
-                setInputBairroValue(bairroValue);
-            } else {
-                setInputBairroValue("");
-            }
-            setIsBairroEditable(!isBairroEditable);
-        } else if (value === "Cidade") {
-            if  (isCidadeEditable) {
-                setInputCidadeValue(cidadeValue);
-            } else {
-                setInputCidadeValue("");
-            }
-            setIsCidadeEditable(!isCidadeEditable);
-        } else if (value === "Estado") {
-            if  (isEstadoEditable) {
-                setInputEstadoValue(estadoValue);
-            } else {
-                setInputEstadoValue("");
-            }
-            setIsEstadoEditable(!isEstadoEditable);
-        } 
+        }
     };
 
     const handleInputChange = (value : string, e : any) => {
@@ -183,18 +118,8 @@ export default function Account(){
             setShouldShowDiv(inputValue !== "Morador" && !fileUploaded && !accountVerified);
         } else if (value === "Email") {
             setInputEmailValue(inputValue);
-        } else if (value === "Telefone") {
-            setInputTelefoneValue(inputValue);
         } else if (value === "CEP") {
             setInputCepValue(inputValue);
-        } else if (value === "Endereço") {
-            setInputEnderecoValue(inputValue);
-        } else if (value === "Bairro") {
-            setInputBairroValue(inputValue);
-        } else if (value === "Cidade") {
-            setInputCidadeValue(inputValue);
-        } else if (value === "Estado") {
-            setInputEstadoValue(inputValue);
         } 
     };
 
@@ -222,16 +147,28 @@ export default function Account(){
                 userName: inputNomeValue, 
                 role: inputCargoValue,
                 email: inputEmailValue,
-                phoneNumber: inputTelefoneValue,
                 zipCode: inputCepValue,
-                address: inputEnderecoValue,
-                neighbor: inputBairroValue,
-                city: inputCidadeValue,
-                state: inputEstadoValue,
                 pdf: pdfFile,  
+                profilePic: profilePic,
             };
             const result: UpdateResponse = await UpdateHandler(accountInfo);
         }
+    };
+
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const newImageUrl = URL.createObjectURL(file);
+          setProfilePic(newImageUrl);
+        }
+    };
+
+    const getImageSrc = () => {
+        if (profilePic) return profilePic;
+        if (cargoValue === "Morador") return morador;
+        if (cargoValue === "Fiscal") return fiscal;
+        if (cargoValue === "Admin") return admin;
+        return morador
     };
 
     return (
@@ -244,7 +181,27 @@ export default function Account(){
             <form onSubmit={handleSubmit} className={styles.container}>
                 <div className={styles.profileHeader}>
                     <div className={styles.FirstHeader}>
-                        <Image src={morador} alt="Profile" className={styles.profileImage} />
+                    <div className={styles.profileContainer}>
+                        <label htmlFor="fileInput" className={styles.imageWrapper}>
+                            <Image
+                            fill={true}
+                            src={getImageSrc()}
+                            alt="Profile"
+                            className={styles.profileImage}
+                            />
+                            <div className={styles.editIconContainer} style={{ filter: "invert(1)" }}>
+                                <Image src={editIcon} alt="Edit" className={styles.editIcon} />
+                            </div>
+                        </label>
+                        <input
+                            id="fileInput"
+                            type="file"
+                            accept="image/*"
+                            className={styles.inputImage}
+                            onChange={handleImageChange}
+                        />
+                    </div>
+
                         <div className={styles.nameAndRole}>
                             <div className={styles.editWrapper}>
                                 <input
@@ -363,23 +320,6 @@ export default function Account(){
                             </div>
                         </div>
                         <div className={styles.fieldRow}>
-                            <label>Telefone:</label>
-                            <div className={styles.editWrapper}>
-                                <input
-                                    type="text"
-                                    className={styles.input}
-                                    onChange={(e) => handleInputChange("Telefone", e)}
-                                    value={inputTelefoneValue}
-                                    placeholder={telefoneValue}
-                                    disabled={!isTelefoneEditable}
-                                    autoFocus={isTelefoneEditable}
-                                />
-                                <button type="button" onClick={() => handleEditClick("Telefone")} className={styles.toggleButton}>
-                                    {isTelefoneEditable ? <Image src={dEditIcon} alt="Stop editing" className={styles.editIcon} /> : <Image src={editIcon} alt="Edit" className={styles.editIcon} />}
-                                </button>
-                            </div>
-                        </div>
-                        <div className={styles.fieldRow}>
                             <label>CEP:</label>
                             <div className={styles.editWrapper}>
                                 <input
@@ -396,77 +336,7 @@ export default function Account(){
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div className={styles.secondCol}>
-                        <div className={styles.fieldRow}>
-                            <label>Endereço:</label>
-                            <div className={styles.editWrapper}>
-                                <input
-                                    type="text"
-                                    className={styles.input}
-                                    onChange={(e) => handleInputChange("Endereço", e)}
-                                    value={inputEnderecoValue}
-                                    placeholder={enderecoValue}
-                                    disabled={!isEnderecoEditable}
-                                    autoFocus={isEnderecoEditable}
-                                />
-                                <button type="button" onClick={() => handleEditClick("Endereço")} className={styles.toggleButton}>
-                                    {isEnderecoEditable ? <Image src={dEditIcon} alt="Stop editing" className={styles.editIcon} /> : <Image src={editIcon} alt="Edit" className={styles.editIcon} />}
-                                </button>
-                            </div>
-                        </div>
-                        <div className={styles.fieldRow}>
-                            <label>Bairro:</label>
-                            <div className={styles.editWrapper}>
-                                <input
-                                    type="text"
-                                    className={styles.input}
-                                    onChange={(e) => handleInputChange("Bairro", e)}
-                                    value={inputBairroValue}
-                                    placeholder={bairroValue}
-                                    disabled={!isBairroEditable}
-                                    autoFocus={isBairroEditable}
-                                />
-                                <button type="button" onClick={() => handleEditClick("Bairro")} className={styles.toggleButton}>
-                                    {isBairroEditable ? <Image src={dEditIcon} alt="Stop editing" className={styles.editIcon} /> : <Image src={editIcon} alt="Edit" className={styles.editIcon} />}
-                                </button>
-                            </div>
-                        </div>
-                        <div className={styles.fieldRow}>
-                            <label>Cidade:</label>
-                            <div className={styles.editWrapper}>
-                                <input
-                                    type="text"
-                                    className={styles.input}
-                                    onChange={(e) => handleInputChange("Cidade", e)}
-                                    value={inputCidadeValue}
-                                    placeholder={cidadeValue}
-                                    disabled={!isCidadeEditable}
-                                    autoFocus={isCidadeEditable}
-                                />
-                                <button type="button" onClick={() => handleEditClick("Cidade")} className={styles.toggleButton}>
-                                    {isCidadeEditable ? <Image src={dEditIcon} alt="Stop editing" className={styles.editIcon} /> : <Image src={editIcon} alt="Edit" className={styles.editIcon} />}
-                                </button>
-                            </div>
-                        </div>
-                        <div className={styles.fieldRow}>
-                            <label>Estado:</label>
-                            <div className={styles.editWrapper}>
-                                <input
-                                    type="text"
-                                    className={styles.input}
-                                    onChange={(e) => handleInputChange("Estado", e)}
-                                    value={inputEstadoValue}
-                                    placeholder={estadoValue}
-                                    disabled={!isEstadoEditable}
-                                    autoFocus={isEstadoEditable}
-                                />
-                                <button type="button" onClick={() => handleEditClick("Estado")} className={styles.toggleButton}>
-                                    {isEstadoEditable ? <Image src={dEditIcon} alt="Stop editing" className={styles.editIcon} /> : <Image src={editIcon} alt="Edit" className={styles.editIcon} />}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    </div>                       
                 </div>
                 <div className={styles.buttonContainer}>
                     <button className={styles.changePasswordButton}>Alterar senha</button>

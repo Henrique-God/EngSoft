@@ -282,7 +282,7 @@ export default function Admin(){
                                 <th className={styles.thTable}>Validado</th>
                                 <th className={styles.thTable}>Documento</th>
                                 <th className={styles.thTable}>Data de criação</th>
-                                <th className={styles.thTable}>Status perfil</th>
+                                <th className={styles.thTable}>CPF</th>
                             </tr>
                             </thead>
                             <tbody className={styles.tbodyTable}>
@@ -294,7 +294,7 @@ export default function Admin(){
                                 <td className={styles.tdTable}>{user.validated}</td>
                                 <td className={styles.tdTable}>{user.socialNumber}</td>
                                 <td className={styles.tdTable}>{user.createdAt}</td>
-                                <td className={styles.tdTable}>{user.status ? 'Ativo' : 'Inativo'}</td>
+                                <td className={styles.tdTable}>{user.cpf}</td>
                                 </tr>
                             ))}
                             </tbody>
