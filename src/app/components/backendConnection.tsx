@@ -6,12 +6,8 @@ export interface UserResponse {
     role?: string;
     email?: string;
     socialNumber?: string;
-    phoneNumber?: string;
     zipCode?: string;
-    address?: string;
-    neighbor?: string;
-    city?: string;
-    state?: string;
+    profilePic?: string;
     error?: string;
 }
 
@@ -36,12 +32,8 @@ export async function UserHandler(id: string): Promise<UserResponse> {
             role: data.role,
             email: data.email,
             socialNumber: data.socialNumber,
-            phoneNumber: data.phoneNumber,
             zipCode: data.zipCode,
-            address: data.address,
-            neighbor: data.neighbor,
-            city: data.city,
-            state: data.state,
+            profilePic: data.profilePic,
         };
     } catch (error) {
         console.error("Error getting user:", error);
@@ -57,24 +49,16 @@ export interface UpdateResponse {
 export async function UpdateHandler(formData: { userName: string; 
                                                 role: string;
                                                 email: string;
-                                                phoneNumber: string;
                                                 zipCode: string;
-                                                address: string;
-                                                neighbor: string
-                                                city: string;
-                                                state: string;
-                                                pdf: string; }): Promise<UpdateResponse> {
+                                                pdf: string;
+                                                profilePic: string; }): Promise<UpdateResponse> {
     try {
         const url = new URL(`${baseUrl}users/`);
         url.searchParams.append("userName", formData.userName);
         url.searchParams.append("role", formData.role);
         url.searchParams.append("email", formData.email);
-        url.searchParams.append("phoneNumber", formData.phoneNumber);
         url.searchParams.append("zipCode", formData.zipCode);
-        url.searchParams.append("address", formData.address);
-        url.searchParams.append("neighbor", formData.neighbor);
-        url.searchParams.append("city", formData.city);
-        url.searchParams.append("state", formData.state);
+        url.searchParams.append("profilePic", formData.profilePic);
         const token = localStorage.getItem("token");
         const response = await fetch(url.toString(), {
             method: "POST",
@@ -137,25 +121,17 @@ export async function CreateHandler(formData: { userName: string;
                                                 password: string;
                                                 role: string;
                                                 email: string;
-                                                phoneNumber: string;
                                                 zipCode: string;
-                                                address: string;
-                                                neighbor: string
-                                                city: string;
-                                                state: string;
-                                                pdf: string; }): Promise<CreateResponse> {
+                                                pdf: string;
+                                                profilePic: string; }): Promise<CreateResponse> {
     try {
         const url = new URL(`${baseUrl}users/register`);
         url.searchParams.append("userName", formData.userName);
         url.searchParams.append("password", formData.password);
         url.searchParams.append("role", formData.role);
         url.searchParams.append("email", formData.email);
-        url.searchParams.append("phoneNumber", formData.phoneNumber);
         url.searchParams.append("zipCode", formData.zipCode);
-        url.searchParams.append("address", formData.address);
-        url.searchParams.append("neighbor", formData.neighbor);
-        url.searchParams.append("city", formData.city);
-        url.searchParams.append("state", formData.state);
+        url.searchParams.append("profilePic", formData.profilePic);
         const response = await fetch(url.toString(), {
             method: "POST",
             headers: {
