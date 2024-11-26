@@ -182,24 +182,24 @@ export default function Account(){
                 <div className={styles.profileHeader}>
                     <div className={styles.FirstHeader}>
                     <div className={styles.profileContainer}>
-                    <label htmlFor="fileInput" className={styles.imageWrapper}>
-                        <Image
-                        fill={true}
-                        src={getImageSrc()}
-                        alt="Profile"
-                        className={styles.profileImage}
+                        <label htmlFor="fileInput" className={styles.imageWrapper}>
+                            <Image
+                            fill={true}
+                            src={getImageSrc()}
+                            alt="Profile"
+                            className={styles.profileImage}
+                            />
+                            <div className={styles.editIconContainer} style={{ filter: "invert(1)" }}>
+                                <Image src={editIcon} alt="Edit" className={styles.editIcon} />
+                            </div>
+                        </label>
+                        <input
+                            id="fileInput"
+                            type="file"
+                            accept="image/*"
+                            className={styles.inputImage}
+                            onChange={handleImageChange}
                         />
-                        <div className={styles.editIconContainer} style={{ filter: "invert(1)" }}>
-                            <Image src={editIcon} alt="Edit" className={styles.editIcon} />
-                        </div>
-                    </label>
-                    <input
-                        id="fileInput"
-                        type="file"
-                        accept="image/*"
-                        className={styles.inputImage}
-                        onChange={handleImageChange}
-                    />
                     </div>
 
                         <div className={styles.nameAndRole}>
