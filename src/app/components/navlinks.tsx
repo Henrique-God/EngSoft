@@ -14,7 +14,7 @@ const links = [
   { name: 'Home', href: '/home', icon: HomeIcon },
   { name: 'Wiki', href: '/wiki', icon: DocumentDuplicateIcon },
   { name: 'Forum', href: '/forum', icon: UserGroupIcon },
-  { name: 'Estatística', href: '/circles', icon: ChartBarIcon },
+  { name: 'Estatística', href: '/estatistica', icon: ChartBarIcon },
   { name: 'Write Wiki', href: '/page/newPage', icon: PencilSquareIcon },
   { name: 'Admin', href: '/admin', icon: Cog6ToothIcon },
 ];

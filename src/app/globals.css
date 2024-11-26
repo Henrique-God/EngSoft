@@ -15,6 +15,13 @@
   --button-blue-light: #66B2FF; /* Lighter Button Blue */
   --button-blue-dark: #0056b3;  /* Darker Button Blue */
 }
+/* Remove default margin and padding from body and html */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
 
 body {
   font-family: 'Raleway', sans-serif;
