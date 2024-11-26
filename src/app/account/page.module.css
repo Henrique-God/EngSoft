@@ -124,9 +124,13 @@
     padding: 0.5rem 0.5rem; /* px-2 py-1 */
     border-radius: 0.5rem; /* rounded */
     outline: none; /* outline-none */
-    font-size: 32px;
-    height: 40px;
-    text-decoration: none;
+    font-size: 24px;
+    height: fit-content;
+    width: fit-content;
+    padding-right: 24px;
+    padding-left: 24px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 .backButton:hover,

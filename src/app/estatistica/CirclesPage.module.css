@@ -1,0 +1,92 @@
+/* Main container for layout */
+.container {
+    display: flex; /* Use flexbox for horizontal layout */
+    justify-content: space-between; /* Space between description and circles */
+    align-items: flex-start; /* Align items at the top */
+    gap: 4rem; /* Increased space between the left and right sections (previously 2rem) */
+}
+
+/* Main content layout */
+.main-content {
+    display: flex; /* Flex to organize the main content */
+    flex-direction: row; /* Row-wise layout */
+    gap: 4rem; /* Increased space between left and right content */
+}
+
+/* Description container: Make it take up available space */
+.description-container {
+    flex: 1;
+    width: 800px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Increased font size in description container */
+.description-container h2 {
+    font-size: 32px; /* Larger font size for title */
+    color: var(--dark-blue);
+    margin-bottom: 15px;
+}
+
+.description-container p {
+    font-size: 18px; /* Larger text for paragraphs */
+    color: #333333;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.description-container strong {
+    color: var(--dark-blue);
+}
+
+/* Circle wrapper to hold the circles */
+.circleWrapper {
+    flex: 1; /* Take up available space */
+    display: flex;
+    flex-wrap: wrap; /* Allow the circles to wrap if needed */
+    gap: 3.9rem; /* Space between circles */
+    justify-content: flex-start;
+    min-width: 550px; /* Prevent circles from going under the description */
+}
+
+/* Circle container */
+.circleContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 3.9rem;
+}
+
+/* Circle styles */
+.circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 70%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    background-color: var(--light-yellow);
+}
+
+.circle:hover {
+    transform: scale(1.05);
+}
+
+.circleImage {
+    object-fit: cover;
+}
+
+.circleLabel {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.circleDescription {
+    font-size: 1.0rem;
+    color: #555;
+    max-width: 250px; /* Optional: Limit description width */
+}
