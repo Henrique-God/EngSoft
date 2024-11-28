@@ -6,7 +6,7 @@ import { useState } from 'react';
 import styles from "./page.module.css";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ImgInsertHandler, ImgInsertResponse } from "@/src/app/components/conecctionBackendWiki";
+import { ImgInsertHandler, ImgInsertResponse, CreateWikitHandler, CreateWikiResponse } from "@/src/app/components/conecctionBackendWiki";
 import { Result } from "postcss";
 
 
@@ -109,11 +109,20 @@ export default function NewPage() {
         return
     };
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
         if (handleValidation()) {
-            window.location.href = `/`;
+            const wikiContent = {
+                wikiTitle: formData.titulo, 
+                wikiText: linkedText,
+            };
+            const result: CreateWikiResponse = await CreateWikitHandler(wikiContent);
+            if (result.success && result.title) {
+                window.location.href = `/wiki?title=${encodeURIComponent(result.title)}`;
+            } else {
+                alert("Algo deu errado, tente novamente mais tarde");
+            }            
         } else {
             alert("Por favor, preencha todos os campos obrigatórios.");
         }
@@ -202,5 +211,3 @@ export default function NewPage() {
         </div>
     );
 }
-
-

@@ -12,7 +12,7 @@ import editIcon from '@/src/assets/icons/pencil-svgrepo-com.svg';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import styles from "./page.module.css";
-import { CreateHandler, CreateResponse } from "@/src/app/components/backendConnection";
+import { AddPhotoHandler, AddPhotoResponse, CreateHandler, CreateResponse } from "@/src/app/components/backendConnection";
 
 
 export default function Role() {
@@ -28,14 +28,9 @@ export default function Role() {
     const [profilePic, setProfilePic] = useState("");
     const [formData, setFormData] = useState({
         nomecompleto: "",
-        cpf: "",
-        logradouro: "",
-        bairro: "",
-        cidade: "",
-        estado: "",
+        cpf: 0,
         cep: "",
         email: "",
-        telefone: "",
         senha: "",
         senha2: "",
     });
@@ -102,15 +97,18 @@ export default function Role() {
                 role: role,
                 email: formData.email,
                 zipCode: formData.cep,
-                pdf: pdfFile, 
-                profilePic: profilePic 
+                socialNumber: formData.cpf,
             };
             const result: CreateResponse = await CreateHandler(accountInfo);
-            if (result.success && result.token && result.id) {
-                // Store the token and redirect
+            if (result.success && result.token) {
                 localStorage.setItem("token", result.token);
-                localStorage.setItem("id", result.id);
-                window.location.href = `/account/register/success`;
+                const resultPhoto: AddPhotoResponse = await AddPhotoHandler(profilePic);
+                if(resultPhoto.success) {
+                    window.location.href = `/account/register/success`;
+                } else {
+                    alert("Algo deu errado com sua foto de perfil, mas seu cadastro foi realizado");
+                    window.location.href = `/account/register/success`;
+                }
             } else {
                 alert("Algo deu errado, tente novamente mais tarde");
             }            
