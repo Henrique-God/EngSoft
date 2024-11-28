@@ -48,9 +48,8 @@ export default function Role() {
             };
             const result: LoginResponse = await LoginHandler(credentials);
 
-            if (result.success && result.token && result.id) {
+            if (result.success && result.token) {
                 localStorage.setItem("token", result.token);
-                localStorage.setItem("id", result.id);
                 window.location.href = "/";
             } else {
                 console.error("Login failed:", result.error);

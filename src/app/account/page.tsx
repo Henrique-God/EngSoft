@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import Image from 'next/image';
-import React, { Component, useState, useEffect, FormEvent } from 'react';
+import React, { Component, useState, useEffect, FormEvent, useMemo } from 'react';
 import morador from '@/src/assets/morador.jpg';
 import admin from '@/src/assets/admin.jpg';
 import fiscal from '@/src/assets/fiscal.jpg';
 import editIcon from '@/src/assets/icons/pencil-svgrepo-com.svg';
 import dEditIcon from '@/src/assets/icons/pencil-slash-svgrepo-com.svg';
 import styles from "./page.module.css";
-import { UpdateHandler, UpdateResponse, UserHandler, UserResponse } from "@/src/app/components/backendConnection";
+import { AddPhotoHandler, AddPhotoResponse, UpdateHandler, UpdateResponse, UserHandler, UserResponse } from "@/src/app/components/backendConnection";
+import decodeToken from "@/src/app/components/TokenDecoder";
 import { Result } from "postcss";
 
 
@@ -37,12 +38,15 @@ export default function Account(){
     const [inputEmailValue, setInputEmailValue] = useState(emailValue);
     const [isCepEditable, setIsCepEditable] = useState(false);
     const [inputCepValue, setInputCepValue] = useState(cepValue);
-    const id = localStorage.getItem("id")
+
+    const token = useMemo(() => localStorage.getItem("token"), []);
+    const decodedToken = useMemo(() => (token ? decodeToken(token) : null), [token]);
+
     useEffect(() => {
         const fetchUserData = async () => {
-            if (id) {
+            if (decodedToken) {
                 try {
-                    const result: UserResponse = await UserHandler(id);
+                    const result: UserResponse = await UserHandler(decodedToken.nameid);
                     if (result.userName) {
                         setNomeValue(result.userName);
                         setInputNomeValue(result.userName);
@@ -72,7 +76,7 @@ export default function Account(){
         };
 
         fetchUserData();
-    }, [id]);
+    }, [decodedToken]);
 
     const handleEditClick = (value : string) => {
         if (value === "Nome") {
@@ -148,10 +152,14 @@ export default function Account(){
                 role: inputCargoValue,
                 email: inputEmailValue,
                 zipCode: inputCepValue,
-                pdf: pdfFile,  
-                profilePic: profilePic,
             };
             const result: UpdateResponse = await UpdateHandler(accountInfo);
+            if (result.success) {
+                const resultPhoto: AddPhotoResponse = await AddPhotoHandler(profilePic);
+                if(resultPhoto.success) {
+                    window.location.href = `/account`;
+                }
+            }
         }
     };
 

@@ -1,4 +1,58 @@
-const baseUrl = "http://localhost:5036/api/";
+const baseUrl = "http://localhost:5036/";
+
+export async function CreateHandler(formData: { userName: string; 
+    password: string;
+    role: string;
+    email: string;
+    zipCode: string;
+    socialNumber: number; }): Promise<CreateResponse> {
+    try {
+        const url = new URL(`${baseUrl}users/register`);
+        const response = await fetch(url.toString(), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData)
+        });
+        if (!response.ok) {
+            return { success: false, error: response.statusText };
+        }
+        const data = await response.json();
+
+        return { success: true, token: data.token, id: data.id };
+    } catch (error) {
+        console.error("Error while logging in:", error);
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+export interface AddPhotoResponse {
+    success: boolean;
+    error?: string;
+}
+
+export async function AddPhotoHandler(profilePic?: string): Promise<AddPhotoResponse> {
+    try {
+        const url = new URL(`${baseUrl}users/`);
+        if(profilePic) url.searchParams.append("profilePic", profilePic);
+        const token = localStorage.getItem("token");
+        const response = await fetch(url.toString(), {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+        if (!response.ok) {
+            return { success: false, error: response.statusText };
+        }
+        const data = await response.json();
+        return { success: true };
+    } catch (error) {
+        return { success: false, error: (error as Error).message };
+    }
+}
 
 export interface UserResponse {
     success: boolean;
@@ -11,9 +65,12 @@ export interface UserResponse {
     error?: string;
 }
 
-export async function UserHandler(id: string): Promise<UserResponse> {
+export async function UserHandler(nameid: string): Promise<UserResponse> {
     try {
-        const url = new URL(`${baseUrl}users/${id}`);
+        console.log(nameid)
+
+        const url = new URL(`${baseUrl}users/get-user`);
+        if(nameid) url.searchParams.append("userName", nameid);
         const token = localStorage.getItem("token");
         const response = await fetch(url.toString(), {
             method: "GET",
@@ -46,19 +103,16 @@ export interface UpdateResponse {
     error?: string;
 }
 
-export async function UpdateHandler(formData: { userName: string; 
-                                                role: string;
-                                                email: string;
-                                                zipCode: string;
-                                                pdf: string;
-                                                profilePic: string; }): Promise<UpdateResponse> {
+export async function UpdateHandler(formData: { userName?: string; 
+                                                role?: string;
+                                                email?: string;
+                                                zipCode?: string; }): Promise<UpdateResponse> {
     try {
-        const url = new URL(`${baseUrl}users/`);
-        url.searchParams.append("userName", formData.userName);
-        url.searchParams.append("role", formData.role);
-        url.searchParams.append("email", formData.email);
-        url.searchParams.append("zipCode", formData.zipCode);
-        url.searchParams.append("profilePic", formData.profilePic);
+        const url = new URL(`${baseUrl}users/update-user`);
+        if(formData.userName) url.searchParams.append("userName", formData.userName);
+        if(formData.role) url.searchParams.append("role", formData.role);
+        if(formData.email) url.searchParams.append("email", formData.email);
+        if(formData.zipCode) url.searchParams.append("zipCode", formData.zipCode);
         const token = localStorage.getItem("token");
         const response = await fetch(url.toString(), {
             method: "POST",
@@ -81,7 +135,6 @@ export async function UpdateHandler(formData: { userName: string;
 
 export interface LoginResponse {
     success: boolean;
-    id?: string;
     token?: string;
     error?: string;
 }
@@ -102,7 +155,7 @@ export async function LoginHandler(formData: { userName: string; password: strin
             return { success: false, error: response.statusText };
         }
         const data = await response.json();
-        return { success: true, token: data.token, id: data.id };
+        return { success: true, token: data.token};
     } catch (error) {
         console.error("Error while logging in:", error);
         return { success: false, error: (error as Error).message };
@@ -117,40 +170,6 @@ export interface CreateResponse {
     token?: string;
 }
 
-export async function CreateHandler(formData: { userName: string; 
-                                                password: string;
-                                                role: string;
-                                                email: string;
-                                                zipCode: string;
-                                                pdf: string;
-                                                profilePic: string; }): Promise<CreateResponse> {
-    try {
-        const url = new URL(`${baseUrl}users/register`);
-        url.searchParams.append("userName", formData.userName);
-        url.searchParams.append("password", formData.password);
-        url.searchParams.append("role", formData.role);
-        url.searchParams.append("email", formData.email);
-        url.searchParams.append("zipCode", formData.zipCode);
-        url.searchParams.append("profilePic", formData.profilePic);
-        const response = await fetch(url.toString(), {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        if (!response.ok) {
-            return { success: false, error: response.statusText };
-        }
-        const data = await response.json();
-
-        return { success: true, token: data.token, id: data.id };
-    } catch (error) {
-        console.error("Error while logging in:", error);
-        return { success: false, error: (error as Error).message };
-    }
-}
-
-
 export interface GetAllUserResponse {
     success: boolean;
     users?: (string)[][];
@@ -159,7 +178,7 @@ export interface GetAllUserResponse {
 
 export async function GetAllUserHandler(): Promise<GetAllUserResponse> {
     try {
-        const url = new URL(`${baseUrl}users/getUsers`);
+        const url = new URL(`${baseUrl}users/get-users`);
         const token = localStorage.getItem("token");
         const response = await fetch(url.toString(), {
             method: "GET",

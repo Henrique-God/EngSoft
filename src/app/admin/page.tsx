@@ -5,6 +5,8 @@ import Image, { StaticImageData } from 'next/image';
 import styles from "./page.module.css";
 import searchIcon from '@/src/assets/icons/search-svgrepo-com.svg';
 import { GetAllUserHandler, GetAllUserResponse, UserHandler, UserResponse } from "@/src/app/components/backendConnection";
+import decodeToken from "@/src/app/components/TokenDecoder";
+
 
 export default function Admin(){
     const [searchQuery, setSearchQuery] = useState('');
@@ -30,18 +32,14 @@ export default function Admin(){
     const orderOptions = ["", "Mais recente", "Mais antigo"];
     const options = ['Administrador', 'Fiscal', 'Morador'];
 
-    const handleChange = (value : string, e : any) => {
-        if (value == "validateFilter") {
 
-        }
-    };
-
-    const id = localStorage.getItem("id")
+    const token = localStorage.getItem("token")
+    const decodedToken = token ? decodeToken(token) : null;
     useEffect(() => {
         const fetchUserData = async () => {
-            if (id) {
+            if (decodedToken) {
                 try {
-                    const result: UserResponse = await UserHandler(id);
+                    const result: UserResponse = await UserHandler(decodedToken.nameid);
                     if (result.userName) {
                         setRoleValue(result.userName)
                     }
@@ -51,7 +49,7 @@ export default function Admin(){
         };
 
         fetchUserData();
-    }, [id]);
+    }, [decodedToken]);
 
     
     useEffect(() => {
