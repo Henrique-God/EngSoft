@@ -176,6 +176,39 @@ export interface GetAllUserResponse {
     error?: string;
 }
 
+export interface WikiPageSuggestion {
+    id: number;
+    pageText: string;
+    pageTitle: string;
+    ownerName: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export async function SearchWikiPageHandler(pageTitle: string): Promise<WikiPageSuggestion[]> {
+    try {
+        const url = new URL(`${baseUrl}wiki-pages/search-pages/${pageTitle}`);
+        
+        const response = await fetch(url.toString(), {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            return [];  // Return an empty array in case of error (could also throw error if needed)
+        }
+
+        const data = await response.json();
+
+        return data; // Assuming the server returns a list of wiki page suggestions
+    } catch (error) {
+        console.error("Error fetching wiki page suggestions:", error);
+        return [];  // Return empty array in case of error
+    }
+}
+
 export async function GetAllUserHandler(): Promise<GetAllUserResponse> {
     try {
         const url = new URL(`${baseUrl}users/get-users`);
