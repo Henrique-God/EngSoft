@@ -26,10 +26,39 @@
 .profileImage {
     width: 144px;
     height: 144px;
+    object-fit: cover;
     border-radius: 50%; 
     margin-bottom: 8px;
     border: 3px solid #00695c; 
-    object-fit: cover;
+}
+
+.imageWrapper {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 160px;
+    height: 160px;    
+}
+
+.profileContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.editIconContainer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    padding: 5px;
+    margin-bottom: 54px;
+    margin-right: 50px;
+}
+
+.inputImage {
+    display: none;
 }
 
 .nameAndRole {
@@ -79,13 +108,22 @@
     background-color: transparent;
 }
 
+.toggleButton {
+    background: none;
+}
+
+.toggleButton:hover,
+.toggleButton:focus {
+    background-color: var(--dark-green);
+    background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
+}
+
 .backButton {
     background-color: #6eb257;
     color: #000000; /* text-white */
     padding: 0.5rem 0.5rem; /* px-2 py-1 */
     border-radius: 0.5rem; /* rounded */
     outline: none; /* outline-none */
-<<<<<<< HEAD
     font-size: 24px;
     height: fit-content;
     width: fit-content;
@@ -93,17 +131,11 @@
     padding-left: 24px;
     padding-top: 8px;
     padding-bottom: 8px;
-=======
-    font-size: 32px;
->>>>>>> cb28902 (new visual identity)
-    
-
 }
 
 .backButton:hover,
 .backButton:focus {
     background-color: var(--dark-green);
-<<<<<<< HEAD
     background-color: #15803d; /* hover:bg-green-700 focus:bg-green-700 */
 }
 

@@ -1,0 +1,120 @@
+/* Main container styles */
+.container {
+  background-color: var(--white);
+  color: var(--black);
+  padding: 20px;
+}
+
+/* Title of the forum */
+.title {
+  color: var(--dark-blue);
+  font-size: 3em; /* Increased font size */
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Flex layout for the description and data visualization */
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+/* Description container */
+.description-container {
+  flex: 0 0 350px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Title in the description */
+.description-container h2 {
+  font-size: 28px; /* Larger title */
+  color: var(--dark-blue);
+  margin-bottom: 15px;
+}
+
+/* Paragraph styles in the description */
+.description-container p {
+  font-size: 18px; /* Larger text for paragraphs */
+  color: #333333;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Highlight strong elements in description */
+.description-container strong {
+  color: var(--dark-blue);
+}
+
+/* Container for data visualization */
+.graph-container {
+  flex: 1;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Tabs container for switching content */
+.tabs-container {
+  display: flex;
+  justify-content: flex-start; /* Make tabs appear side by side */
+  gap: 10px; /* Reduce space between tabs */
+  margin-top: 20px;
+}
+
+/* Individual tab styles */
+.tab {
+  padding: 10px 20px;
+  background-color: var(--white);
+  color: var(--dark-blue);
+  font-size: 1.1em;
+  font-weight: bold;
+  border: 2px solid var(--dark-blue);
+  border-radius: 8px 8px 0 0; /* Rounded top corners */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Active tab style */
+.tab.active {
+  background-color: var(--button-blue);
+  color: var(--white);
+  border-bottom: 2px solid var(--button-blue); /* Keeps the active tab visually connected with content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect for tabs */
+.tab:hover {
+  background-color: var(--button-blue-light);
+  color: var(--white);
+  transform: translateY(-2px); /* Lift the tab a bit when hovered */
+}
+
+/* Container for tab content */
+.tabs-content {
+  margin-top: 20px;
+  display: none; /* Hide all content initially */
+}
+
+/* Active tab content should be displayed */
+.tabs-content.active {
+  display: block;
+}
+
+/* Styling for the content within the tabs */
+.tabs-content h2 {
+  font-size: 2em;
+  color: var(--dark-blue);
+  margin-bottom: 10px;
+}
+
+.tabs-content p {
+  font-size: 1.2em;
+  color: var(--black);
+  line-height: 1.6;
+}

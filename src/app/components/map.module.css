@@ -1,0 +1,16 @@
+.legend-gradient {
+    height: 20px;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .legend-labels {
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  
+
+  

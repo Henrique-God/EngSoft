@@ -42,6 +42,7 @@
 
 .buttonDiv {
     margin-top: 64px;
+    text-decoration: none;
 }
 
 /* Back Button */
@@ -52,6 +53,7 @@
     border-radius: 0.5rem; /* rounded */
     outline: none; /* outline-none */
     font-size: 32px;
+    text-decoration: none;
 }
 
 /* Back Button Hover and Focus States */
