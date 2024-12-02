@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import searchIcon from '@/src/assets/icons/search-svgrepo-com.svg';
 import { GetAllUserHandler, GetAllUserResponse, UserHandler, UserResponse } from "@/src/app/components/backendConnection";
 import decodeToken from "@/src/app/components/TokenDecoder";
-
+import Link from 'next/link'; // Import the Link component
 
 export default function Admin(){
     const [searchQuery, setSearchQuery] = useState('');
@@ -301,6 +301,12 @@ export default function Admin(){
                     <div className={styles.filterButton}>
                         <button type="submit" className={styles.saveChangesButton}>Salvar mudanças</button>
                     </div>
+                </div>
+                <div className={styles.buttonWrapper}>
+                    {/* Add the link/button here */}
+                    <Link href="/approve_page"> 
+                        <button className={styles.saveChangesButton}>Aprovação da Wiki</button>
+                    </Link>
                 </div>
             </div>
         </div>

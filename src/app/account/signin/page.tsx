@@ -50,6 +50,7 @@ export default function Role() {
 
             if (result.success && result.token) {
                 localStorage.setItem("token", result.token);
+                
                 window.location.href = "/";
             } else {
                 console.error("Login failed:", result.error);

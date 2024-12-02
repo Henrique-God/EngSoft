@@ -1,5 +1,4 @@
-// src/app/components/navlinks.tsx
-"use client"
+"use client";
 
 import styles from './SideNav.module.css';
 import {
@@ -11,47 +10,55 @@ import {
   Cog6ToothIcon,
 } from '@heroicons/react/24/outline';
 import decodeToken from "@/src/app/components/TokenDecoder";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-const links = [
-  { name: 'Home', href: '/home', icon: HomeIcon },
+// Base links (static)
+const baseLinks = [
+  { name: 'Home', href: '/', icon: HomeIcon },
   { name: 'Wiki', href: '/wiki', icon: DocumentDuplicateIcon },
   { name: 'Forum', href: '/forum', icon: UserGroupIcon },
   { name: 'Estatística', href: '/estatistica', icon: ChartBarIcon },
 ];
 
 export default function NavLinks() {
-  const token = localStorage.getItem("token")
-  const decodedToken = token ? decodeToken(token) : null;
-  useEffect(() => {
-      const fetchUserData = async () => {
-          if (decodedToken) {
-              try {
-                  if (decodedToken.role === "admin") {
-                      links.push({
-                          name: 'Admin',
-                          href: '/admin',
-                          icon: Cog6ToothIcon,
-                      });
-                  }
+  const [dynamicLinks, setDynamicLinks] = useState(baseLinks);
 
-                  if (decodedToken.role !== "morador") {
-                      links.push({
-                          name: 'Write Wiki',
-                          href: '/page/newPage',
-                          icon: PencilSquareIcon,
-                      });
-                  }
-              } catch (err) {
-              }
-          } 
-      };
-      fetchUserData();
-  }, [decodedToken]);
+  useEffect(() => {
+    const fetchUserData = () => {
+      // Ensure we're on the client side
+      if (typeof window === "undefined") return;
+
+      const token = localStorage.getItem("token");
+      const decodedToken = token ? decodeToken(token) : null;
+
+      if (decodedToken) {
+        const additionalLinks = [];
+        if (decodedToken.role === "ADMIN") {
+          additionalLinks.push({
+            name: 'Admin',
+            href: '/admin',
+            icon: Cog6ToothIcon,
+          });
+        }
+        if (decodedToken.role !== "MORADOR") {
+          additionalLinks.push({
+            name: 'Write Wiki',
+            href: '/page/newPage',
+            icon: PencilSquareIcon,
+          });
+        }
+
+        // Update links
+        setDynamicLinks((prevLinks) => [...prevLinks, ...additionalLinks]);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <>
-      {links.map((link) => {
+      {dynamicLinks.map((link) => {
         const LinkIcon = link.icon;
         return (
           <a
@@ -59,7 +66,7 @@ export default function NavLinks() {
             href={link.href}
             className={styles.navLink}
           >
-            <LinkIcon className={styles.iconSmall} /> {/* Smaller icon class */}
+            <LinkIcon className={styles.iconSmall} />
             <span>{link.name}</span>
           </a>
         );

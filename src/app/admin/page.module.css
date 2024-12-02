@@ -3,11 +3,13 @@
     flex-direction: column;
     min-height: 88vh;
     margin: 32px;
+    font-family: var(--font-family);
 }
 
 .filterButton {
     display: flex;
     justify-content: end;
+    font-family: var(--font-family);
 }
 
 .titleWrapper {
@@ -192,6 +194,8 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-family: var(--font-family);
+
 }
 
 .saveChangesButton:hover {

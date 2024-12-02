@@ -1,0 +1,17 @@
+.wiki {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    color: var(--dark-blue); /* Text in dark blue */
+    font-size: 0.875rem; /* Smaller font for a compact look */
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s;
+  }
+
+  .iconSmall {
+    width: 24px;  /* Smaller icon size */
+    height: 24px; /* Smaller icon size */
+  }
