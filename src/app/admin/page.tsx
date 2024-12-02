@@ -132,7 +132,7 @@ export default function Admin(){
     return (
     <div>
         <div className={styles.container}>
-            <div className={styles.titleWrapper}><label>Area do administrador</label></div>
+            <div className={styles.titleWrapper}><label>Área do administrador</label></div>
             <div className={styles.contentWrapper}>
                 <div className={styles.filterWrapper}>
                     <label className={styles.filterTile}>Filtros:</label>

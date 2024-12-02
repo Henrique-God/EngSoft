@@ -35,9 +35,9 @@ export default function Role() {
         senha2: "",
     });
     let roleImg: StaticImageData | undefined;
-    if (role === "morador") {
+    if (role === "Morador") {
         roleImg = morador;
-    } else if (role === "fiscal") {
+    } else if (role === "Fiscal") {
         roleImg = fiscal;
     } else {
         roleImg = admin;
@@ -77,7 +77,7 @@ export default function Role() {
         });
 
         // Verificar se o PDF está presente para fiscal e admin
-        if ((role === "fiscal" || role === "admin") && !pdfFile) {
+        if ((role === "Fiscal" || role === "Admin") && !pdfFile) {
             errors.pdf = true;
         }
 
@@ -141,9 +141,9 @@ export default function Role() {
                 <div className={styles.container}>
                     <div className={styles.Header}>
                         <h1 className={styles.title}>
-                            {role === "admin" && "Administrador"}
-                            {role === "fiscal" && "Fiscal"}
-                            {role === "morador" && "Morador"}
+                            {role === "Admin" && "Administrador"}
+                            {role === "Fiscal" && "Fiscal"}
+                            {role === "Morador" && "Morador"}
                         </h1>
                         <div className={styles.profileContainer}>
                             <label htmlFor="fileInput" className={styles.imageWrapper}>
@@ -213,7 +213,7 @@ export default function Role() {
                             </div>
                         </div>
 
-                        {(role === "fiscal" || role === "admin") && (
+                        {(role === "Fiscal" || role === "Admin") && (
                             <div className={styles.inputs}>
                                 <label className={styles.label}>Insira um comprovante de cargo (PDF):</label>
                                 <input
