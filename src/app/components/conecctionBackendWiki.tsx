@@ -72,7 +72,7 @@ export interface GetWikiResponse {
     content?: string;
 }
 
-export async function GetWikitHandler(wikiTitle: string): Promise<GetWikiResponse> {
+export async function GetWikiHandler(wikiTitle: string): Promise<GetWikiResponse> {
     try {
         const url = new URL(`${baseUrl}search-pages/`);
         url.searchParams.append("PageTitle", wikiTitle);
@@ -91,6 +91,68 @@ export async function GetWikitHandler(wikiTitle: string): Promise<GetWikiRespons
         const data = await response.json();
 
         return { success: true, content: data[0]};
+    } catch (error) {
+        console.error("Error while logging in:", error);
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+
+export interface GetAllPagesResponse {
+    success: boolean;
+    error?: string;
+    pages?: (any)[][];
+}
+
+export async function GetAllPagestHandler(): Promise<GetAllPagesResponse> {
+    try {
+        const url = new URL(`${baseUrl}get-all;`);
+        const token = localStorage.getItem("token");
+        const response = await fetch(url.toString(), {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+
+            },
+        });
+        if (!response.ok) {
+            return { success: false, error: response.statusText };
+        }
+        const data = await response.json();
+
+        return { success: true, pages: data};
+    } catch (error) {
+        console.error("Error while logging in:", error);
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+
+export interface ApprovePageResponse {
+    success: boolean;
+    error?: string;
+    page?: (any)[];
+}
+
+export async function ApprovePageHandler(wikiId: string): Promise<ApprovePageResponse> {
+    try {
+        const url = new URL(`${baseUrl}approve/${wikiId}`);
+        const token = localStorage.getItem("token");
+        const response = await fetch(url.toString(), {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+
+            },
+        });
+        if (!response.ok) {
+            return { success: false, error: response.statusText };
+        }
+        const data = await response.json();
+
+        return { success: true, page: data};
     } catch (error) {
         console.error("Error while logging in:", error);
         return { success: false, error: (error as Error).message };
