@@ -195,7 +195,7 @@ export async function GetAllPagestHandler(): Promise<GetAllPagesResponse> {
 
         return { success: true, pages: data};
     } catch (error) {
-        console.error("Error while logging in:", error);
+        console.error("Error:", error);
         return { success: false, error: (error as Error).message };
     }
 }
@@ -226,7 +226,7 @@ export async function ApprovePageHandler(wikiId: string): Promise<ApprovePageRes
 
         return { success: true, page: data};
     } catch (error) {
-        console.error("Error while logging in:", error);
+        console.error("Error:", error);
         return { success: false, error: (error as Error).message };
     }
 }
