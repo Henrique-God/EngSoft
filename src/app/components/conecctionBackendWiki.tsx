@@ -178,10 +178,10 @@ export interface GetAllPagesResponse {
 
 export async function GetAllPagestHandler(): Promise<GetAllPagesResponse> {
     try {
-        const url = new URL(`${baseUrl}get-all;`);
+        const url = new URL(`${baseUrl}get-pages;`);
         const token = localStorage.getItem("token");
         const response = await fetch(url.toString(), {
-            method: "PUT",
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
@@ -227,6 +227,41 @@ export async function ApprovePageHandler(wikiId: string): Promise<ApprovePageRes
         return { success: true, page: data};
     } catch (error) {
         console.error("Error:", error);
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+export interface GetTitlesResponse {
+    success: boolean;
+    error?: string;
+    titles?: string[];
+}
+
+export async function GetAllTitlesHandler(): Promise<GetTitlesResponse> {
+    try {
+        const url = `${baseUrl}get-titles`; // Route for fetching validated wiki titles
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            return { success: false, error: "Authentication token is missing." };
+        }
+
+        const response = await fetch(url, {
+            method: "GET", // GET method for fetching data
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            return { success: false, error: response.statusText };
+        }
+
+        const data = await response.json();
+        return { success: true, titles: data }; // Titles returned as a string array
+    } catch (error) {
+        console.error("Error while fetching titles:", error);
         return { success: false, error: (error as Error).message };
     }
 }

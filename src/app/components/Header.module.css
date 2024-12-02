@@ -178,3 +178,49 @@
 .suggestion_item:hover {
     background-color: var(--button-blue-light); /* Highlight on hover */
 }
+
+
+.logo_title_wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user_area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile_container {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile_pic {
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 10;
+}
+
+
+.auth_links {
+    display: flex;
+    gap: 10px;
+}

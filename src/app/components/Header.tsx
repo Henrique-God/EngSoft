@@ -3,73 +3,95 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import Image from "next/image";
+import decodeToken from "@/src/app/components/TokenDecoder";
 import logo from "@/src/assets/logo.png";
-import { GetWikitHandler } from "./conecctionBackendWiki";
+import { GetWikitHandler, GetAllTitlesHandler } from "./conecctionBackendWiki";
+import adminImg from "@/src/assets/admin.jpg";
+import fiscalImg from "@/src/assets/fiscal.jpg";
+import moradorImg from "@/src/assets/morador.jpg";
 
 export default function Header() {
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState<string[]>([]);
-    const [isSignedIn, setIsSignedIn] = useState(false); // Track sign-in state
-    const [role, setRole] = useState<string | null>(null); // Track user role
-    const [wikiContent, setWikiContent] = useState<string | null>(null); // State for wiki content
-    const [username, setUsername] = useState<string | null>(null); // Track username
-    const [profilePic, setProfilePic] = useState<string | null>(null); // Track profile picture URL
+    const [allSuggestions, setAllSuggestions] = useState<string[]>([]);
+    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [username, setUsername] = useState<string | null>(null);
+    const [profilePic, setProfilePic] = useState<string | null>(null);
+    const [role, setRole] = useState<string | null>(null);
+    const [wikiContent, setWikiContent] = useState<string | null>(null);
 
-    // Check for token and role on component mount
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        const userName = localStorage.getItem("username"); // Assuming username is stored in localStorage
-        const userProfilePic = localStorage.getItem("profilePic"); // Assuming profilePic is stored in localStorage
+        const fetchTitles = async () => {
+            try {
+                const response = await GetAllTitlesHandler();
+                if (response.success) {
+                    if (response.content) {
+                    setAllSuggestions(response.content);
+                    }
+                } else {
+                    console.error("Failed to fetch titles:", response.error);
+                }
+            } catch (error) {
+                console.error("Error fetching titles:", error);
+            }
+        };
 
-        setIsSignedIn(!!token); // Update state based on token existence
-        setUsername(userName); // Set username from localStorage if present
-        setProfilePic(userProfilePic); // Set profilePic from localStorage if present
+        const token = localStorage.getItem("token");
+        const decodedToken = token ? decodeToken(token) : null;
+        if (decodedToken) {
+            setUsername(decodedToken.nameid);
+            setRole(decodedToken.role);
+        }
+
+        const userProfilePic = localStorage.getItem("profilePic");
+        setIsSignedIn(!!token);
+        setProfilePic(userProfilePic);
+
+        fetchTitles();
     }, []);
 
-    // Handle sign out
     const handleSignOut = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
-        localStorage.removeItem("username");
-        localStorage.removeItem("profilePic"); // Remove profile pic when signing out
+        localStorage.clear();
         setIsSignedIn(false);
-        setRole(null); // Clear role from state
-        setUsername(null); // Clear username from state
-        setProfilePic(null); // Clear profile pic from state
+        setUsername(null);
+        setProfilePic(null);
+        setRole(null);
     };
 
-    // Handle input change and filter suggestions
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const query = e.target.value;
         setSearchQuery(query);
 
-        // Filter suggestions based on query
         if (query) {
             const filteredSuggestions = allSuggestions.filter(item =>
                 item.toLowerCase().includes(query.toLowerCase())
             );
             setSuggestions(filteredSuggestions);
         } else {
-            setSuggestions([]); // Clear suggestions if the input is empty
+            setSuggestions([]);
         }
     };
 
-    const allSuggestions = [
-        'Mosquito', 'São José do Rio Preto', 'Dengue', 'Perifocal', 'Focal', 
-        'Nebulização', 'Prevenção', 'Casos', 'Anchieta', 'Setor Censitário', 
-        'Casos por Área', 'Estatística'
-    ];
-
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Search query:", searchQuery);
-        const response = await GetWikitHandler(searchQuery);
-        if (response.success) {
-            setWikiContent(response.content); // Update the state with the content
-        } else {
-            setWikiContent(null); // Reset content if the search fails
-            alert(response.error || "Search failed");
+        try {
+            const response = await GetWikitHandler(searchQuery);
+            if (response.success) {
+                setWikiContent(response.content);
+            } else {
+                setWikiContent(null);
+                alert(response.error || "Search failed");
+            }
+        } catch (error) {
+            console.error("Error during search:", error);
+            alert("An error occurred. Please try again.");
         }
+    };
+
+    const getDefaultProfilePic = () => {
+        if (role === "ADMIN") return adminImg;
+        if (role === "OPERATOR") return fiscalImg;
+        return moradorImg;
     };
 
     return (
@@ -111,15 +133,13 @@ export default function Header() {
                 {isSignedIn ? (
                     <>
                         <div className={styles.user_info}>
-                            {profilePic && (
-                                <Image
-                                    src={profilePic}
-                                    alt="Profile Picture"
-                                    width={40}
-                                    height={40}
-                                    className={styles.profile_pic} // Add a class to style the image
-                                />
-                            )}
+                            <Image
+                                src={profilePic || getDefaultProfilePic()}
+                                alt="Profile Picture"
+                                width={40}
+                                height={40}
+                                className={styles.profile_pic}
+                            />
                             <span className={styles.username}>{username}</span>
                         </div>
                         <button onClick={handleSignOut} className={styles.sign_in}>
@@ -134,7 +154,6 @@ export default function Header() {
                 )}
             </div>
 
-            {/* Display the wiki content */}
             {wikiContent && (
                 <div className={styles.wiki_content}>
                     <h3>Wiki Content:</h3>
