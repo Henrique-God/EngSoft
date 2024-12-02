@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 
 // Base links (static)
 const baseLinks = [
-  { name: 'Home', href: '/home', icon: HomeIcon },
+  { name: 'Home', href: '/', icon: HomeIcon },
   { name: 'Wiki', href: '/wiki', icon: DocumentDuplicateIcon },
   { name: 'Forum', href: '/forum', icon: UserGroupIcon },
   { name: 'Estatística', href: '/estatistica', icon: ChartBarIcon },
@@ -33,14 +33,14 @@ export default function NavLinks() {
 
       if (decodedToken) {
         const additionalLinks = [];
-        if (decodedToken.role === "admin") {
+        if (decodedToken.role === "ADMIN") {
           additionalLinks.push({
             name: 'Admin',
             href: '/admin',
             icon: Cog6ToothIcon,
           });
         }
-        if (decodedToken.role !== "morador") {
+        if (decodedToken.role !== "MORADOR") {
           additionalLinks.push({
             name: 'Write Wiki',
             href: '/page/newPage',

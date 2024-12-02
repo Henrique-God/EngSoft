@@ -109,24 +109,33 @@ export default function NewPage() {
         return
     };
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-
-        if (handleValidation()) {
-            const wikiContent = {
-                wikiTitle: formData.titulo, 
-                wikiText: linkedText,
-            };
-            const result: CreateWikiResponse = await CreateWikitHandler(wikiContent);
-            if (result.success && result.title) {
-                window.location.href = `/wiki?title=${encodeURIComponent(result.title)}`;
-            } else {
-                alert("Algo deu errado, tente novamente mais tarde");
-            }            
-        } else {
-            alert("Por favor, preencha todos os campos obrigatórios.");
+    
+        if (!handleValidation()) {
+          alert("Por favor, preencha todos os campos obrigatórios.");
+          return;
         }
-    };
+    
+        try {
+          const response = await CreateWikitHandler({
+            wikiTitle: formData.titulo.trim(),
+            wikiText: formData.texto.trim(),
+          });
+    
+          if (response.success) {
+            alert(`Página criada com sucesso: ${response.title}`);
+            window.location.href = `/wiki/${encodeURIComponent(response.title || "")}`;
+          } else {
+            console.error("Erro ao criar página:", response.error);
+            alert(`Erro ao criar a página: ${response.error || "Erro desconhecido"}`);
+          }
+        } catch (error) {
+          console.error("Erro inesperado:", error);
+          alert("Ocorreu um erro inesperado ao tentar criar a página.");
+        }
+      };
+    
 
     const renderers = {
         link: ({ href, children }) => {

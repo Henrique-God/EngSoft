@@ -127,10 +127,10 @@ export default function Role() {
 
     const getImageSrc = () => {
         if (profilePic) return profilePic;
-        if (role === "Morador") return morador;
-        if (role === "Fiscal") return fiscal;
-        if (role === "Admin") return admin;
-        return morador
+        if (role === "morador") return morador;
+        if (role === "fiscal") return fiscal;
+        if (role === "admin") return admin;
+        return morador;  // Default fallback
     };
 
     return (

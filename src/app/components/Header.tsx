@@ -4,23 +4,38 @@ import React, { useEffect, useState } from "react";
 import styles from "./Header.module.css";
 import Image from "next/image";
 import logo from "@/src/assets/logo.png";
+import { GetWikitHandler } from "./conecctionBackendWiki";
 
 export default function Header() {
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [isSignedIn, setIsSignedIn] = useState(false); // Track sign-in state
+    const [role, setRole] = useState<string | null>(null); // Track user role
+    const [wikiContent, setWikiContent] = useState<string | null>(null); // State for wiki content
+    const [username, setUsername] = useState<string | null>(null); // Track username
+    const [profilePic, setProfilePic] = useState<string | null>(null); // Track profile picture URL
 
-    // Check for token on component mount
+    // Check for token and role on component mount
     useEffect(() => {
         const token = localStorage.getItem("token");
+        const userName = localStorage.getItem("username"); // Assuming username is stored in localStorage
+        const userProfilePic = localStorage.getItem("profilePic"); // Assuming profilePic is stored in localStorage
+
         setIsSignedIn(!!token); // Update state based on token existence
+        setUsername(userName); // Set username from localStorage if present
+        setProfilePic(userProfilePic); // Set profilePic from localStorage if present
     }, []);
 
     // Handle sign out
     const handleSignOut = () => {
         localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("username");
+        localStorage.removeItem("profilePic"); // Remove profile pic when signing out
         setIsSignedIn(false);
-        // Optional: Redirect to the home or sign-in page
+        setRole(null); // Clear role from state
+        setUsername(null); // Clear username from state
+        setProfilePic(null); // Clear profile pic from state
     };
 
     // Handle input change and filter suggestions
@@ -45,10 +60,16 @@ export default function Header() {
         'Casos por Área', 'Estatística'
     ];
 
-    const handleSearch = (e: React.FormEvent) => {
+    const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Search query:", searchQuery);
-        // Add search functionality here later
+        const response = await GetWikitHandler(searchQuery);
+        if (response.success) {
+            setWikiContent(response.content); // Update the state with the content
+        } else {
+            setWikiContent(null); // Reset content if the search fails
+            alert(response.error || "Search failed");
+        }
     };
 
     return (
@@ -88,9 +109,23 @@ export default function Header() {
             </div>
             <div className={styles.buttons_wrapper}>
                 {isSignedIn ? (
-                    <button onClick={handleSignOut} className={styles.sign_out}>
-                        Sign Out
-                    </button>
+                    <>
+                        <div className={styles.user_info}>
+                            {profilePic && (
+                                <Image
+                                    src={profilePic}
+                                    alt="Profile Picture"
+                                    width={40}
+                                    height={40}
+                                    className={styles.profile_pic} // Add a class to style the image
+                                />
+                            )}
+                            <span className={styles.username}>{username}</span>
+                        </div>
+                        <button onClick={handleSignOut} className={styles.sign_in}>
+                            Sign Out
+                        </button>
+                    </>
                 ) : (
                     <>
                         <Link className={styles.sign_in} href="/account/signin">Sign in</Link>
@@ -98,6 +133,14 @@ export default function Header() {
                     </>
                 )}
             </div>
+
+            {/* Display the wiki content */}
+            {wikiContent && (
+                <div className={styles.wiki_content}>
+                    <h3>Wiki Content:</h3>
+                    <p>{wikiContent}</p>
+                </div>
+            )}
         </div>
     );
 }
