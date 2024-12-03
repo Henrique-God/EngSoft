@@ -39,7 +39,7 @@ export default function NavLinks() {
             icon: Cog6ToothIcon,
           });
         }
-        if (decodedToken.role !== "MORADOR") {
+        if (decodedToken.role !== "USER") {
           additionalLinks.push({
             name: 'Write Wiki',
             href: '/page/newPage',
