@@ -5,7 +5,7 @@ import Image, { StaticImageData } from 'next/image';
 import styles from "./page.module.css";
 import searchIcon from '@/src/assets/icons/search-svgrepo-com.svg';
 import { UserHandler, UserResponse } from "@/src/app/components/backendConnection";
-import { GetAllPagesHandler, GetAllPagesResponse, ApprovePageHandler, ApprovePageResponse } from "@/src/app/components/conecctionBackendWiki";
+import { ApprovePageHandler, ApprovePageResponse, GetAllHandler, GetAllResponse } from "@/src/app/components/conecctionBackendWiki";
 import decodeToken from "@/src/app/components/TokenDecoder";
 
 
@@ -38,9 +38,10 @@ export default function ApprovePage(){
         const fetchUserData = async () => {
             if (roleValue) {
                 try {
-                    const result: GetAllPagesResponse = await GetAllPagesHandler();
+                    const result: GetAllResponse = await GetAllHandler();
                     if (result.pages) {
                         const unvalidatedPages = result.pages.filter((page) => !page.validated);
+                        console.log(result.pages)
                         setWikis(unvalidatedPages);
                         setFilteredWikis(unvalidatedPages);
                     }
