@@ -8,7 +8,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  width: 100vw;
+  width: 100%;
   min-height: 88vh;
 }
 
@@ -113,6 +113,24 @@
     background-color: rgb(227, 221, 221) ; /* Manually set a darker green color */
     font-weight: 700;
   }
+
+  
+  .previewContainer {
+    flex: 1;
+    margin-left: 20px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+}
+
+.preview {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
 
 .nextButton {
   padding: 10px 20px;

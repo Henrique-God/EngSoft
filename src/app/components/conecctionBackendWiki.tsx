@@ -6,32 +6,38 @@ export interface ImgInsertResponse {
     path?: string;
 }
 
-export async function ImgInsertHandler(image: string): Promise<ImgInsertResponse> {
+export async function ImgInsertHandler(image: File[]): Promise<ImgInsertResponse> {
     try {
-        const url = new URL(`${baseUrl}add-photo`);
-        url.searchParams.append("image", image);
+        const formData = new FormData();
+
+        // Append each image to FormData with the correct field name
+        image.forEach((file) => {
+            formData.append('photo', file, file.name);  // 'photo' is the form field name that the backend expects
+        });
+
+        const url = `${baseUrl}add-photo`;  // Correct endpoint URL
         const token = localStorage.getItem("token");
-        const response = await fetch(url.toString(), {
+
+        // Send the FormData in the body of the POST request
+        const response = await fetch(url, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-
+                "Authorization": `Bearer ${token}`,  // Make sure the token is included
             },
+            body: formData,  // Send the FormData as the body
         });
+
         if (!response.ok) {
             return { success: false, error: response.statusText };
         }
-        const data = await response.json(); 
 
-        return { success: true, path: data.picture };
+        const data = await response.json();
+        return { success: true, path: data.url };  // Assuming the response contains a URL field
     } catch (error) {
-        console.error("Error while logging in:", error);
+        console.error("Error while uploading image:", error);
         return { success: false, error: (error as Error).message };
     }
 }
-
-
 
 export interface CreateWikiResponse {
     success: boolean;
@@ -92,17 +98,16 @@ export interface CreateWikiResponse {
     }[];
 }
 
-  
 export interface GetWikiResponse {
     success: boolean;
     error?: string;
-    content?: WikiPage;  // Use WikiPage structure for the response content
+    content?: WikiPage;
 }
 
 
-export async function GetWikitHandler(wikiTitle: string): Promise<GetWikiResponse> {
+export async function GetWikiHandler(wikiTitle: string): Promise<GetWikiResponse> {
     try {
-        const url = `${baseUrl}search-pages/${wikiTitle}`; // Corrected path with pageTitle
+        const url = `${baseUrl}search-pages/${wikiTitle}`;
         const token = localStorage.getItem("token");
 
         if (!token) {
@@ -110,7 +115,7 @@ export async function GetWikitHandler(wikiTitle: string): Promise<GetWikiRespons
         }
 
         const response = await fetch(url, {
-            method: "GET", // Correct HTTP method for fetching data
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
@@ -118,16 +123,21 @@ export async function GetWikitHandler(wikiTitle: string): Promise<GetWikiRespons
         });
 
         if (!response.ok) {
-            return { success: false, error: response.statusText };
+            return { success: false, error: `Error: ${response.status} - ${response.statusText}` };
         }
 
-        const data = await response.json();
-        if (data.length === 0) {
+        let data;
+        try {
+            data = await response.json();
+        } catch {
+            return { success: false, error: "Invalid JSON response from server." };
+        }
+
+        if (!Array.isArray(data) || data.length === 0) {
             return { success: false, error: "Wiki page not found." };
         }
 
-        // Assuming the response is an array, return the first element as content
-        return { success: true, content: data[0] }; 
+        return { success: true, content: data[0] };
     } catch (error) {
         console.error("Error while fetching wiki data:", error);
         return { success: false, error: (error as Error).message };
@@ -178,28 +188,29 @@ export interface GetAllPagesResponse {
 
 export async function GetAllPagestHandler(): Promise<GetAllPagesResponse> {
     try {
-        const url = new URL(`${baseUrl}get-pages;`);
+        const url = new URL(`${baseUrl}get-all`);
         const token = localStorage.getItem("token");
+        if (!token) {
+            return { success: false, error: "No token found" };
+        }
         const response = await fetch(url.toString(), {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`,
-
             },
         });
         if (!response.ok) {
-            return { success: false, error: response.statusText };
+            const errorDetails = await response.text();
+            return { success: false, error: `${response.statusText} - ${errorDetails}` };
         }
         const data = await response.json();
-
-        return { success: true, pages: data};
+        return { success: true, pages: data.pages }; // Assuming the response has a 'pages' field
     } catch (error) {
         console.error("Error:", error);
         return { success: false, error: (error as Error).message };
     }
 }
-
 
 export interface ApprovePageResponse {
     success: boolean;

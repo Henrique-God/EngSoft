@@ -1,46 +1,63 @@
-// app/wiki/[slug]/page.tsx
+'use client';
 
-import path from 'path';
-import fs from 'fs';
+import { useEffect, useState } from 'react';
+import { GetWikiHandler } from '@/src/app/components/conecctionBackendWiki';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkHtml from 'remark-html';
 
-// Esta função gera os parâmetros estáticos para cada arquivo Markdown
-export async function generateStaticParams() {
-  const wikiDir = path.join(process.cwd(), 'src/assets/wiki');
-  const filenames = fs.readdirSync(wikiDir);
-
-  return filenames.map((filename) => ({
-    slug: filename.replace(/\.md$/, ''), // Remove .md para criar slug
-  }));
-}
-
-// Página que exibe o conteúdo do Markdown
-const WikiPage = async ({ params }: { params: { slug: string } }) => {
+const WikiPage = ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
-  const filePath = path.join(process.cwd(), 'src/assets/wiki', `${slug}.md`);
+  const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Verifica se o arquivo existe antes de ler
-  if (!fs.existsSync(filePath)) {
-    return <div>Página não encontrada</div>; // Trata arquivo não encontrado
+  useEffect(() => {
+    const fetchPage = async () => {
+      // Log the received slug to check if it's being passed correctly
+      console.log('Received slug:', slug);
+
+      // Convert the slug back to the original title
+      const formattedTitle = slug.replace(/-/g, ' '); // Convert slug back to title
+      console.log('Formatted title for search:', formattedTitle); // Log the formatted title
+
+      const response = await GetWikiHandler(formattedTitle);
+
+      if (response.content) {
+        console.log('Response content:', response.content); // Log the response from the API
+        setTitle(response.content.pageTitle);
+
+        // Process the Markdown content to HTML
+        const processedContent = await unified()
+          .use(remarkParse)
+          .use(remarkHtml)
+          .process(response.content.pageText);
+
+        setContent(processedContent.toString());
+      } else {
+        setError(response.error || 'Erro ao carregar a página');
+      }
+
+      setLoading(false);
+    };
+
+    fetchPage();
+  }, [slug]);
+
+  if (loading) {
+    return <div>Carregando...</div>;
   }
 
-  // Lê e processa o arquivo Markdown
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const processedContent = await unified()
-    .use(remarkParse)
-    .use(remarkHtml)
-    .process(content);
-
-  const htmlContent = processedContent.toString();
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="wiki-page">
-      <h1>{slug.replace(/-/g, ' ').toUpperCase()}</h1>
       <div
         className="wiki-content"
-        dangerouslySetInnerHTML={{ __html: htmlContent }}
+        dangerouslySetInnerHTML={{ __html: content }}
       />
     </div>
   );

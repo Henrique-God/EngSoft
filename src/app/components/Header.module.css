@@ -185,6 +185,9 @@
     align-items: center;
     cursor: pointer;
 }
+.suggestion_item a {
+    text-decoration: none; /* Remove underline */
+}
 
 .user_area {
     display: flex;

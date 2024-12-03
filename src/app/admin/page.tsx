@@ -304,7 +304,7 @@ export default function Admin(){
                 </div>
                 <div className={styles.buttonWrapper}>
                     {/* Add the link/button here */}
-                    <Link href="/approve_page"> 
+                    <Link href="/admin/approvePage"> 
                         <button className={styles.saveChangesButton}>Aprovação da Wiki</button>
                     </Link>
                 </div>

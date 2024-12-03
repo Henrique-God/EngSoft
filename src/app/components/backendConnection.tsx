@@ -95,7 +95,13 @@ export async function UserHandler(nameid: string): Promise<UserResponse> {
     try {
         const url = new URL(`${baseUrl}users/get-user`);
         if (nameid) url.searchParams.append("userName", nameid);
+        console.log("Request URL:", url.toString());  // Log for debugging
+
         const token = localStorage.getItem("token");
+        if (!token) {
+            return { success: false, error: "Missing or invalid token" };
+        }
+
         const response = await fetch(url.toString(), {
             method: "GET",
             headers: {
@@ -103,9 +109,13 @@ export async function UserHandler(nameid: string): Promise<UserResponse> {
                 "Authorization": `Bearer ${token}`,
             },
         });
+
         if (!response.ok) {
-            return { success: false, error: response.statusText };
+            const errorDetails = await response.text();
+            console.error("Server Error:", errorDetails); // Log the server's response body for debugging
+            return { success: false, error: `Error: ${response.statusText} - ${errorDetails}` };
         }
+
         const data = await response.json();
         return {
             success: true,
@@ -118,9 +128,14 @@ export async function UserHandler(nameid: string): Promise<UserResponse> {
         };
     } catch (error) {
         console.error("Error getting user:", error);
-        return { success: false, error: (error as Error).message };
+        if (error instanceof Error) {
+            return { success: false, error: error.message };
+        } else {
+            return { success: false, error: "Unknown error occurred" };
+        }
     }
 }
+
 
 // UpdateHandler: Handles user data update
 export interface UpdateResponse {

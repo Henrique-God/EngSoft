@@ -1,5 +1,4 @@
-"use client"; 
-
+'use client'
 import Link from "next/link";
 import React, { Component, FormEvent } from 'react';
 import { useState } from 'react';
@@ -14,7 +13,7 @@ export default function NewPage() {
 
     const [image, setImage] = useState(null);
     const [savedImages, setSavedImages] = useState<string[]>([]);
-    const [inputErrors, setInputErrors] = useState({})
+    const [inputErrors, setInputErrors] = useState({});
     const [linkedText, setLinkedText] = useState('');
 
     const [formData, setFormData] = useState({
@@ -75,7 +74,6 @@ export default function NewPage() {
         setInputErrors((prevErrors) => ({ ...prevErrors, [name]: false }));
     };
 
-
     const handleValidation = () => {
         const errors = {};
         Object.keys(formData).forEach((key) => {
@@ -93,20 +91,23 @@ export default function NewPage() {
     const handleImageChange = (event) => {
         const files = Array.from(event.target.files);
         setImage(files);
-
     };
 
     const handleSaveImg = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         if (image) {
-            const result: ImgInsertResponse = await ImgInsertHandler(image);
-            setImage(null);
-            if (result.success && result.path) {
-                setSavedImages([...savedImages, result.path]);
+            const formData = new FormData();
+            image.forEach(file => formData.append('photo', file));  // Append files to formData
+            try {
+                const result: ImgInsertResponse = await ImgInsertHandler(formData);
+                setImage(null);
+                if (result.success && result.path) {
+                    setSavedImages([...savedImages, result.path]);
+                }
+            } catch (error) {
+                console.error("Error uploading image:", error);
             }
         }
-        
-        return
     };
 
     const handleSubmit = async (e: FormEvent) => {
@@ -193,7 +194,10 @@ export default function NewPage() {
                         {savedImages.length > 0 && (
                             <div className={styles.imageContainer}>
                                 {savedImages.map((path, index) => (
-                                    <img key={index} src={path} alt={`Uploaded ${index}`} className={styles.uploadedImage} />
+                                    <div key={index}>
+                                        <img src={path} alt={`Uploaded ${index}`} className={styles.uploadedImage} />
+                                        <div>{path}</div> {/* Displaying the image path */}
+                                    </div>
                                 ))}
                             </div>
                         )}
