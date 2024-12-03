@@ -41,6 +41,8 @@ const WikiPage = ({ params }: { params: { slug: string } }) => {
           .use(remarkParse)
           .use(remarkHtml)
           .process(response.content.pageText);
+        
+         console.log(response.content.pageText);
 
         let updatedContent = processedContent.toString();
         titles.forEach((title) => {
@@ -48,7 +50,11 @@ const WikiPage = ({ params }: { params: { slug: string } }) => {
           if (title.toLowerCase() !== formattedTitle.toLowerCase()) {
             const regex = new RegExp(`\\b${title.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&')}\\b`, 'gi');
             updatedContent = updatedContent.replace(regex, (match) => {
-              return `<a href="/wiki/${formattedSlug}" class="${styles['title-link']}">${match}</a>`;
+              // Verifica se já está dentro de uma tag de link
+              if (`/<a[^>]>.?</a>/`.test(match)) {
+                return match; // Não substitui se já for um link
+              } 
+              return <a href="/wiki/${formattedSlug}" class="${styles['title-link']}">${match}</a>;
             });
           }
         });

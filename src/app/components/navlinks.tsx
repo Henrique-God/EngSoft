@@ -8,6 +8,7 @@ import {
   ChartBarIcon,
   PencilSquareIcon,
   Cog6ToothIcon,
+  CheckCircleIcon,
 } from '@heroicons/react/24/outline';
 import decodeToken from "@/src/app/components/TokenDecoder";
 import { useEffect, useState } from 'react';
@@ -37,6 +38,11 @@ export default function NavLinks() {
             name: 'Admin',
             href: '/admin',
             icon: Cog6ToothIcon,
+          });
+          additionalLinks.push({
+            name: 'Aprovar wikis',
+            href: '/admin/approvePage',
+            icon: CheckCircleIcon,
           });
         }
         if (decodedToken.role !== "USER") {

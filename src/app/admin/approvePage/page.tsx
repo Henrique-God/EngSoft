@@ -5,7 +5,7 @@ import Image, { StaticImageData } from 'next/image';
 import styles from "./page.module.css";
 import searchIcon from '@/src/assets/icons/search-svgrepo-com.svg';
 import { UserHandler, UserResponse } from "@/src/app/components/backendConnection";
-import { GetAllPagestHandler, GetAllPagesResponse, ApprovePageHandler, ApprovePageResponse } from "@/src/app/components/conecctionBackendWiki";
+import { GetAllPagesHandler, GetAllPagesResponse, ApprovePageHandler, ApprovePageResponse } from "@/src/app/components/conecctionBackendWiki";
 import decodeToken from "@/src/app/components/TokenDecoder";
 
 
@@ -31,18 +31,18 @@ export default function ApprovePage(){
         };
 
         fetchUserData();
-    }, []);
+    }, [decodedToken]);
 
     
     useEffect(() => {
         const fetchUserData = async () => {
             if (roleValue) {
                 try {
-                    const result: GetAllPagesResponse = await GetAllPagestHandler();
+                    const result: GetAllPagesResponse = await GetAllPagesHandler();
                     if (result.pages) {
                         const unvalidatedPages = result.pages.filter((page) => !page.validated);
                         setWikis(unvalidatedPages);
-                        setFilteredWikis(unvalidatedPages)
+                        setFilteredWikis(unvalidatedPages);
                     }
                 } catch (err) {
                 }

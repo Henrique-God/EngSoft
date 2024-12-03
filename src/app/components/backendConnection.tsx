@@ -220,7 +220,7 @@ export async function LoginHandler(formData: { userName: string; password: strin
 // GetAllUserHandler: Fetches all users from the backend
 export interface GetAllUserResponse {
     success: boolean;
-    users?: (string)[][];
+    users?: (any)[][];
     error?: string;
 }
 
@@ -239,6 +239,7 @@ export async function GetAllUserHandler(): Promise<GetAllUserResponse> {
             return { success: false, error: response.statusText };
         }
         const data = await response.json();
+        console.log(data)
         return {
             success: true,
             users: data,
