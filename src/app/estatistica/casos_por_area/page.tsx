@@ -72,7 +72,7 @@ export default function MapPage() {
               <strong>Densidade demográfica:</strong> 1.112,17 hab/km² [2022]
             </p>
             <p>
-              Para análise dos dados do município, dividiu-se em 29 <a href="/wiki/conceito-de-área">áreas</a> para visualização no gráfico. A área com maior
+              Para análise dos dados do município, dividiu-se em 29 <a href="/wiki/área">áreas</a> para visualização no gráfico. A área com maior
               quantidade de casos em 2022 foi São Francisco com 2397 notificacoes em 2023 foi Estoril com 1058 notificações. São áreas vizinhas no sudoeste de São José do Rio Preto.
             </p>
           </div>
