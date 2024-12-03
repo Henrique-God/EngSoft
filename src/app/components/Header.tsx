@@ -89,6 +89,7 @@ export default function Header() {
         setUsername(null);
         setProfilePic(null);
         setRole(null);
+        window.location.href = '/';
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
