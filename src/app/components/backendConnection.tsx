@@ -1,5 +1,11 @@
 const baseUrl = "http://localhost:5036/";
 
+export interface CreateResponse {
+    success: boolean;
+    error?: string;
+    token?: string; 
+}
+
 // CreateHandler: Handles user registration
 export async function CreateHandler(formData: { userName: string; 
     password: string;
@@ -21,7 +27,7 @@ export async function CreateHandler(formData: { userName: string;
         }
         const data = await response.json();
 
-        return { success: true, token: data.token, id: data.id };
+        return { success: true, token: data.token };
     } catch (error) {
         console.error("Error while logging in:", error);
         return { success: false, error: (error as Error).message };

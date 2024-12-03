@@ -22,8 +22,8 @@ export default function ApprovePage(){
             if (decodedToken) {
                 try {
                     const result: UserResponse = await UserHandler(decodedToken.nameid);
-                    if (result.userName) {
-                        setRoleValue(result.userName)
+                    if (result.role) {
+                        setRoleValue(result.role)
                     }
                 } catch (err) {
                 }
@@ -31,7 +31,7 @@ export default function ApprovePage(){
         };
 
         fetchUserData();
-    }, [decodedToken]);
+    }, []);
 
     
     useEffect(() => {
@@ -40,9 +40,9 @@ export default function ApprovePage(){
                 try {
                     const result: GetAllPagesResponse = await GetAllPagestHandler();
                     if (result.pages) {
-                        const unapprovedPages = result.pages.filter((page) => !page.approved);
-                        setWikis(unapprovedPages);
-                        setFilteredWikis(unapprovedPages)
+                        const unvalidatedPages = result.pages.filter((page) => !page.validated);
+                        setWikis(unvalidatedPages);
+                        setFilteredWikis(unvalidatedPages)
                     }
                 } catch (err) {
                 }
@@ -57,34 +57,37 @@ export default function ApprovePage(){
         if (searchQuery) {
             const lowerCaseQuery = searchQuery.toLowerCase();
             filtered = filteredWikis.filter(wiki => 
-                wiki.PageTitle.toLowerCase().includes(lowerCaseQuery) || 
-                wiki.OwnerName?.toLowerCase().includes(lowerCaseQuery)
+                wiki.pageTitle.toLowerCase().includes(lowerCaseQuery) || 
+                wiki.ownerName?.toLowerCase().includes(lowerCaseQuery)
             );
         }
         setSearchQuery('');
         setFilteredWikis(filtered);
     }
 
-    const toggleApproved = (id: string) => {
+    const togglevalidated = (id: string) => {
         setWikis((prev) =>
           prev.map((wiki) =>
-            wiki.id === id
-              ? { ...wiki, approved: wiki.approved === 'Yes' ? 'No' : 'Yes' }
-              : wiki
+            wiki.id === id ? { ...wiki, validated: !wiki.validated } : wiki
           )
+        );
+        setFilteredWikis((prev) =>
+            prev.map((wiki) =>
+              wiki.id === id ? { ...wiki, validated: !wiki.validated } : wiki
+            )
         );
     };
 
     const saveChangesButton = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault(); 
-        const approvedWikis = wikis.filter((wiki) => wiki.approved);
+        const validatedWikis = wikis.filter((wiki) => wiki.validated);
 
-        for (const wiki of approvedWikis) {
+        for (const wiki of validatedWikis) {
             try {
                 const result: ApprovePageResponse = await ApprovePageHandler(wiki.id);
 
                 if (result.success) {
-                    console.log(`Wiki with ID ${wiki.id} approved successfully!`);
+                    console.log(`Wiki with ID ${wiki.id} validated successfully!`);
                 } else {
                     console.error(`Failed to approve Wiki with ID ${wiki.id}: ${result.error}`);
                 }
@@ -93,7 +96,8 @@ export default function ApprovePage(){
             }
         }
 
-        console.log("All approved wikis processed.");
+        console.log("All validated wikis processed.");
+        window.location.reload();
     }
     
     return (
@@ -128,19 +132,19 @@ export default function ApprovePage(){
                             {filteredWikis.map((wiki) => (
                                 <tr className={styles.trTable} key={wiki.id} style={{ textAlign: 'center' }}>
                                     <td className={styles.tdTable}>
-                                        <a href={`/wiki?title=${wiki.PageTitle}`} className={styles.linkStyle}>
-                                        {wiki.PageTitle}
+                                        <a href={`/wiki?title=${wiki.pageTitle}`} className={styles.linkStyle}>
+                                        {wiki.pageTitle}
                                         </a>
                                     </td>
-                                    <td className={styles.tdTable}>{wiki.OwnerName}</td>
+                                    <td className={styles.tdTable}>{wiki.ownerName}</td>
                                     <td className={styles.tdTable}>
                                         <button
-                                        className={`${styles.approvedButton} ${
-                                            wiki.approved === 'Yes' ? styles.yesButton : styles.noButton
+                                        className={`${styles.validatedButton} ${
+                                            wiki.validated ? styles.yesButton : styles.noButton
                                         }`}
-                                        onClick={() => toggleApproved(wiki.id)}
+                                        onClick={() => togglevalidated(wiki.id)}
                                         >
-                                        {wiki.approved}
+                                        {wiki.validated ? "aprovado" : "Não aprovado"}
                                         </button>
                                     </td>
                                 </tr>
@@ -149,7 +153,7 @@ export default function ApprovePage(){
                         </table>
                     </div>
                     <div className={styles.filterButton}>
-                        <button type="button" onClick={() => saveChangesButton} className={styles.saveChangesButton}>Salvar mudanças</button>
+                        <button type="button" onClick={saveChangesButton} className={styles.saveChangesButton}>Salvar mudanças</button>
                     </div>
                 </div>
             </div>
