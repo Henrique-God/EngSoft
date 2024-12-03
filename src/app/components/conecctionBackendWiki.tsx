@@ -183,12 +183,12 @@ export async function GetAllWikiHandler(): Promise<GetAllWikiResponse> {
 export interface GetAllPagesResponse {
     success: boolean;
     error?: string;
-    pages?: (any)[][];
-}
+    pages?: any[]; // Just a flat array of pages
+    }
 
 export async function GetAllPagestHandler(): Promise<GetAllPagesResponse> {
     try {
-        const url = new URL(`${baseUrl}get-all`);
+        const url = new URL(`${baseUrl}get-pages`);
         const token = localStorage.getItem("token");
         if (!token) {
             return { success: false, error: "No token found" };

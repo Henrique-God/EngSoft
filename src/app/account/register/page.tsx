@@ -18,21 +18,21 @@ export default function Register(){
                     <div className={styles.content}>
                         <h1 className={styles.roletitle}>Cadastro</h1>
                         <div className={styles.grid}>
-                            <Link href={{ pathname: '/account/register/role', query: { role: 'Morador' } }} className={styles.card}>
+                            <Link href={{ pathname: '/account/register/role', query: { role: 'USER' } }} className={styles.card}>
                             <div>
                                 <Image src={morador} alt="Morador" className={styles.accoutn_type} />
                                 <h2 className={styles.roletitle}>Morador</h2>
                             </div>
                             </Link>
 
-                            <Link href={{ pathname: '/account/register/role', query: { role: 'Fiscal' } }} className={styles.card}>
+                            <Link href={{ pathname: '/account/register/role', query: { role: 'OPERATOR' } }} className={styles.card}>
                             <div>
                                 <Image src={fiscal} alt="Fiscal/Agente Público" className={styles.accoutn_type} />
                                 <h2 className={styles.roletitle}>Fiscal/Agente Público</h2>
                             </div>
                             </Link>
 
-                            <Link href={{ pathname: '/account/register/role', query: { role: 'Admin' } }} className={styles.card}>
+                            <Link href={{ pathname: '/account/register/role', query: { role: 'ADMIN' } }} className={styles.card}>
                             <div>
                                 <Image src={admin} alt="Administrador" className={styles.accoutn_type} />
                                 <h2 className={styles.roletitle}>Administrador</h2>

@@ -16,8 +16,7 @@ export default function MapPage() {
       <div className={styles.content}>
         <div className={styles['property-info']}>
           <h2>Imóveis em São José do Rio Preto</h2>
-          <p> No mapa, vemos a quantidade de imóveis trabalhados e não trabalhados em alguns setores de São José do Rio Preto. Essas são as classificações dos imóveis quanto à sua situação no momento da visita:</p>
-          <ul>
+          <p> No mapa, vemos a quantidade de <a href="/wiki/imóvel">imóveis</a> trabalhados e <a href="/wiki/visitas-à-imóveis:-classificação">não trabalhados</a> em alguns setores de São José do Rio Preto. Essas são as classificações dos imóveis quanto à sua situação no momento da visita:</p>          <ul>
             <li>
               <strong> Imóvel Trabalhado:</strong> 
               É todo imóvel no qual foi possível o acesso para realização das ações previstas na atividade em desenvolvimento.

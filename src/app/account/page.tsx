@@ -45,8 +45,10 @@ export default function Account(){
     useEffect(() => {
         const fetchUserData = async () => {
             if (decodedToken) {
+                console.log("Token decoded successfully: ", decodedToken);  // Log the decoded token
                 try {
                     const result: UserResponse = await UserHandler(decodedToken.nameid);
+                    console.log("Fetched user data: ", result);  // Log the fetched data
                     if (result.userName) {
                         setNomeValue(result.userName);
                         setInputNomeValue(result.userName);
@@ -70,13 +72,16 @@ export default function Account(){
                         setProfilePic(result.profilePic);
                     }
                 } catch (err) {
+                    console.error("Error fetching user data: ", err);  // Log error if fetching fails
                 }
             } else {
+                console.log("No decoded token found.");  // Log if there's no token
             }
         };
-
+    
         fetchUserData();
     }, [decodedToken]);
+
 
     const handleEditClick = (value : string) => {
         if (value === "Nome") {
@@ -89,7 +94,7 @@ export default function Account(){
         } else if (value === "Cargo") {
             if  (isCargoEditable) {
                 setInputCargoValue(cargoValue);
-                if (cargoValue == "Morador") {
+                if (cargoValue == "USER") {
                     setShouldShowDiv(false);
                 }
             } else {
@@ -143,7 +148,7 @@ export default function Account(){
     const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
 
-        if ((inputCargoValue == "Fiscal" || inputCargoValue == "Administrador") && pdfFile == "") {
+        if ((inputCargoValue == "OPERATOR" || inputCargoValue == "ADMIN") && pdfFile == "") {
             setPdfError(true);
             alert("Por favor, adicione um PDF de comprovante.");
         } else {
@@ -173,9 +178,9 @@ export default function Account(){
 
     const getImageSrc = () => {
         if (profilePic) return profilePic;
-        if (cargoValue === "Morador") return morador;
-        if (cargoValue === "Fiscal") return fiscal;
-        if (cargoValue === "Admin") return admin;
+        if (cargoValue === "USER") return morador;
+        if (cargoValue === "OPERATOR") return fiscal;
+        if (cargoValue === "ADMIN") return admin;
         return morador
     };
 
@@ -226,7 +231,7 @@ export default function Account(){
                                 </button>
                             </div>
                             <div className={styles.editDropWrapper}>
-                                {cargoValue == "Fiscal" ? 
+                                {cargoValue == "OPERATOR" ? 
                                     <select 
                                         className={styles.role}
                                         onChange={(e) => handleInputChange("Cargo", e)}
@@ -244,7 +249,7 @@ export default function Account(){
                                             ))}
 
                                     </select>
-                                    : (cargoValue == "Admin" ? 
+                                    : (cargoValue == "ADMIN" ? 
                                         <select 
                                             className={styles.role}
                                             onChange={(e) => handleInputChange("Cargo", e)}
@@ -347,8 +352,8 @@ export default function Account(){
                     </div>                       
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button className={styles.changePasswordButton}>Alterar senha</button>
-                    <button type="submit" className={styles.saveChangesButton}>Salvar mudanças</button>
+                    <button className={styles.button}>Alterar senha</button>
+                    <button type="submit" className={styles.button}>Salvar mudanças</button>
                 </div>
             </form>
         </div>

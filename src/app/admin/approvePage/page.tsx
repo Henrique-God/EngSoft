@@ -13,7 +13,7 @@ export default function ApprovePage(){
     const [searchQuery, setSearchQuery] = useState('');
     const [wikis, setWikis] = useState<(string)[][]>([]);   
     const [filteredWikis, setFilteredWikis] = useState<(string)[][]>([]);
-    const [roleValue, setRoleValue] = useState("Morador");
+    const [roleValue, setRoleValue] = useState("USER");
 
     const token = localStorage.getItem("token")
     const decodedToken = token ? decodeToken(token) : null;

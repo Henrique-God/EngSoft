@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react';
 const baseLinks = [
   { name: 'Home', href: '/', icon: HomeIcon },
   { name: 'Wiki', href: '/wiki', icon: DocumentDuplicateIcon },
-  { name: 'Forum', href: '/forum', icon: UserGroupIcon },
   { name: 'Estatística', href: '/estatistica', icon: ChartBarIcon },
 ];
 

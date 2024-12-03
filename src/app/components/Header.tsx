@@ -1,7 +1,6 @@
-"use client";
-
+'use client'
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter
 import styles from "./Header.module.css";
 import Image from "next/image";
@@ -25,6 +24,8 @@ export default function Header() {
     const [profilePic, setProfilePic] = useState<string | null>(null);
     const [role, setRole] = useState<string | null>(null);
     const [isClient, setIsClient] = useState(false);
+    
+    const searchWrapperRef = useRef<HTMLDivElement | null>(null); // Reference to search wrapper
 
     const router = useRouter(); // Use useRouter for navigation
 
@@ -62,6 +63,26 @@ export default function Header() {
         fetchTitles();
     }, [isClient]);
 
+    // Close suggestion list if clicked outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (searchWrapperRef.current && !searchWrapperRef.current.contains(event.target as Node)) {
+                setSuggestions([]); // Close suggestions
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleSuggestionClick = (suggestion: string) => {
+        setSearchQuery(suggestion); // Update the input with the clicked suggestion
+        setSuggestions([]); // Close the suggestion list
+        router.push(`/wiki/${suggestion.toLowerCase().replace(/\s+/g, "-")}`); // Navigate to the suggestion's link
+    };
+
     const handleSignOut = () => {
         localStorage.clear();
         setIsSignedIn(false);
@@ -85,6 +106,7 @@ export default function Header() {
     };
 
     const handleSearchSubmit = () => {
+        setSuggestions([]); // Close the suggestion list
         const queryString = encodeURIComponent(JSON.stringify(suggestions)); // Encode the suggestions
         router.push(`/search_results?suggestions=${queryString}`);
     };
@@ -102,7 +124,7 @@ export default function Header() {
                     <Image src={logo} alt="Mosquito" width={300} height={140} />
                 </div>
             </Link>
-            <div className={styles.search_wrapper}>
+            <div className={styles.search_wrapper} ref={searchWrapperRef}> {/* Add ref here */}
                 <form onSubmit={(e) => e.preventDefault()}>
 
                     <input
@@ -119,14 +141,17 @@ export default function Header() {
                     >
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </button>
+
                 </form>
                 {suggestions.length > 0 && (
                     <div className={styles.suggestions}>
                         {suggestions.map((suggestion, index) => (
-                            <li key={index} className={styles.suggestion_item}>
-                                <Link href={`/wiki/${suggestion.toLowerCase().replace(/\s+/g, "-")}`}>
-                                    {suggestion}
-                                </Link>
+                            <li
+                                key={index}
+                                className={styles.suggestion_item}
+                                onClick={() => handleSuggestionClick(suggestion)}
+                            >
+                                {suggestion}
                             </li>
                         ))}
                     </div>
@@ -136,6 +161,7 @@ export default function Header() {
                 {isSignedIn ? (
                     <>
                         <div className={styles.user_info}>
+                        <Link href="/account">
                             <Image
                                 src={profilePic || getDefaultProfilePic()}
                                 alt="Profile Picture"
@@ -143,6 +169,7 @@ export default function Header() {
                                 height={40}
                                 className={styles.profile_pic}
                             />
+                            </Link>
                             <span className={styles.username}>{username}</span>
                         </div>
                         <button onClick={handleSignOut} className={styles.sign_in}>

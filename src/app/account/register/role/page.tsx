@@ -35,9 +35,9 @@ export default function Role() {
         senha2: "",
     });
     let roleImg: StaticImageData | undefined;
-    if (role === "Morador") {
+    if (role === "USER") {
         roleImg = morador;
-    } else if (role === "Fiscal") {
+    } else if (role === "OPERATOR") {
         roleImg = fiscal;
     } else {
         roleImg = admin;
@@ -77,7 +77,7 @@ export default function Role() {
         });
 
         // Verificar se o PDF está presente para fiscal e admin
-        if ((role === "Fiscal" || role === "Admin") && !pdfFile) {
+        if ((role === "OPERATOR" || role === "ADMIN") && !pdfFile) {
             errors.pdf = true;
         }
 
@@ -127,9 +127,9 @@ export default function Role() {
 
     const getImageSrc = () => {
         if (profilePic) return profilePic;
-        if (role === "morador") return morador;
-        if (role === "fiscal") return fiscal;
-        if (role === "admin") return admin;
+        if (role === "USER") return morador;
+        if (role === "OPERATOR") return fiscal;
+        if (role === "ADMIN") return admin;
         return morador;  // Default fallback
     };
 
@@ -141,9 +141,9 @@ export default function Role() {
                 <div className={styles.container}>
                     <div className={styles.Header}>
                         <h1 className={styles.title}>
-                            {role === "Admin" && "Administrador"}
-                            {role === "Fiscal" && "Fiscal"}
-                            {role === "Morador" && "Morador"}
+                            {role === "ADMIN" && "Administrador"}
+                            {role === "OPERATOR" && "Fiscal"}
+                            {role === "USER" && "Morador"}
                         </h1>
                         <div className={styles.profileContainer}>
                             <label htmlFor="fileInput" className={styles.imageWrapper}>
@@ -213,7 +213,7 @@ export default function Role() {
                             </div>
                         </div>
 
-                        {(role === "Fiscal" || role === "Admin") && (
+                        {(role === "OPERATOR" || role === "ADMIN") && (
                             <div className={styles.inputs}>
                                 <label className={styles.label}>Insira um comprovante de cargo (PDF):</label>
                                 <input

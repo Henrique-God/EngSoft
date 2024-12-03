@@ -1,17 +1,99 @@
-.wiki {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    color: var(--dark-blue); /* Text in dark blue */
-    font-size: 0.875rem; /* Smaller font for a compact look */
-    font-weight: 500;
-    text-decoration: none;
-    border-radius: 0.25rem;
-    transition: background-color 0.3s;
-  }
+/* General Container */
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .iconSmall {
-    width: 24px;  /* Smaller icon size */
-    height: 24px; /* Smaller icon size */
-  }
+/* Two-column Layout */
+.layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* Intro Section */
+.intro {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.introHeading {
+  font-size: 24px;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.introText {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Index Section */
+.index {
+  flex: 1;
+}
+
+.heading {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.listItem {
+  font-size: 18px;
+  background-color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.listItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.link {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #2980b9;
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading, Error, and Empty States */
+.loading,
+.error,
+.empty {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Image Styling */
+.introImage {
+  margin-top: 20px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
