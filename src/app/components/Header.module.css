@@ -1,0 +1,229 @@
+.header_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center elements vertically */
+    width: 100%; /* Full width of the page */
+    padding: 8px 20px; /* Adding internal spacing with some horizontal padding */
+    box-sizing: border-box; /* Includes padding and border in total width */
+    position: relative; /* Allow for the shadow to be placed relative to the header */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle bottom shadow */
+    background-color: var(--white); /* Ensure a clean background */
+    font-family: var(--font-family); /* Apply the common font family */
+    font-size: var(--font-size); /* Apply the common font size */
+}
+
+.logo_title_wrapper {
+    display: flex;
+    align-items: center; /* Center the logo and title vertically */
+}
+
+.logo_title_wrapper a {
+    text-decoration: none; /* Remove underline from the logo link */
+}
+
+.logo_title_wrapper h1 {
+    margin-left: 12px; /* Space between logo and text */
+    color: var(--dark-blue); /* Dark Blue for the title */
+    font-size: 1.5rem; /* Adjust the title size */
+    font-weight: bold;
+}
+
+.search_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center content horizontally */
+    padding: 8px 12px; /* Internal padding */
+    border-radius: 4px; /* Rounded corners */
+    background-color: var(--light-gray); /* Light background color for the search bar */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for the search div */
+    margin-right: 15px; /* Add margin to the right if needed */
+    position: relative; /* Ensure that suggestions are placed relative to this */
+}
+
+.search_input {
+    padding: 0.5rem 1rem; /* Padding for input */
+    border: 1px solid var(--gray); /* Light gray border */
+    border-radius: 4px; /* Rounded corners for the input */
+    font-size: 1rem; /* Same font size for consistency */
+    outline: none; /* Remove outline on focus */
+    width: 700px; /* Set a fixed width */
+    font-family: var(--font-family); /* Apply the common font family */
+}
+
+.search_input::placeholder {
+    color: gray; /* Set the placeholder text color to gray */
+    font-style: italic; /* Make placeholder text italic */
+}
+
+.search_button {
+    background-color: var(--dark-blue); /* Button color */
+    color: var(--white); /* White text */
+    padding: 0.5rem 1rem; /* Padding for button */
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem;
+    cursor: pointer; /* Pointer on hover */
+    margin-left: 10px; /* Space between input and button */
+    font-family: var(--font-family); /* Apply the common font family */
+}
+
+.search_button:hover {
+    background-color: var(--button-blue-light); /* Lighter button color on hover */
+    color: var(--dark-blue);
+}
+
+.buttons_wrapper {
+    display: flex;
+    align-items: center; /* Align buttons vertically in the center */
+    gap: 12px; /* Even spacing between buttons */
+}
+
+/* Button base styles */
+.sign_in,
+.register {
+    text-decoration: none; /* Remove underline from links */
+    padding: 0.5rem 1rem; /* Space for button height and width */
+    border-radius: 4px; /* Slightly rounded corners */
+    font-size: 1rem; /* Adjust font size for consistency */
+    font-weight: 600; /* Slightly bold text for emphasis */
+    display: flex;
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    cursor: pointer; /* Change cursor to pointer for buttons */
+    font-family: var(--font-family); /* Apply the common font family */
+}
+
+/* Specific button colors */
+.sign_in {
+    background-color: var(--dark-blue); /* Dark Blue background */
+    color: var(--white); /* White text for contrast */
+}
+
+.sign_in:hover,
+.sign_in:focus {
+    background-color: var(--button-blue-light); /* Lighter blue on hover/focus */
+}
+.userRole {
+    margin-right: 15px;
+    font-weight: bold;
+    color: #333;
+}
+.profile_pic {
+    border-radius: 50%; /* This makes the image circular */
+    object-fit: cover; /* Ensures the image covers the circle without distortion */
+    width: 40px; /* Adjust size */
+    height: 40px; /* Adjust size */
+}
+
+.user_info {
+    display: flex;
+    align-items: center;
+}
+
+.username {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.register {
+    background-color: var(--basic-grey); /* Grey background */
+    color: var(--dark-blue); /* Dark blue text for contrast */
+}
+
+.register:hover,
+.register:focus {
+    background-color: var(--button-blue); /* Custom Button Blue on hover/focus */
+    color: var(--white); /* White text for contrast on hover */
+}
+
+/* Optional: Media queries for responsiveness */
+@media (max-width: 768px) {
+    .header_wrapper {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align items to the left */
+    }
+
+    .buttons_wrapper {
+        justify-content: flex-start; /* Align buttons to the left */
+        margin-top: 8px; /* Add space above buttons */
+    }
+
+    .logo_title_wrapper h1 {
+        font-size: 1.2rem; /* Adjust title size for smaller screens */
+    }
+}
+
+.suggestions {
+    position: absolute;
+    top: 100%; /* Position directly below the search input */
+    left: 0;
+    width: 700px; /* Match the search input width */
+    background-color: var(--light-gray); /* Light gray background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    max-height: 200px; /* Optional: Limit height if there are many suggestions */
+    overflow-y: auto; /* Scroll if the list exceeds max-height */
+}
+
+.suggestion_item {
+    padding: 8px 12px;
+    background-color: var(--white);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.suggestion_item:hover {
+    background-color: var(--button-blue-light); /* Highlight on hover */
+}
+
+
+.logo_title_wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.suggestion_item a {
+    text-decoration: none; /* Remove underline */
+}
+
+.user_area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile_container {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile_pic {
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px;
+    z-index: 10;
+}
+
+
+.auth_links {
+    display: flex;
+    gap: 10px;
+}
