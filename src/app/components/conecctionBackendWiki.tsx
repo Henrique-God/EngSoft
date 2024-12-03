@@ -108,17 +108,11 @@ export interface GetWikiResponse {
 export async function GetWikiHandler(wikiTitle: string): Promise<GetWikiResponse> {
     try {
         const url = `${baseUrl}search-pages/${wikiTitle}`;
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            return { success: false, error: "Authentication token is missing." };
-        }
 
         const response = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
             },
         });
 
@@ -279,17 +273,12 @@ export interface GetTitlesResponse {
 export async function GetAllTitlesHandler(): Promise<GetTitlesResponse> {
     try {
         const url = `${baseUrl}get-titles`; // Route for fetching validated wiki titles
-        const token = localStorage.getItem("token");
 
-        if (!token) {
-            return { success: false, error: "Authentication token is missing." };
-        }
 
         const response = await fetch(url, {
             method: "GET", // GET method for fetching data
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
             },
         });
 
