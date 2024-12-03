@@ -189,6 +189,34 @@ export interface GetAllPagesResponse {
 export async function GetAllPagesHandler(): Promise<GetAllPagesResponse> {
     try {
         const url = new URL(`${baseUrl}get-pages`);
+        const response = await fetch(url.toString(), {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            const errorDetails = await response.text();
+            return { success: false, error: `${response.statusText} - ${errorDetails}` };
+        }
+        const data = await response.json();
+        return { success: true, pages: data }; // Assuming the response has a 'pages' field
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+
+export interface GetAllResponse {
+    success: boolean;
+    error?: string;
+    pages?: any[]; // Just a flat array of pages
+    }
+
+export async function GetAllHandler(): Promise<GetAllResponse> {
+    try {
+        const url = new URL(`${baseUrl}get-all`);
         const token = localStorage.getItem("token");
         if (!token) {
             return { success: false, error: "No token found" };
