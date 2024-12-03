@@ -204,6 +204,9 @@
     text-decoration: none;
     font-weight: bold;
     transition: color 0.2s ease-in-out;
+    display: flex;
+    justify-content: start;
+    align-items: center;
   }
   
   .linkStyle:hover {
@@ -211,8 +214,8 @@
     text-decoration: underline;
   }
   
-  /* General Button Style for Approved Column */
-  .approvedButton {
+  /* General Button Style for validatedButton Column */
+  .validatedButton {
     border: none;
     border-radius: 4px;
     padding: 8px 12px;

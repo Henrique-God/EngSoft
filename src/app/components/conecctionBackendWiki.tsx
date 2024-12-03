@@ -205,7 +205,7 @@ export async function GetAllPagestHandler(): Promise<GetAllPagesResponse> {
             return { success: false, error: `${response.statusText} - ${errorDetails}` };
         }
         const data = await response.json();
-        return { success: true, pages: data.pages }; // Assuming the response has a 'pages' field
+        return { success: true, pages: data }; // Assuming the response has a 'pages' field
     } catch (error) {
         console.error("Error:", error);
         return { success: false, error: (error as Error).message };
