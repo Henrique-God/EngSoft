@@ -29,9 +29,9 @@ export default function Admin(){
     const [orderOption, setOrderOption] = useState("");
 
 
-    const validateOptions = ["", "Validados", "Em Análise", "Inválidos"];
-    const orderOptions = ["", "Mais recente", "Mais antigo"];
-    const options = ['Administrador', 'Fiscal', 'Morador'];
+    const validateOptions = ["", "VALIDATED", "UNDER_VALIDATION", "INVALIDATED"];
+    const orderOptions = ["", "Mais antigo", "Mais recente"];
+    const options = ['ADMIN', 'OPERATOR', 'USER'];
 
 
     const token = localStorage.getItem("token")

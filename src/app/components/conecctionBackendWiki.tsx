@@ -108,17 +108,11 @@ export interface GetWikiResponse {
 export async function GetWikiHandler(wikiTitle: string): Promise<GetWikiResponse> {
     try {
         const url = `${baseUrl}search-pages/${wikiTitle}`;
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            return { success: false, error: "Authentication token is missing." };
-        }
 
         const response = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
             },
         });
 
@@ -189,6 +183,34 @@ export interface GetAllPagesResponse {
 export async function GetAllPagesHandler(): Promise<GetAllPagesResponse> {
     try {
         const url = new URL(`${baseUrl}get-pages`);
+        const response = await fetch(url.toString(), {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            const errorDetails = await response.text();
+            return { success: false, error: `${response.statusText} - ${errorDetails}` };
+        }
+        const data = await response.json();
+        return { success: true, pages: data }; // Assuming the response has a 'pages' field
+    } catch (error) {
+        console.error("Error:", error);
+        return { success: false, error: (error as Error).message };
+    }
+}
+
+
+export interface GetAllResponse {
+    success: boolean;
+    error?: string;
+    pages?: any[]; // Just a flat array of pages
+    }
+
+export async function GetAllHandler(): Promise<GetAllResponse> {
+    try {
+        const url = new URL(`${baseUrl}get-all`);
         const token = localStorage.getItem("token");
         if (!token) {
             return { success: false, error: "No token found" };
@@ -251,17 +273,12 @@ export interface GetTitlesResponse {
 export async function GetAllTitlesHandler(): Promise<GetTitlesResponse> {
     try {
         const url = `${baseUrl}get-titles`; // Route for fetching validated wiki titles
-        const token = localStorage.getItem("token");
 
-        if (!token) {
-            return { success: false, error: "Authentication token is missing." };
-        }
 
         const response = await fetch(url, {
             method: "GET", // GET method for fetching data
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
             },
         });
 
