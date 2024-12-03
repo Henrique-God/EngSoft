@@ -1,11 +1,13 @@
 'use client'
 import Link from "next/link";
-import React, { Component, FormEvent } from 'react';
+import React, { Component, FormEvent, useEffect } from 'react';
 import { useState } from 'react';
 import styles from "./page.module.css";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { ImgInsertHandler, ImgInsertResponse, CreateWikitHandler, CreateWikiResponse } from "@/src/app/components/conecctionBackendWiki";
+import { GetAllPagesHandler, GetAllPagesResponse } from "@/src/app/components/conecctionBackendWiki";
+
 import { Result } from "postcss";
 
 
@@ -15,27 +17,52 @@ export default function NewPage() {
     const [savedImages, setSavedImages] = useState<string[]>([]);
     const [inputErrors, setInputErrors] = useState({});
     const [linkedText, setLinkedText] = useState('');
-
+    interface TitleLink {
+        title: string;
+        link: string;
+        query: {
+            title: string;
+        };
+    }
+    
+    const [titleLinks, setTitleLinks] = useState<TitleLink[]>([]);
+    
     const [formData, setFormData] = useState({
         titulo: "",
         texto: "",
     });
 
-    const fetchTitles = async () => {
-        return [
-            { title: 'teste', link: '/account/register/role', query: { title: 'Morador' } },
-            { title: 'fiscal', link: '/account/register/role', query: { title: 'fiscal' } },
-            { title: 'admin', link: '/account/register/role', query: { title: 'admin' } }
-        ];
-    };
+    useEffect(() => {
+        const fetchTitles = async (): Promise<void> => {
+            try {
+                const result: GetAllPagesResponse = await GetAllPagesHandler();
+        
+                if (result.pages && result.success) {
+                    // Create title objects with necessary properties
+                    const titles = result.pages.map((page) => ({
+                        title: page.pageTitle,
+                        link: `/wiki/${encodeURIComponent(page.pageTitle)}`, // Assuming /wiki/title is the desired URL
+                        query: { title: page.pageTitle },
+                    }));
+        
+                    setTitleLinks(titles); // Store structured titles
+                } else {
+                    console.error(`Failed creating links: ${result.error}`);
+                }
+            } catch (error) {
+                console.error(`Error creating links`, error);
+            }
+        };
+
+        fetchTitles();
+    }, []);
+
     
     const handleCreateLinks = async () => {
-        // Fetch titles ordered by length in descending order
-        const titles = await fetchTitles();
-        titles.sort((a, b) => b.title.length - a.title.length);
-    
+        // Access the updated title links
+        const sortedTitles = titleLinks.sort((a, b) => b.title.length - a.title.length);
         let updatedText = formData.texto;
-
+    
         // Replace image placeholders
         const imagePlaceholderRegex = /!\[.*?\]\(<image-(\d+)>\)/g;
         updatedText = updatedText.replace(imagePlaceholderRegex, (match, imageIndex) => {
@@ -46,26 +73,27 @@ export default function NewPage() {
             return match;
         });
     
-        titles.forEach(({ title, link, query }) => {
-            const markdownLink = `[${title}](${link}?title=${encodeURIComponent(query.title)})`;
+        // Add links for each title
+        sortedTitles.forEach(({ title, link, query }) => {
+            const markdownLink = `[${title}](${link})`;
     
             // Case-insensitive regex to check if the title is already a link
-            const linkRegex = new RegExp(`\\[${title}\\]\\(${link}\\?title=${encodeURIComponent(query.title)}\\)`, 'gi');
+            const linkRegex = new RegExp(`\\[${title}\\]\\(${link}\\)`, 'gi');
     
             if (!linkRegex.test(updatedText)) {
                 const regex = new RegExp(`\\b${title}\\b`, 'gi');
-                updatedText = updatedText.replace(regex, (match) => {
-                    return `[${match}](${link}?title=${encodeURIComponent(query.title)})`;
-                });
+                updatedText = updatedText.replace(regex, (match) => `[${match}](${link})`);
             }
         });
     
+        // Update linked text and form data
         setLinkedText(updatedText);
         setFormData((prevData) => ({
             ...prevData,
             texto: updatedText,
         }));
     };
+    
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
         const { name, value } = e.target;
@@ -119,7 +147,7 @@ export default function NewPage() {
         }
     
         try {
-          const response = await CreateWikitHandler({
+          const response: CreateWikiResponse = await CreateWikitHandler({
             wikiTitle: formData.titulo.trim(),
             wikiText: formData.texto.trim(),
           });
@@ -196,7 +224,6 @@ export default function NewPage() {
                                 {savedImages.map((path, index) => (
                                     <div key={index}>
                                         <img src={path} alt={`Uploaded ${index}`} className={styles.uploadedImage} />
-                                        <div>{path}</div> {/* Displaying the image path */}
                                     </div>
                                 ))}
                             </div>

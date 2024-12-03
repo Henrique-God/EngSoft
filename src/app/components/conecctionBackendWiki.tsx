@@ -186,7 +186,7 @@ export interface GetAllPagesResponse {
     pages?: any[]; // Just a flat array of pages
     }
 
-export async function GetAllPagestHandler(): Promise<GetAllPagesResponse> {
+export async function GetAllPagesHandler(): Promise<GetAllPagesResponse> {
     try {
         const url = new URL(`${baseUrl}get-pages`);
         const token = localStorage.getItem("token");
