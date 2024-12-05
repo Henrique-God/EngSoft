@@ -1,12 +1,25 @@
 # Dengue Combat Support Prototype - TchauDengue
 
+![TchauDengue Logo](/images/logo.png)
+
 This is a prototype project designed to support efforts in combating dengue fever in **São José do Rio Preto**, located in the state of São Paulo, Brazil. The goal is to provide a **user-friendly interface** featuring a wiki, interactive map pages, and statistical visualizations to facilitate access to data about prevention actions, case reports, and more.
 
 ## Features
 
-- **Wiki**: A section to organize and present detailed information about dengue fever and related prevention strategies.
-- **Interactive Maps**: Displays georeferenced data, allowing users to explore hotspots and track prevention activities.
-- **Statistics**: Provides dynamic visualizations to analyze trends in reported cases and prevention efforts.
+### Wiki
+A section to organize and present detailed information about dengue fever and related prevention strategies.
+
+![Wiki Preview](/images/wiki.png)
+
+### Interactive Maps
+Displays georeferenced data, allowing users to explore hotspots and track prevention activities.
+
+![Interactive Map Preview](/images/mapa.png)
+
+### Statistics
+Provides dynamic visualizations to analyze trends in reported cases and prevention efforts.
+
+![Statistics Graph Preview](/images/grafico.png)
 
 ## Data Sources
 
@@ -17,6 +30,8 @@ This is a prototype project designed to support efforts in combating dengue feve
 
 - **Improved Text Editing Interface**: A more intuitive and flexible text editor for updating wiki content.
 - **Backend Caching**: To avoid fetching data from the API on every page load, future implementations will include caching mechanisms. This will store data on the backend temporarily and reduce redundant API calls, improving performance and reducing load times.
+
+---
 
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
