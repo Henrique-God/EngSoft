@@ -1,4 +1,4 @@
-# Dengue Combat Support Prototype
+# Dengue Combat Support Prototype - TchauDengue
 
 This is a prototype project designed to support efforts in combating dengue fever in **São José do Rio Preto**, located in the state of São Paulo, Brazil. The goal is to provide a **user-friendly interface** featuring a wiki, interactive map pages, and statistical visualizations to facilitate access to data about prevention actions, case reports, and more.
 
